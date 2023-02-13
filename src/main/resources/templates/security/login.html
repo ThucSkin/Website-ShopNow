@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+th:replace="~{/layout/fragment :: dynamic(~{::main})}">
+<body>
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-5 shadow-lg border-0 rounded-lg mx-auto">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-title mb-4 text-uppercase">[[#{login.title}]]</div>
+                            <div class="small mb-1"><a th:href="@{/security/register}">[[#{login.regis}]]</a></div>
+                            <form th:action="@{/security/login}" method="post">
+                                <div class="form-floating mb-2">
+                                    <input name="username" type="text" class="form-control" required autofocus>
+                                    <label for="floatingInputUsername">[[#{login.username}]]</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input name="password" type="password" class="form-control" placeholder="Password" required>
+                                    <label for="floatingPassword">[[#{login.password}]]</label>
+                                </div>
+                                <div class="form-group text-left">
+                                    <label class="checkbox-inline ">
+                                        <input type="checkbox" name="remember-me"> Remember me?
+                                        <a class="small forgot-pass" th:href="@{/forgot_password}">[[#{login.forgotPass}]]</a>                      
+                                    </label>
+                                </div>
+                                <div class="message" th:text="${message}"></div>
+                                <div class="d-grid mb-2">
+                                    <button type="submit" 
+                                            class="btn btn-lg btn-primary btn-login fw-bold text-uppercase my-2">[[#{login.title}]]
+                                    </button>
+                                </div> <hr>
+                                <div class="card-bottom">
+                                    <a class="btn-google btn-sm fw-bold text-uppercase"
+                                        href="/oauth2/authorization/Google">
+                                        <i class="fa-brands fa-google"></i> Login with Google
+                                    </a>
+                                    <a class="btn-sm btn-facebook  fw-bold text-uppercase"
+                                        href="/oauth2/authorization/Facebook">
+                                        <i class="fa-brands fa-facebook"></i> Login with Facebook
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </main>
+</body>
+</html>

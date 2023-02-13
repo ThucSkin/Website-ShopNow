@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+th:replace="~{/layout/fragment :: dynamic(~{::main})}">
+
+<body> 
+    <main>
+        <div class="text-center container">
+            <h3 class="mt-3 mb-5"><i class="fa-solid fa-heart"></i> [[#{favorite.title}]]</h3>
+        </div>
+        <div class="container"> 
+            <a th:href="@{/product/list}" class="btn btn-warning mb-1"><i class="fa fa-angle-left"></i> <lable th:text="#{product.btn.continute}"></lable></a>
+            <div th:if="${message != null}" class="alert alert-primary" role="alert"> 
+                <i>[[${message}]]</i>
+            </div>
+            <table class="table table-hover table-condensed"> 
+                <thead> 
+                    <tr> 
+                        <th th:text="#{favorite.code}"></th> 
+                        <th th:text="#{favorite.image}"></th>
+                        <th th:text="#{favorite.productName}"></th>  
+                        <th th:text="#{favorite.price}"></th> 
+                        <th th:text="#{cart.discount}"></th> 
+                        <th th:text="#{cart.amount}"></th>
+                        <th></th> 
+                    </tr> 
+                </thead>
+                <tbody>
+                    <tr th:each="item : ${favorites}">
+                        <td>[[${item.favoriteId}]]</td>
+                        <td>
+                            <img th:src="@{|/assets/images/${item.product.image1}|}" class="img--item">
+                        </td>
+                        </td>
+                        <td>[[${item.product.name}]]</td> 
+                        <td>[[${#numbers.formatInteger(item.product.unitPrice, 0, 'POINT')}]] <sup>đ</sup></td>
+                        <td>[[${item.product.discount}]]%</td>
+                        <td>[[${#numbers.formatInteger(item.product.unitPrice-((item.product.unitPrice*item.product.discount)/100), 0, 'DEFAULT')}]] <sup>đ</sup></td>
+                        <td>
+                            <a th:attr="ng-click=@{|cart.add(${item.product.productId})|}" class="btn btn-sm btn-primary">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            </a>
+                            <a th:href="@{'/favorite/delete/' + ${item.favoriteId}}" class="btn btn-sm btn-danger ml-3">
+                            <i class="fa-regular fa-trash-can"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table> 
+        </div> 
+    </main>
+</body>
+</html>

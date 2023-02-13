@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+th:replace="~{/layout/fragment :: dynamic(~{::main})}">
+<body>
+<main class="container">
+	<div id="wrapper">
+		<div class="container">
+			<div class="row justify-content-around">
+				<form action="/register/save" class="col-md-5 bg-light p-3 my-3 shadow" 
+					method="post" th:object="${account}">
+					<div class="card-title mb-5 text-uppercase">[[#{regist.title}]]</div>
+					<div class="row">
+						<div class="col-sm-6 form-group">
+							<label for="floatingInputUsername"><i class="fa-solid fa-user"></i> [[#{regist.name}]]:</label> 
+							<input type="text" th:field="*{username}" name="username" id="username" class="form-control" minlength="4" required>
+						</div>
+						<div class="col-sm-6 form-group">
+							<label for="fullname"><i class="fa-solid fa-pen-nib"></i> [[#{info.name}]]:</label> 
+							<input type="text" th:field="*{fullname}" name="fullname" id="fullname" class="form-control" required>
+						</div>
+						<div class="col-sm-6 form-group">
+							<label for="email"><i class="fa-solid fa-envelope"></i> Email:</label> 
+							<input type="email" th:field="*{email}" name="email" id="email" class="form-control" required>
+						</div>
+						<div class="col-sm-6 form-group">
+							<label for="telePhone"><i class="fa-solid fa-phone"></i> Số điện thoại:</label> 
+							<input type="text" minlength="10" maxlength="10" th:field="*{telePhone}" name="telePhone" id="telePhone" class="form-control" required>
+						</div>
+						<div class="col-sm-6 form-group">
+							<label for="password"><i class="fa-solid fa-key"></i> [[#{regist.password}]]:</label> 
+							<input type="password" minlength="6" name="password" id="password" class="form-control" required>
+						</div>
+						<div class="col-sm-6 form-group">
+							<label for="passwordRe"><i class="fa-solid fa-check-double"></i> [[#{regist.confirmPass}]]:</label> 
+							<input type="password" name="passwordRe" id="passwordRe"
+								oninput="checkPasswordMatch(this);" class="form-control" required>
+						</div>
+					</div>
+					<div th:if="${message != null}" class="message"
+						role="alert">
+						<i>[[${message}]]</i>
+					</div>
+					<hr />
+					<button class="btn-primary btn btn-block mb-3">[[#{regist.regist}]]</button>
+					<div class="small text-center"><a th:href="@{/security/login/form}">[[#{login.login}]]</a></div>
+				</form>
+			</div>
+			<script>
+				function checkPasswordMatch(fieldConfirmPassword) {
+					if (fieldConfirmPassword.value != $("#password").val()) {
+						fieldConfirmPassword.setCustomValidity("Mật khẩu không trùng khớp!");
+					} else {
+						fieldConfirmPassword.setCustomValidity("");
+					}
+				}
+				
+			</script>
+		</div>
+	</div>
+	</main>
+</body>
+</html>

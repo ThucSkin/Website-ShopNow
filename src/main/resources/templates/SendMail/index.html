@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    th:replace="~{/layout/fragment :: dynamic(~{::main})}">
+
+<body>
+	<main>
+		<div class="container" style="margin-top: 10px;">
+			<div class="row"
+				style="border: 1px darkgrey solid; border-radius: 10px; width: 50%; margin: 0 auto; padding: 20px;">
+				<div class="col-sm-12">
+					<h2 style="text-align: center;"><label>[[#{mail.title}]]</label></h2>
+					<div th:if="${message != null}" class="alert alert-primary"
+						role="alert"> 
+					<i>[[${message}]]</i>
+				</div>
+					<form action="/user/send" method="post">
+						<div class="form-group">
+							<label>[[#{mail.to}]]: </label> 
+							<input type="email" 
+								class="form-control" name="to" value="shopnow24@gmail.com" readonly>
+						</div>
+						<div class="form-group">
+							<label>[[#{mail.sub}]]:</label>
+							<input type="text"
+							class="form-control" name="subject" value="Yêu cầu từ khách hàng" readonly>
+						</div>
+						<div class="form-group">
+							<label>[[#{mail.content}]]:</label>
+							<textarea class="form-control" required rows="3"  name="content"></textarea>
+						</div>
+						<div class="btn-mail-bottom">
+							<button type="submit" class="btn btn-primary mr-3">Send</button>
+						<button type="reset" class="btn btn-primary">Cancel</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</main>	
+</body>
+</html>

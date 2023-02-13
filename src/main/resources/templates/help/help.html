@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+th:replace="~{/help/fragment :: dynamic(~{::body})}">
+<body>
+        <div class="col">
+            <div class="content">
+                <p class="fs-4 text-justify ">Câu hỏi thường gặp?</p>
+            </div>
+            <hr>
+            <a th:href="@{help/help1}" type="button" class="btn">Quy trình trả hàng hoàn tiền?</a>
+            <hr>
+            <a th:href="@{help/help3}" type="button" class="btn">Làm sao để mua hàng / đặt hàng trên ứng dụng?</a>
+            <hr>
+            <a th:href="@{help/help2}" type="button" class="btn">Cách theo dõi tình trạng vận chuyển của đơn hàng?</a>
+            <hr>
+            <a th:href="@{help/help4}" type="button" class="btn">Tôi phải làm gì nếu đơn hàng bị cập nhật sai trạng thái / chưa nhận được
+                hàng?</a>
+            <hr>
+            <a th:href="@{help/help5}" type="button" class="btn">Tại sao tài khoản Shopee của tôi bị khóa / bị giới hạn?</a>
+            <hr>
+            <a th:href="@{help/help6}" type="button" class="btn">Tại sao tôi không nhận được mã xác thự OTP?</a>
+            <hr>
+            <a th:href="@{help/help7}" type="button" class="btn">Mua sắm an toàn cùng ShopNow</a>
+            <hr>
+            <a th:href="@{help/help8}" type="button" class="btn">Điều kiện trả hàng / hoàn tiền?</a>
+            <hr>
+            <a th:href="@{help/help9}" type="button" class="btn">Nên hoặc không nên để tránh nhận được đơn hàng ảo / giả mạo?</a>
+        </div>
+</body>
+</html>

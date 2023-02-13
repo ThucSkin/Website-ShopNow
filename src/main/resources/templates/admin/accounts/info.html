@@ -1,0 +1,70 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" 
+    th:replace="~{/admin/dist/fragment :: dynamic(~{::main})}">
+<body>
+	<main>
+    <div class="container rounded bg-white mt-5 mb-5 border-0 shadow rounded-3 overflow-hidden">
+        <div class="row" th:each="acc: ${info}">
+            <div class="col-md-4 mx-auto ">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px">
+                    <div>	
+                        <img th:src="@{|/assets/images/${acc.image}|}"
+								src="/assets/images/noimage.jpg"
+                            class="avatar img-circle img-thumbnail rounded-circle" alt="avatar"> 
+                        <h6>[[#{info.avata}]]</h6>
+                    </div>    
+                </div>
+            </div>
+            <div class="col-sm-8" >
+                <div class="p-3 py-5">
+                    <div class="row mb-3 card-title">
+                        <h4><label><i class="fa-solid fa-user-pen"></i> [[#{info.title}]]</label></h4>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label>[[#{info.name}]]</label>:
+                            <div class="form-floating mb-3">
+                                <div class="form-control" id="floatingInputUsername"
+                                    placeholder="Fullname" required autofocus>[(${acc.fullname})]
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label>[[#{info.sdt}]]</label>:
+                            <div class="form-floating mb-3">                            
+                                <div type="text" class="form-control" id="floatingInputPhonenumber"
+                                    placeholder="Phone number" required>0[(${acc.telePhone})]  
+                                </div>     
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <label>Email</label>:
+                            <div class="form-floating mb-3">
+                                <div class="form-control"
+                                    placeholder="you@gmail.com" required>[(${acc.email})]
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="">
+                                <label>[[#{info.address}]]</label>:
+                                <textarea class="form-control" readonly rows="3">
+                                    [(${acc.address})]
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="col-sm-10 mt-2">
+                            <div class="col-sm-6">
+                                <a th:href="@{|/admin/accounts/info/edit/${acc.username}|}" class="btn btn-lg btn-warning custom btn-block btn-edit  fw-bold text-uppercase my-2">
+                                    <label><i class="fa-light fa-user-pen"></i> [[#{info.edit}]]</label>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </main>
+</body>
+</html>

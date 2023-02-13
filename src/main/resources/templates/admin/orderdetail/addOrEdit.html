@@ -1,0 +1,134 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/admin/dist/fragment :: dynamic(~{::main})}">
+<body>
+	<main>
+		<form action="/admin/orderDetails/saveOrUpdate" method="post"
+			enctype="multipart/form-data" th:object="${orderDetail}">
+			<div class="card">
+				<div class="card-header card bg-secondary text-white"
+					style="text-align: center">
+					<h2
+						th:text="${orderDetail.isEdit ? 'Chỉnh sửa đơn hàng chi tiết' : 'Thêm mới đơn hàng chi tiết'}">
+					</h2>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<input type="hidden" th:field="*{isEdit}">
+						<div class="col-sm-12 ses ">
+							<div class="row">
+								<div class="form-group col-sm-6">
+									<label for="productId">Mã đơn hàng chi tiết: </label> 
+									<input type="text"
+										readonly class="form-control" name="orderDetailId"
+										th:field="*{orderDetailId}">
+								</div>
+								<div class="form-group col-sm-6">
+									<label for="productId">Mã đơn hàng: </label> 
+									<input type="text"  class="form-control" name="order" id="productId" readonly
+										th:field="*{order.orderId}" aria-describedby="productIdHid">
+								</div>
+								<div class="form-group col-sm-1">
+									<img th:src="@{|/assets/images/*{product.image1}|}" class="img--item">
+								</div>
+								<div class="form-group col-sm-4">
+									<label for="productId">Tên sản phẩm: </label> 
+									<input type="text"  class="form-control"  readonly
+										th:field="*{product.name}" aria-describedby="productIdHid">
+								</div>
+								<div class="form-group col-sm-3">
+									<label for="productId">Mã sản phẩm:</label> 
+									<input class="form-control" name="product" readonly 
+										th:field="*{product.productId}" >
+								</div>
+								<div class="form-group col-sm-4">
+									<label for="productId">Ngày đặt hàng: </label> 
+									<input type="text"  class="form-control"  readonly
+										th:field="*{order.createDay}" aria-describedby="productIdHid">
+								</div>
+								<div class="form-group col-sm-6">
+									<label for="price">Giá</label> 
+									<input class="form-control" name="price" type="number"
+										th:field="*{price}">
+								</div>
+								<div class="form-group col-sm-6">
+									<label for="discount">Giảm giá</label> 
+									<input class="form-control" name="discount" type="number"
+										th:field="*{discount}">
+								</div>
+								<div class="form-group col-sm-6">
+									<label for="quantity">Số lượng</label> 
+									<input class="form-control" name="quantity" type="number"
+										th:field="*{quantity} ">
+								</div>
+								<div class="form-group col-sm-6">
+									<label>Trạng thái:</label>
+									<select
+											class="form-control" name="status" id="status"
+											th:field="*{status}">
+											<option value="Đang chờ xác nhận">Đang chờ xác nhận</option>
+											<option value="Đang vận chuyển">Đang vận chuyển</option>
+											<option value="Đang giao hàng">Đang giao hàng</option>
+											<option value="Đã giao hàng">Đã giao hàng</option>
+										</select>
+								</div>
+								<div class="form-group">
+									<label>Mô tả:</label>
+									<textarea th:field="*{discription}" placeholder="Mô tả"
+										rows="3" class="mt-2 form-control description">
+									</textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="card-footer text-center mt-2">
+					<button class="btn btn-primary mr-3"
+						th:text="${orderDetail.isEdit? 'Cập nhật':'Lưu'}">
+						Lưu <i class="fa-solid fa-plus"></i>
+					</button>
+					<a th:href="@{/admin/orderDetails}" class="btn btn-success mr-2">Danh
+						sách đơn hàng</a> <a class="btn btn-danger mr-2"
+						th:if="${orderDetail.isEdit}" th:data-id="${orderDetail.orderDetailId}"
+						th:data-name="${orderDetail.orderDetailId}"
+						onclick="showConfirmModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))">
+						Xóa <i class="fa-regular fa-trash-can"></i>
+					</a> <a th:href="@{/admin/orderDetails/add}" class="btn btn-info mr-3">
+						Làm mới <i class="fa-regular fa-window-restore"></i>
+					</a>
+				</div>
+			</div>
+			<script>
+				function showConfirmModalDialog(id, name) {
+					$('#orderId').text(name);
+					$('#yesOption').attr('href', '/admin/orderDetails/delete/' + id);
+					$('#noOption').attr('href', '/admin/orderDetails/edit/' + id);
+					$('#confirmationId').modal('show');
+				}
+			</script>
+			<div class="modal fade" id="confirmationId" tabindex="-1"
+				role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">Xác nhận</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							Bạn có muốn xóa đơn hàng chi tiết mã "<span id="orderId"></span>"?
+						</div>
+						<div class="modal-footer">
+							<a id="yesOption" type="button" class="btn btn-danger">Đồng ý</a>
+							<a id="noOption" type="button" class="btn btn-secondary"
+								data-dismiss="modal">Hủy</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</main>
+</body>
+</html>

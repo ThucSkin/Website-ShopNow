@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+th:replace="~{/help/fragment :: dynamic(~{::body})}">
+<body>
+    <div class="txt">
+        <p class="fs-4  text-center text-justify  ">Tại sao tôi không nhận được Mã xác thực OTP?</p>
+    </div>
+    <h6 class="indent">Nếu bạn không nhận được Mã xác thực OTP khi đăng nhập hoặc thay đổi mật khẩu tài khoản/mã PIN của
+        Số Dư TK ShopNow qua
+        tin nhắn Zalo/tin nhắn SMS/Cuộc gọi tự động, nguyên nhân có thể là do:</h6>
+    <h5>1. Lỗi kết nối hoặc lỗi đường truyền</h5>
+    <h6>Trong trường hợp này, bạn có thể thử những hướng giải quyết sau:</h6>
+    <h6 class="indent">- Kiểm tra lại kết nối mạng (đối với tin nhắn Zalo) và sóng dịch vụ viễn thông (đối với tin nhắn
+        SMS, Cuộc gọi tự động)
+        trên điện thoại của bạn đảm bảo đủ mạnh.</h6>
+    <h6 class="indent">- Yêu cầu gửi lại Mã xác thực OTP (cho phép tối đa 04 lần)</h6>
+    <h5>2. Số điện thoại liên kết tài khoản không chính xác</h5>
+    <h6>Số điện thoại đúng để nhận được mã xác thực phải là số điện thoại bạn đã dùng để đăng ký tài khoản ShopNow. Bạn
+        vui lòng
+        kiểm tra lại thông tin này trong mục Tài khoản của tôi nhằm đảm bảo tài khoản ShopNow và số điện thoại liên kết
+        với tài
+        khoản ShopNow là chính xác</h6>
+    <h6>Đối với trường hợp số điện thoại liên kết với tài khoản ShopNow trước đó bạn sử dụng bị thay đổi đầu số theo quy
+        định nhà
+        mạng, bạn vui lòng cập nhật lại đầu số đúng để có thể nhận Mã xác thực OTP</h6>
+    <h5>3. Vượt quá giới hạn số lượt yêu cầu gửi Mã OTP</h5>
+    <h6>Thông báo Yêu cầu OTP không thành công (D06) sẽ được hiển thị khi bạn đã vượt quá số lượt yêu cầu gửi Mã xác
+        thực OTP
+        cho phép (tối đa 04 lần). Giới hạn này được đưa ra nhằm mục đích hạn chế rủi ro tài khoản bị đánh cắp thông tin
+    </h6>
+    <h6>Trong trường hợp này, vui lòng đợi 30 phút và thử yêu cầu gửi lại Mã xác thực OTP</h6>
+    <h5>4. Các nguyên nhân khác</h5>
+    <h6>Tài khoản Shopee của bạn không được đăng nhập quá 180 ngày.
+    </h6>
+    <h6>Bạn đang thực hiện đăng nhập trên thiết bị chưa từng đăng nhập tài khoản ShopNow...</h6>
+    <h5>⚠️ Lưu ý:</h5>
+    <h6>Nếu gặp vấn đề liên quan đến Mã xác thực OTP khi đăng nhập tài khoản ShopNow bằng tin nhắn SMS, bạn có thể thử
+        sử dụng
+        những phương pháp đăng nhập khác</h6>
+    <h6>Nếu bạn chọn gửi mã xác thực bằng tin nhắn Zalo, bạn cần phải bật tính năng nhận thông báo của app Zalo trên
+        điện thoại
+        để có thể nhận biết nhanh chóng khi mã OTP được gửi về. Trường hợp bạn không bật thông báo, bạn vui lòng trực
+        tiếp truy
+        cập vào app Zalo để kiểm tra mã OTP sau khi đã thao tác</h6>
+    <h6>Nếu vấn đề không thể giải quyết, vui lòng liên hệ Nhân viên CSKH ShopNow để được hỗ trợ. Bạn nên chuẩn bị sẵn
+        những thông
+        tin cần thiết sau:</h6>
+    <h6 class="indent">- Tên tài khoản ShopNow và/hoặc số điện thoại liên kết tài khoản ShopNow</h6>
+    <h6 class="indent">- Thời điểm xảy ra vấn đề</h6>
+    <h6 class="indent">- Phiên bản điện thoại và phiên bản hệ điều hành (phiên bản iOS hoặc Android)</h6>
+    <h6 class="indent">- Đơn vị cung cấp dịch vụ viễn thông (nếu cần)</h6>
+    <h6 class="indent">- Thao tác đang thực hiện khi xảy ra vấn đề (ví dụ: trong quá trình đặt lại mật khẩu, trong quá
+        trình cập nhật thông tin
+        tài khoản ngân hàng liên kết…)</h6>
+    <h6 class="indent">- Hình ảnh hoặc video minh họa lỗi (nếu có).
+    </h6>
+</body>
+</html>

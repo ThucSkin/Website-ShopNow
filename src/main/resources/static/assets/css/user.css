@@ -1,0 +1,64 @@
+
+
+.avatar{
+	width: 321px;
+	height: 321px;
+    margin-bottom: 5px;
+}
+.content{
+    display: flex;
+}
+.card-title{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 35px;
+}
+.btn-bottom{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3px;
+}
+.btn-mail-bottom{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/*  aside   */
+.menu{
+    
+}
+.hea{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.header-aside{
+    display: flex;
+    justify-content: space-around;
+}
+.content-aside{
+    text-align: right;
+    margin-right: 2em;
+}
+.body{
+    
+}
+.search{
+    display: flex;
+    background-color: rgb(216, 223, 223);
+    margin-top: 5px;
+    height: 32px;
+    align-items: center;
+}
+.btn-save{
+    margin-top: 8px;
+    width: 80px;
+}
+
+
+
+

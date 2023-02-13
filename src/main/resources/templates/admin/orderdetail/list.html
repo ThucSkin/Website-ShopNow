@@ -1,0 +1,104 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/admin/dist/fragment :: dynamic(~{::main})}">
+
+<body>
+	<main>
+		<div class="card">
+			<div class="card-header card bg-primary text-white" style="text-align: center">
+				<h3>Danh sách đơn hàng chi tiết</h3>
+			</div>
+			<div class="card-body">
+				<div th:if="${message != null}" class="alert alert-primary" role="alert">
+					<i>[[${message}]]</i>
+				</div>
+				<div class="order-status">
+					<a th:href=@{/admin/orderDetails/confirmation}><label onmousemove="mDown(this)"><i class="fa-solid fa-circle-check"></i> [[#{order.waiting}]]</label></a>
+					<a th:href=@{/admin/orderDetails/transported}><label onmousemove="mDown(this)"><i class="fa-solid fa-truck"></i> [[#{order.Being_transported}]]</label></a>
+					<a th:href=@{/admin/orderDetails/delivery}><label onmousemove="mDown(this)"><i class="fa-solid fa-road"></i> [[#{order.Delivery_in_progress}]]</label></a>
+					<a th:href=@{/admin/orderDetails/delivered}><label onmousemove="mDown(this)"><i class="fa-solid fa-face-smile"></i> [[#{order.Delivered}]]</label></a>
+				</div>
+				<script>
+					function mDown(obj) {
+						obj.style.color = "red";
+					}
+				</script>
+				<table id="datatablesSimple">
+					<thead class="bg-light ">
+						<tr>
+							<th>Mã đơn chi tiết</th>
+							<th>Mã đơn hàng</th>
+							<th>Tên khách hàng</th>
+							<th>Mã sản phẩm</th>
+							<th>Image</th>
+							<th>[[#{cart.amount}]]</th>
+							<th>Trạng thái</th>
+							<!-- <th>Mô tả</th> -->
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="item: ${orderDetails}">
+							<td th:utext="${item.orderDetailId}"></td>
+							<td th:utext="${item.order.orderId}"></td>
+							<td th:utext="${item.order.name}"></td>
+							<td th:utext="${item.product.productId}"></td>
+							<td>
+								<img th:src="@{|/assets/images/${item.product.image1}|}" class="img--stt">
+							</td>
+							<td>[[${#numbers.formatInteger(item.Quantity*(item.price-(item.price*item.discount)/100), 0 , 'DEFAULT')}]] <sup>đ</sup></td>
+							<td th:utext="${item.status}"></td>
+							<!-- <td th:utext="${item.discription}"></td> -->
+							<td>
+								<div class="btn-group btn-group-xs">
+									<a th:href="@{|/admin/orders/detail/${item.order.orderId}|}"
+										class="btn btn-default">
+										<i class="fa-solid fa-magnifying-glass-plus"></i>
+									</a>
+									<a class="btn btn-warning mr-2"
+										th:href="@{'/admin/orderDetails/edit/' + ${item.orderDetailId}}">
+										<i class="fa-regular fa-pen-to-square"></i>
+									</a> <a class="btn btn-danger" th:data-id="${item.orderDetailId}"
+										th:data-name="${item.orderDetailId}"
+										onclick="showConfirmModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))">
+										<i class="fa-solid fa-trash-can"></i>
+									</a>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+					<script>
+						function showConfirmModalDialog(id, name) {
+							$('#orderId').text(name);
+							$('#yesOption').attr('href',
+								'/admin/orderDetails/delete/' + id);
+							$('#noOption').attr('href', '/admin/orderDetails');
+							$('#confirmationId').modal('show');
+						}
+					</script>
+					<div class="modal fade" id="confirmationId" tabindex="-1" role="dialog"
+						aria-labelledby="modelTitleId" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title">Xác nhận</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									Bạn thực sự muốn xóa đơn chi tiết với mã "<span id="orderId"></span>"?
+								</div>
+								<div class="modal-footer">
+									<a id="yesOption" type="button" class="btn btn-danger">Đồng ý</a>
+									<a id="noOption" type="button" class="btn btn-secondary"
+										data-dismiss="modal">Hủy</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</table>
+			</div>
+		</div>
+	</main>
+</body>
+
+</html>

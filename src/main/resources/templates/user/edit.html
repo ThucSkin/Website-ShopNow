@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/layout/fragment :: dynamic(~{::main})}">
+<body>
+	<main>
+		<div
+			class="container rounded bg-white mt-5 mb-5 border-0 shadow rounded-3 overflow-hidden">
+			<form action="/info/saveOrUpdate" enctype="multipart/form-data"
+				th:object="${account}" method="post" class="content">
+				<div class="row">
+					<div class="col-sm-4">
+						<div class="d-flex flex-column align-items-center text-center p-3 py-5">
+							<img class="rounded-circle mt-5" width="150px"> <img id="image"
+								class="avatar rounded-circle"
+								alt="avatar"
+								th:src="${account.image != null? '/info/images/' + account.image : '/assets/images/noimage.jpg'}"
+								src="/assets/images/noimage.jpg">
+							<h6>[[#{info.avata}]]</h6>
+							<div class="">
+								<script>
+									function chooseFile(fileInput) {
+										if (fileInput.files
+												&& fileInput.files[0]) {
+											var reader = new FileReader();
+											reader.onload = function(e) {
+												$('#image').attr('src',
+														e.target.result);
+											}
+											reader
+													.readAsDataURL(fileInput.files[0]);
+										}
+									}
+								</script>
+								<input type="file" name="imageFile" style="height: 45px"
+									onchange="chooseFile(this)" placeholder="Product Image"
+									aria-describedby="productImageHid"
+									class="form-control mt-5 choose-img" id="productImage">
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-8">
+						<div class="row mb-5 mt-4 card-title">
+							<h4><i class="fa-solid fa-pen-to-square"></i> [[#{info.tit}]]</h4>
+						</div>
+						<div th:if="${message != null}" class="alert alert-primary" role="alert"> 
+							<i>[[${message}]]</i>
+						</div>
+						<div class="row">
+							<div class="form-floating mb-3 col-sm-3" hidden>
+								<div>image1:</div>
+								<input th:field="*{image}"
+									placeholder="Unit Price" class="form-control mt-2">
+							</div>
+							<div class="form-group col-sm-6" hidden="hidden">
+								<label for="productId">Tên tài khoản: </label> 
+								<input type="text" class="form-control" name="username" id="productId"
+									th:field="*{username}" aria-describedby="productIdHid"
+									placeholder="Tên tài khoản">
+							</div>
+							<div class="form-group col-sm-6" hidden="hidden">
+								<div>Mật khẩu:</div>
+								<input th:field="*{password}" type="text" name="password" id="password" aria-describedby="passwordHid"
+									placeholder="mật khẩu" class="form-control mt-2">
+							</div>
+							<div class="col-sm-6 ">
+								<i class="fa-solid fa-user"></i> 
+								<label>[[#{info.name}]]</label>:
+								<div class="form-floating mb-3">
+									<input th:field="*{fullname}" type="text" name="fullname" placeholder="Họ và tên" class="form-control">
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<i class="fa-solid fa-phone"></i>
+								<label>[[#{info.sdt}]]</label>:
+								<div class="form-floating mb-3">
+									<input th:field="*{telePhone}" type="text" minlength="10" maxlength="10" name="telePhone" placeholder="Số điện thoại" class="form-control">
+								</div>
+							</div>
+							<div class="col-sm-12">
+								<i class="fa-solid fa-envelope"></i>
+								<label>Email</label>:
+								<div class="form-floating mb-3">
+									<input th:field="*{email}" type="email" name="email" placeholder="Email" class="form-control mt-2">
+								</div>
+							</div>
+							<div class="col-sm-12">
+								<i class="fa-solid fa-address-book"></i>
+								<label>[[#{info.address}]]</label>:
+								<textarea th:field="*{address}" placeholder="Địa chỉ" rows="3"
+										class="mt-2 form-control description">
+                                </textarea>
+							</div>
+							<div class="col-sm-12">
+								<button class="btn btn-danger btn-save">
+									[[#{info.save}]]
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</main>
+</body>
+</html>
