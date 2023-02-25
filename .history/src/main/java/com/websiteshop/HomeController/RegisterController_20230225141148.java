@@ -55,7 +55,7 @@ public class RegisterController {
 
 		accountService.save(entity);
 		model.addAttribute("message", "Tạo tài khoản thành công!");
-		return new ModelAndView("forward:/security/register", model);
+		return new ModelAndView("forward:/security/register-css", model);
 	}
 
 }

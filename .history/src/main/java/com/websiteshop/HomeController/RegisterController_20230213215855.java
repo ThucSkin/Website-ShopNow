@@ -26,7 +26,7 @@ public class RegisterController {
 		AccountDto dto = new AccountDto();
 		dto.setIsEdit(false);
 		model.addAttribute("account", dto);
-		return "security/register-css";
+		return "security/register";
 	}
 
 	@PostMapping("/register/save")
@@ -35,24 +35,24 @@ public class RegisterController {
 
 		if (!dto.getPassword().toString().equals(dto.getPasswordRe().toString())) {
 			model.addAttribute("message", "Mật khẩu không trùng khớp");
-			return new ModelAndView("security/register-css");
+			return new ModelAndView("security/register");
 		}
 
 		Account entity = new Account();
 		BeanUtils.copyProperties(dto, entity);
-
+		
 		if (!accountService.findById(entity.getUsername()).isEmpty()) {
 			model.addAttribute("message", "Tài khoản đã tồn tại");
-			return new ModelAndView("security/register-css");
+			return new ModelAndView("security/register");
 		}
-
-		if (entity.getTelePhone().length() != 10) {
+		
+		if(entity.getTelePhone().length() != 10) {
 			model.addAttribute("message", "Số điện thoại phải đủ 10 số!");
-			return new ModelAndView("security/register-css");
+			return new ModelAndView("security/register");
 		}
-
+		
 		entity.setImage("noimage.jpg");
-
+		
 		accountService.save(entity);
 		model.addAttribute("message", "Tạo tài khoản thành công!");
 		return new ModelAndView("forward:/security/register", model);

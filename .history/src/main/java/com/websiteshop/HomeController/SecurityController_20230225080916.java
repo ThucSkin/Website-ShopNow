@@ -21,7 +21,7 @@ public class SecurityController {
     @RequestMapping("/oauth2/login/success")
     public String success(OAuth2AuthenticationToken oauth2) {
         accountService.loginFormOAuth2(oauth2);
-        return "forward:/security/login/success";
+        return "forward:/security/login-css/success";
     }
 
     @RequestMapping("/security/login/form")
@@ -45,7 +45,7 @@ public class SecurityController {
     @RequestMapping("/security/unauthoried")
     public String unauthoried(Model model) {
         model.addAttribute("message", "Tài khoản không có quyền truy xuất!");
-        return "security/login";
+        return "security/login-css";
     }
 
     @RequestMapping("/security/logoff/success")

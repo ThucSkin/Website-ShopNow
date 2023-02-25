@@ -45,7 +45,7 @@ public class SecurityController {
     @RequestMapping("/security/unauthoried")
     public String unauthoried(Model model) {
         model.addAttribute("message", "Tài khoản không có quyền truy xuất!");
-        return "security/login";
+        return "security/login-css";
     }
 
     @RequestMapping("/security/logoff/success")

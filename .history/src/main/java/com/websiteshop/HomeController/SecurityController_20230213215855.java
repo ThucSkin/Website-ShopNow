@@ -27,7 +27,7 @@ public class SecurityController {
     @RequestMapping("/security/login/form")
     public String loginPage(Model model) {
         model.addAttribute("message", "Vui lòng đăng nhập!");
-        return "security/login-css";
+        return "security/login";
     }
 
     @RequestMapping("/security/login/success")
@@ -39,7 +39,7 @@ public class SecurityController {
     @RequestMapping("/security/login/error")
     public String loginError(Model model) {
         model.addAttribute("message", "Tên đăng nhập hoặc mật khẩu không đúng!");
-        return "security/login-css";
+        return "security/login";
     }
 
     @RequestMapping("/security/unauthoried")
@@ -50,7 +50,7 @@ public class SecurityController {
 
     @RequestMapping("/security/logoff/success")
     public String logoff(Model model) {
-        return "security/login-css";
+        return "security/login";
     }
 
     @RequestMapping("/security/forgotPassword")

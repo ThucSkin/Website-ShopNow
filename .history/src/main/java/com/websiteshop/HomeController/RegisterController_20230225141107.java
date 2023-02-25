@@ -43,19 +43,19 @@ public class RegisterController {
 
 		if (!accountService.findById(entity.getUsername()).isEmpty()) {
 			model.addAttribute("message", "Tài khoản đã tồn tại");
-			return new ModelAndView("security/register-css");
+			return new ModelAndView("security/register");
 		}
 
 		if (entity.getTelePhone().length() != 10) {
 			model.addAttribute("message", "Số điện thoại phải đủ 10 số!");
-			return new ModelAndView("security/register-css");
+			return new ModelAndView("security/register");
 		}
 
 		entity.setImage("noimage.jpg");
 
 		accountService.save(entity);
 		model.addAttribute("message", "Tạo tài khoản thành công!");
-		return new ModelAndView("forward:/security/register", model);
+		return new ModelAndView("forward:/security/register-css", model);
 	}
 
 }

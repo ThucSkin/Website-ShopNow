@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <link rel="stylesheet" href="/assets/css/login-css.css">
+    <title>ShopNow</title>
+    <link rel="shortcut icon" href=/assets/images/img_logoHome.png/>
+</head>
+<body>
+    <section>
+        <div class="form-box">
+            <div class="form-value">
+                <form th:action="@{/security/login}" method="post">
+                    <h2>Login</h2>
+                    <div class="inputbox">
+                        <ion-icon name="mail-outline"></ion-icon>
+                        <input name="username" type="text" required>
+                        <label for="">Username</label>
+                    </div>
+                    <div class="inputbox">
+                        <ion-icon name="lock-closed-outline"></ion-icon>
+                        <input name="password" type="password" required>
+                        <label for="">Password</label>
+                    </div>
+                    <div class="forget">
+                        <label for=""><input type="checkbox" name="remember-me">Remember Me?  
+                            <a th:href="@{/forgot_password}">Forget Password</a></label>
+                    </div>
+                    <div class="message" th:text="${message}"></div>
+                    <button type="submit">Log in</button>
+                    <div class="register">
+                        <p>Don't have a account <a th:href="@{/security/register}">Register</a></p>
+                    </div>
+                    <div class="card-bottom">
+                        <a class="btn-google btn-sm fw-bold text-uppercase" style="margin-right: 20px;"
+                            href="/oauth2/authorization/Google">
+                            <i class="fa-brands fa-google"></i> Login with Google
+                        </a>
+                        <a class="btn-sm btn-facebook  fw-bold text-uppercase"
+                            href="/oauth2/authorization/Facebook">
+                            <i class="fa-brands fa-facebook"></i> Login with Facebook
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <script src="/assets/js/all.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <link rel="stylesheet" href="/assets/css/login-css.css">
+    <title>ShopNow</title>
+    <link rel="shortcut icon" href=/assets/images/img_logoHome.png/>
+</head>
+<body>
+    <section>
+        <div class="form-box">
+            <div class="form-value">
+                <form action="/register/save" th:object="${account}" method="post">
+                    <h2>Register</h2>
+                    <label class="double">
+                        <div class="inputbox" style="margin-right: 15px;">
+                            <ion-icon name="mail-outline"></ion-icon>
+                            <input type="text" th:field="*{username}" name="username" id="username" minlength="4" required>
+                            <label for="">Username</label>
+                        </div>
+                        <div class="inputbox">
+                            <ion-icon name="lock-closed-outline"></ion-icon>
+                            <input type="text" th:field="*{fullname}" name="fullname" id="fullname" required>
+                            <label for="">Fullname</label>
+                        </div>
+                    </label>
+                    <lable class="double">
+                        <div class="inputbox" style="margin-right: 15px;">
+                            <ion-icon name="mail-outline"></ion-icon>
+                            <input type="email" th:field="*{email}" name="email" id="email" required>
+                            <label for="">Email</label>
+                        </div>
+                        <div class="inputbox">
+                            <ion-icon name="lock-closed-outline"></ion-icon>
+                            <input type="text" minlength="10" maxlength="10" th:field="*{telePhone}" name="telePhone" id="telePhone" required>
+                            <label for="">Telephone</label>
+                        </div>
+                    </lable>
+                    <label class="double">
+                        <div class="inputbox" style="margin-right: 15px;">
+                            <ion-icon name="lock-closed-outline"></ion-icon>
+                            <input type="password" minlength="6" name="password" id="password" required>
+                            <label for="">Password</label>
+                        </div>
+                        <div class="inputbox">
+                            <ion-icon name="lock-closed-outline"></ion-icon>
+                            <input type="password" name="passwordRe" id="passwordRe"
+                                oninput="checkPasswordMatch(this);" required>
+                            <label for="">ConfirmPassword</label>
+                        </div>
+                    </label>    
+                    <div th:if="${message != null}" class="message"
+						role="alert">
+						<i>[[${message}]]</i>
+					</div>
+                    <button>Register</button>
+					<div class="bottom-login">Do you have a account?  
+                        <a th:href="@{/security/login/form}">Login</a>
+                    </div>
+                </form>
+            </div>
+            <script>
+				function checkPasswordMatch(fieldConfirmPassword) {
+					if (fieldConfirmPassword.value != $("#password").val()) {
+						fieldConfirmPassword.setCustomValidity("Mật khẩu không trùng khớp!");
+					} else {
+						fieldConfirmPassword.setCustomValidity("");
+					}
+				}
+				
+			</script>
+        </div>
+    </section>
+    <script src="/assets/js/all.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
