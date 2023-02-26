@@ -91,7 +91,7 @@ public class ForgotPasswordController {
         model.addAttribute("token", token);
         model.addAttribute("message", "Đặt lại mật khẩu");
 
-        return "/user/resetPassword-css";
+        return "/user/resetPassword";
     }
 
     @PostMapping("/reset_password")
@@ -108,6 +108,6 @@ public class ForgotPasswordController {
             model.addAttribute("message", "Đổi mật khẩu mới thành công.");
         }
 
-        return "/user/resetPassword-css";
+        return "/user/resetPassword";
     }
 }

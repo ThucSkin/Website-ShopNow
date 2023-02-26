@@ -148,10 +148,10 @@ a {
 .inputbox-f{
     position: relative;
     margin: 70px 0;
-    width: 600px;
+    width: 500px;
     border-bottom: 2px solid #fff;
     display: flex;
-    margin-left: 50px;
+    margin-left: 80px;
 }
 .inputbox-f label{
     position: absolute;
@@ -199,7 +199,6 @@ top: -5px;
 .small{
     display: flex;
     justify-content: center;
-    color: #d5cbcb;
-    margin-top: 40px;
-    font-size: small;
+    color: #a69f9f;
+    margin: 40 5pxpx;
 }

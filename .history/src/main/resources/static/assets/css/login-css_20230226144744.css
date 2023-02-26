@@ -148,10 +148,10 @@ a {
 .inputbox-f{
     position: relative;
     margin: 70px 0;
-    width: 600px;
+    width: 500px;
     border-bottom: 2px solid #fff;
     display: flex;
-    margin-left: 50px;
+    
 }
 .inputbox-f label{
     position: absolute;
@@ -183,23 +183,4 @@ top: -5px;
     color: #fff;
     font-size: 1.2em;
     top: 20px;
-}
-.button-f{
-    width: 600px;
-    height: 40px;
-    border-radius: 40px;
-    background: #fff;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    font-size: 1em;
-    font-weight: 600;
-    margin: 20px 50px;
-}
-.small{
-    display: flex;
-    justify-content: center;
-    color: #d5cbcb;
-    margin-top: 40px;
-    font-size: small;
 }
