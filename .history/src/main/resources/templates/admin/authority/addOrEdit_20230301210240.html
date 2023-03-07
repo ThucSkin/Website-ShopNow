@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/admin/dist/fragment :: dynamic(~{::main})}">
+<body>
+	<main>
+		<section class="row mt-5">
+			<div class="col-6 offset-3 mt-3 mb-3">
+				<form th:action="@{/authority/saveOrUpdate}" method="post"
+					enctype="multipart/form-data" th:object="${authority}">
+					<div class="card">
+						<div class="card-header">
+							<h3><i class="fa-solid fa-pen-to-square"></i> [[${authority.isEdit ? 'Chỉnh sửa phân quyền' : 'Cấp quyền cho tài khoản'}]]</h3>
+						</div>
+						<div class="card-body">
+							<input type="hidden" th:field="*{isEdit}">
+							<div class="form-group" hidden>
+								<label>id:</label> 
+								<input type="text" class="form-control"
+									readonly name="id" th:field="*{id}">
+							</div>
+							<div class="form-group col-sm-12">
+								<label for="username"> Tên tài khoản</label> 
+								<select class="form-control" name="account"
+									th:field="${authority.account.username}">
+									<option th:each="item : ${accounts}"
+										th:value="${item.username}" th:text="${item.username}"
+										th:selected="${item.username == authority.account.username}">
+										<label for="" th:text="${item.username}"></label>
+									</option>
+								</select>
+							</div>
+							<div class="form-group col-sm-12">
+								<label for="username"> Tên tài khoản</label> 
+								<select class="form-control" name="image"
+									th:field="${authority.account.username}">
+									<option th:each="item : ${accounts}"
+										th:value="${item.username}" th:text="${item.username}"
+										th:selected="${item.username == authority.account.username}">
+										<label for="" th:text="${item.username}"></label>
+									</option>
+								</select>
+							</div>
+							<div class="form-group col-sm-12">
+								<label for="name">Vai trò:</label>
+								<div class="row mt-3">
+									<div class="col-sm-4">
+										<input type="radio" name="role" id="check" value="DIRE" required
+											th:field="*{role.roleId}"> <label class="ml-2">Giám đốc</label><br>
+									</div>
+									<div class="col-sm-4">
+										<input type="radio"  name="role" id="check" value="STAF" required
+											th:field="*{role.roleId}"> <label class="ml-2"> Quản trị</label><br>
+									</div>
+									<div class="col-sm-4">
+										<input type="radio" name="role" id="check" value="CUST" required
+											th:field="*{role.roleId}"> <label class="ml-2"> Khách hàng</label><br>
+									</div>
+								</div>
+							</div>
+							<div th:if="${message != null}" class="alert-primary message"
+                        role="alert"> 
+                        <i>[[${message}]]</i>
+                    </div> 
+						</div>
+						<div class="card-footer text-muted card-bottom">
+							<a th:href="@{/authority/add}" type="reset"
+								class="btn btn-secondary mr-2">
+								<i class="fa-regular fa-window-restore"></i> Làm mới
+							</a> 
+							<a th:href="@{/authority}" class="btn btn-success mr-2">
+								<i class="fa-solid fa-list"></i> Danh sách quyền truy cập</a>
+							<button class="btn btn-primary">
+								<i class="fas fa-save"></i> 
+								<span th:if="${authority.isEdit}">Cập nhật</span> 
+								<span th:unless="${authority.isEdit}">Lưu</span>
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</section>
+	</main>
+</body>
+</html>

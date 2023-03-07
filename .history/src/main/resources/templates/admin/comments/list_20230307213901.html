@@ -1,0 +1,140 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/admin/dist/fragment :: dynamic(~{::main})}">
+<body>
+	<main>
+		<div class="card">
+			<div class="card-header card bg-primary text-white"
+				style="text-align: center">
+				<h3><i class="fa-solid fa-list"></i> Danh sách bình luận</h3>
+			</div>
+			<div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <form th:action="@{/admin/comments}">
+                                            <div class="form-inline float-left">
+                                              <input type="text" class="form-control" name="username" id="username"
+                                               aria-describedby="helpId" placeholder="Tên tài khoản">
+                                                <button class="btn btn-outline-primary ml-2">Tìm kiếm</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="row mt-5" th:if="${!commentPage.hasContent()}">
+                                  <div class="col">
+                                    <div class="alert alert-danger" role="alert">
+                                      <strong>Không tìm thấy tên tài khoản trùng khớp</strong>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+			<div class="card-body">
+				<div th:if="${message != null}" class="alert alert-primary"
+					role="alert">
+					<i>[[${message}]]</i>
+				</div>
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>Mã</th>
+							<th>Hình ảnh</th>
+							<th>Tên tài khoản</th>
+							<th>Tên sản phẩm</th>
+							<th>Mô tả</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="item: ${commentPage.content}">
+							<td th:utext="${item.commentId}"></td>
+							<td th:utext="${item.account.username}"></td>
+							<td th:utext="${item.product.name}"></td>
+							<td th:utext="${item.description}"></td>
+							<td>
+								<div class="btn-group btn-group-xs" >
+									<a class="btn btn-warning mr-2" hidden
+										th:href="@{'/admin/comments/edit/' + ${item.commentId}}">
+										<i class="fa-regular fa-pen-to-square"></i>
+									</a> <a class="btn btn-danger" th:data-id="${item.commentId}"
+										th:data-name="${item.commentId}"
+										onclick="showConfirmModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))">
+										<i class="fa-solid fa-trash-can"></i>
+									</a>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+					<script>
+						function showConfirmModalDialog(id, name) {
+							$('#commentId').text(name);
+							$('#yesOption').attr('href',
+									'/admin/comments/delete/' + id);
+							$('#noOption').attr('href', '/admin/comments');
+							$('#confirmationId').modal('show');
+						}
+					</script>
+					<div class="modal fade" id="confirmationId" tabindex="-1"
+						role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title">Xác nhận</h5>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									Bạn có muốn xóa bình luận mã "<span id="commentId"></span>"?
+								</div>
+								<div class="modal-footer">
+									<a id="yesOption" type="button" class="btn btn-danger">Đồng ý</a>
+									<a id="noOption" type="button" class="btn btn-secondary"
+										data-dismiss="modal">Hủy</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</table>
+				<div class="card-footer text-muted">
+                          <form action="">
+                            <div class="form-inline float-left">
+                              <label class="mr-3" for="size">Kích thước: </label>
+                              <select name="size" id="size" class="form-control"
+                              onchange="this.form.submit()">
+                                <option th:selected="${commentPage.size == 5}" value="5">5</option>
+                                <option th:selected="${commentPage.size == 10}" value="10">10</option>
+                                <option th:selected="${commentPage.size == 15}" value="15">15</option>
+                                <option th:selected="${commentPage.size == 20}" value="20">20</option>
+                                <option th:selected="${commentPage.size == 30}" value="30">30</option>
+                              </select>
+                            </div>
+                          </form>
+                           <nav aria-label="Page navigation"
+                           th:if="${commentPage.totalPages > 0}">
+                            <ul class="pagination justify-content-center">
+                              <li th:class="${1 == commentPage.number + 1} ? 'page-item active' : 'page-item'">
+                                <a th:href="@{/admin/comments(name=${name}, size=${commentPage.size}, page=${1})}"
+                                class="page-link">Đầu</a>
+                              </li>
+
+                              <li class="page-item active"
+                              th:each="pageNumber : ${pageNumbers}"
+                              th:if="${commentPage.totalPages > 1}"
+                              th:class="${pageNumber == commentPage.number + 1} ? 'page-item active' : 'page-item'">
+                              <a th:href="@{/admin/comments(name=${name}, size=${commentPage.size}, page=${pageNumber})}"
+                              class="page-link"
+                              th:text="${pageNumber}"></a>
+                              </li>
+
+                              <li th:class="${commentPage.totalPages == commentPage.number + 1} ? 'page-item active' : 'page-item'">
+                                <a th:href="@{/admin/comments(name=${name}, size=${commentPage.size}, page=${commentPage.totalPages})}"
+                                class="page-link">Cuối</a>
+                              </li>
+                            </ul>
+                          </nav>
+                        </div>
+			</div>
+		</div>
+	</main>
+</body>
+</html>
