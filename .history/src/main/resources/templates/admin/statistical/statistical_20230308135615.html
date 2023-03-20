@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/admin/dist/fragment :: dynamic(~{::main})}">
+<body>
+	<main>
+		<div class="container-scroller">
+			<div class="container-fluid page-body-wrapper">
+				<div class="main-panel">
+					<div class="content-wrapper">
+						<div class="row">
+							<div class="col-lg-12 grid-margin stretch-card">
+								<div class="card">
+									<div class="card-header card bg-primary text-white"
+										style="text-align: center">
+										<h3><i class="fa-solid fa-signal"></i> Thống kê</h3>
+									</div>
+									<div class="card-body">
+										<p class="card-description"></p>
+										<nav>
+											<div class="nav nav-tabs" id="nav-tab" role="tablist">
+												<a class="nav-item nav-link active" id="nav-home-tab"
+													data-toggle="tab" href="#nav-home" role="tab"
+													aria-controls="nav-home" aria-selected="true">
+													<i class="fa-solid fa-calendar-days"></i> Doanh Thu
+													Theo Tháng</a> <a class="nav-item nav-link"
+													id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
+													role="tab" aria-controls="nav-profile"
+													aria-selected="false"><i class="fa-solid fa-calendar-days"></i> Doanh Thu Theo Năm</a> <a
+													class="nav-item nav-link" id="nav-contact-tab"
+													data-toggle="tab" href="#nav-contact" role="tab"
+													aria-controls="nav-contact" aria-selected="false">
+													<i class="fa-brands fa-product-hunt"></i> Sản Phẩm Đã Bán</a>
+											</div>
+										</nav>
+										<div class="tab-content" id="nav-tabContent">
+											<div class="tab-pane fade show active" id="nav-home"
+												role="tabpanel" aria-labelledby="nav-home-tab">
+												<table class="table table-hover">
+													<thead>
+														<tr>
+															<th>Thời gian</th>
+															<th>Số lượng đơn hàng</th>
+															<th>Tổng danh thu</th>
+															<th>Doanh thu thấp nhât</th>
+															<th>Doanh thu cao nhất</th>
+															<th></th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr th:each="month : ${months}">
+														<td class="py-1" th:text="${month.orderMonth + '/' + month.orderYear}">
+														<td th:text="${month.orderCount }"></td>
+														<td>[[*{#numbers.formatInteger(month.total, 0, 'DEFAULT')}]] <sup>đ</sup></td>
+														<td>[[*{#numbers.formatInteger(month.minTotal, 0, 'DEFAULT')}]] <sup>đ</sup></td>
+														<td>[[*{#numbers.formatInteger(month.maxTotal, 0, 'DEFAULT')}]] <sup>đ</sup></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+											<div class="tab-pane fade" id="nav-profile" role="tabpanel"
+												aria-labelledby="nav-profile-tab">
+												<table class="table table-hover">
+													<thead>
+														<tr>
+															<th>Thời gian</th>
+															<th>Số lượng đơn hàng</th>
+															<th>Tổng danh thu</th>
+															<th>Doanh thu thấp nhât</th>
+															<th>Doanh thu cao nhất</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr th:each="year : ${years}">
+														<td class="py-1" th:text=${year.orderYear}>
+														<td>[[*{#numbers.formatInteger(year.orderCount, 0, 'DEFAULT')}]]</td>
+														<td>[[*{#numbers.formatInteger(year.total, 0, 'DEFAULT')}]] <sup>đ</sup></td>
+														<td>[[*{#numbers.formatInteger(year.minTotal, 0, 'DEFAULT')}]] <sup>đ</sup></td>
+														<td>[[*{#numbers.formatInteger(year.maxTotal, 0, 'DEFAULT')}]] <sup>đ</sup></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+											<div class="tab-pane fade" id="nav-contact" role="tabpanel"
+												aria-labelledby="nav-contact-tab">
+												<table class="table table-hover">
+													<thead>
+														<tr>
+															<th>Tên Sản Phẩm</th>
+															<th>Số Lượng</th>
+															<th>Tổng tiền thu được</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr th:each="product : ${products}">
+															<td><img th:src="@{|/assets/images/${product.image1}|}" alt=""></td>
+															<td class="py-1" th:text="${product.name}"></td>
+															<td th:text="${product.soLuongBanDuoc}"></td>
+															<td>[[*{#numbers.formatInteger(product.tongTienThuDuoc, 0, 'DEFAULT')}]] <sup>đ</sup></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+</body>
+</html>
