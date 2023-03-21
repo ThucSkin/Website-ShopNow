@@ -38,7 +38,7 @@ public class Product implements Serializable {
 	private String name;
 	private int quantity;
 	private int unitPrice;
-	private int oldPrice;
+	// private int oldPrice;
 	private int discount;
 	private String image1;
 	private String image2;

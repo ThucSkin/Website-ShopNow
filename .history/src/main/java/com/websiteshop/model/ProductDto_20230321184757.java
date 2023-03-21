@@ -18,7 +18,7 @@ public class ProductDto implements Serializable {
 	private String name;
 	private int quantity;
 	private int unitPrice;
-	private int oldPrice;
+	// private int oldPrice;
 	private int discount;
 	private MultipartFile image1File;
 	private String image1;

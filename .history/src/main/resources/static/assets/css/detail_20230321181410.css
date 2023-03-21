@@ -54,29 +54,28 @@
 .img--item{
     width: 50px;
     height: 50px;
-    margin-right: 6px;
 }
 .list-group-item{
     display: flex;
-}.head{
-    font-size: 20px;
 }
 .item-same__name{
     font-size: 14px;
     color: black;
     font-weight: bold;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.item:hover{
-    font-size: 14px;
     text-decoration: none;
-    background-color: rgba(189, 176, 176, 0.298);
+    display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+}
+.item-same__name:hover{
+    font-size: 14px;
+
+    text-decoration: none;
 }
 .item{
-    text-decoration: none;
     display: flex;
     margin: 10px;
 }

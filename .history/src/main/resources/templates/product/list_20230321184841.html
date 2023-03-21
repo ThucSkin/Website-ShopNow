@@ -27,17 +27,19 @@
 							th:href="@{|/product/detail/${item.productId}|}" class="card-title">[(${item.name})]</a>
 						<div class="card-bottom">
 							<div>
+								[[#{cart.price}]]: 
 								<span class="price">[[${#numbers.formatInteger(item.unitPrice, 0,
 									'POINT')}]] <sup>đ</sup>
 								</span>
 							</div>
 							<div>
-								<span class="old_price">[[${#numbers.formatInteger(item.oldPrice, 0,
+								[[#{cart.price}]]: 
+								<span class="price">[[${#numbers.formatInteger(item.unitPrice, 0,
 									'POINT')}]] <sup>đ</sup>
 								</span>
-								<span class="discount">- [[${item.discount}]]%</span></div>
 							</div>
-						
+							<div>[[#{cart.discount}]]:
+								<span class="discount">[[${item.discount}]]%</span></div>
 							<div class="card-bot">
 								<div>
 									<img th:src="|/assets/images/${item.image5}|">
@@ -49,7 +51,7 @@
 										<i class="fa-regular fa-thumbs-up cart-shopping"></i></a>
 								</div>
 							</div>
-						
+						</div>
 					</div>
 				</div>
 			</div>

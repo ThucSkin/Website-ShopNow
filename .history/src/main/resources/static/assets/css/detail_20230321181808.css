@@ -58,8 +58,6 @@
 }
 .list-group-item{
     display: flex;
-}.head{
-    font-size: 20px;
 }
 .item-same__name{
     font-size: 14px;
@@ -69,11 +67,11 @@
     -webkit-line-clamp: 2;
     overflow: hidden;
     text-overflow: ellipsis;
+
 }
 .item:hover{
     font-size: 14px;
     text-decoration: none;
-    background-color: rgba(189, 176, 176, 0.298);
 }
 .item{
     text-decoration: none;

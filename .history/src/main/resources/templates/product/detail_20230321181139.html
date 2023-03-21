@@ -18,7 +18,6 @@
                             <fieldset style="line-height: 30px;">
                                 <li>[[#{cart.name}]]: <label class="category-name">[(*{name})].</label></li>
                                 <li>[[#{cart.price}]]: <label class="price">[[*{#numbers.formatInteger(unitPrice, 0, 'DEFAULT')}]] <sup>đ</sup></label></li>
-                                <li><label class="old_price">[[*{#numbers.formatInteger(oldPrice, 0, 'DEFAULT')}]] <sup>đ</sup></label></li>
                                 <li>[[#{cart.discount}]]: <label class="discount">[(*{discount})]%</label></li>
                                 <li>[[#{detail.qty}]]: [[*{quantity}]]</li>
                                 <li><span class="badge badge-danger"><lable th:text="#{detail.des}"></lable>: </li> 
@@ -43,15 +42,15 @@
                 </article>
                 <aside class="col-sm-3" >
                     <div class="card poly-cart " data-toggle="collapse" href="#chungloai">
-                        <div class="card-header head" style="cursor: pointer;">
+                        <div class="card-header" style="cursor: pointer;">
                             <span class="glyphicon glyphicon-th-list">
                                 <i class="fa-solid fa-list-ul"></i> [[#{product.same_item}]]
                             </span>:
                         </div>                       
-                        <div  id="chungloai" th:each=" item:*{category.products}">
-                            <a class="item" th:href="@{|/product/detail/${item.productId}|}">
+                        <div class="" id="chungloai" th:each=" item:*{category.products}">
+                            <a th:href="@{|/product/detail/${item.productId}|}">
                                 <img th:src="@{|/assets/images/${item.image1}|}" class="img--item">
-                                <div th:text="${item.name}" class="item-same__name"></div>
+                                <div  th:text="${item.name}" class="item-same__name"></div>
                             </a>
                         </div> 
                     </div>

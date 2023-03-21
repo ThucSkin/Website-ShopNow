@@ -225,10 +225,9 @@ nav ul li a label {
   line-height:  14px;
 }
 .discount{
-  color:#212121;
-  font-size:12px;
-  line-height:14px;
-  margin:0px 4px;
+  color: blue;
+  font-weight: bolder;
+  font-family: 'Times New Roman', Times, serif;
 }
 /*         img       */
 .gif{

@@ -58,8 +58,8 @@
 }
 .list-group-item{
     display: flex;
-}.head{
-    font-size: 20px;
+}.card-heade{
+    font-size: 15px;
 }
 .item-same__name{
     font-size: 14px;

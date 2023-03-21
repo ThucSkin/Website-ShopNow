@@ -35,9 +35,9 @@
 								<span class="old_price">[[${#numbers.formatInteger(item.oldPrice, 0,
 									'POINT')}]] <sup>đ</sup>
 								</span>
-								<span class="discount">- [[${item.discount}]]%</span></div>
 							</div>
-						
+							<div>[[#{cart.discount}]]:
+								<span class="discount">[[${item.discount}]]%</span></div>
 							<div class="card-bot">
 								<div>
 									<img th:src="|/assets/images/${item.image5}|">
@@ -49,7 +49,7 @@
 										<i class="fa-regular fa-thumbs-up cart-shopping"></i></a>
 								</div>
 							</div>
-						
+						</div>
 					</div>
 				</div>
 			</div>

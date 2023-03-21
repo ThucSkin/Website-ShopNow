@@ -57,7 +57,6 @@
                   <td th:utext="${item.name}"></td>
                   <!-- <td th:utext="${item.quantity}" hidden></td> -->
                   <td>[[${#numbers.formatInteger(item.unitPrice, 0 , 'DEFAULT')}]] <sup>đ</sup></td>
-                  <td>[[${#numbers.formatInteger(item.oldPrice, 0 , 'DEFAULT')}]] <sup>đ</sup></td>
                   <td>[[${item.discount}]]%</td>
                   <td th:utext="${item.EnteredDay}"></td>
                   <td th:utext="${item.category.name}"></td>

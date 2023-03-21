@@ -58,8 +58,6 @@
 }
 .list-group-item{
     display: flex;
-}.head{
-    font-size: 20px;
 }
 .item-same__name{
     font-size: 14px;
@@ -69,6 +67,9 @@
     -webkit-line-clamp: 2;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+.item-same__name:hover{
+    
 }
 .item:hover{
     font-size: 14px;
