@@ -70,7 +70,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.item_category:hover{
+.item:hover{
     font-size: 14px;
     text-decoration: none;
     background-color: rgba(189, 176, 176, 0.298);

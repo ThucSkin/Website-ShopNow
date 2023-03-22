@@ -18,21 +18,7 @@
     background-color:black;
     padding: 15px;
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
   }
-
-  /* .head_fixed{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 2;
-  }
-  body{
-    padding-top: 155px;
-  } */
   nav ul #item_category{
     display: flex;
     justify-content: space-between;
@@ -420,11 +406,5 @@ nav ul li a label {
 }
 .cart-shopping:hover{
   color: #5878ac;
-}
-.page__navigation{
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  width: 100%;
 }
 

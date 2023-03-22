@@ -424,7 +424,8 @@ nav ul li a label {
 .page__navigation{
   position: fixed;
   bottom: 0;
-  right: 0;
+  left: 0;
   width: 100%;
+  margin: 0;
 }
 
