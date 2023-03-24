@@ -17,10 +17,10 @@
   nav {
     background-color:black;
     padding: 15px;
-    /* position: fixed;
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100%; */
+    width: 100%;
   }
 
   /* .head_fixed{
@@ -414,13 +414,12 @@ nav ul li a label {
   margin: 20px;
 }
 .cart-shopping{
-  width: 1.4em;
-  height: 1.4rem;
-  color: #fc6208;
-  padding: 4px;
+  width: 2em;
+  height: 2rem;
+  color: #134eac;
 }
 .cart-shopping:hover{
-  color: #b9ab91;
+  color: #5878ac;
 }
 .page__navigation{
   position: fixed;
