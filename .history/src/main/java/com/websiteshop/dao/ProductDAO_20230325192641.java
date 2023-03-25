@@ -22,6 +22,6 @@ public interface ProductDAO extends JpaRepository<Product, Long> {
 	List<Product> findByHotSale(String hotSale);
 
 	@Query(value = "select * from products where UnitPrice between ?1 and ?2", nativeQuery = true)
-	List<Product> findByUnitPrice(Integer price1, Integer price2);
+	List<Product> findByUnitPrice(String price1, String price2);
 
 }

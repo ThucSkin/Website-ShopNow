@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/layout/index :: dynamic(~{::main})}">
+
+<body>
+    <main class="container-fluid ml-3">
+        <div class="row">
+            <div th:each="item: ${price}" class="col-sm-2">
+                <div class="card" >
+                    <div class="card-body list-item" >  
+                        <div class="gif">
+                            <img alt="" src="/assets/images/hot-icon.gif">
+                        </div>
+                        <a th:href="@{|/product/detail/${item.productId}|}">					   
+                            <img class="imgindex" th:src="@{|/assets/images/${item.image1}|}"> 
+                        </a>           
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-title">[(${item.name})]</div>
+                        <div class="card-bottom">
+                            <div class="price">[[#{cart.price}]]: [[${#numbers.formatInteger(item.unitPrice, 0, 'POINT')}]] <sup>đ</sup></div>
+                            <div class="discount">[[#{cart.discount}]]: [[${item.discount}]]%</div>
+                            <div class="card-bot">
+                                <div><img src="/assets/images/5sao.png"> </div> 
+                                <div><a th:attr="ng-click=@{|cart.add(${item.productId})|}" href="#"><i style="width: 35px; height:20px ;" class="fa-solid fa-cart-shopping"></i></a> 
+                                <a th:href="@{|/favorite/save/${item.productId}|}"><i style="width: 35px; height:20px ;" class="fa-regular fa-thumbs-up" ></i></a>
+                            </div>
+                        </div>                      
+                    </div>             
+                </div>
+            </div>
+        </div>
+        </div>
+        <ul class="pagination page-item">
+			<li class="page-item"><a class="page-link"
+				href="/view/page?page=0">First</a></li>
+			<li class="page-item"><a class="page-link"
+				href="/view/page?page=0">1</a></li>
+			<li class="page-item"><a class="page-link"
+				href="/view/page?page=1">2</a></li>
+			<li class="page-item"><a class="page-link"
+				href="/view/page?page=2">3</a></li>
+			<li class="page-item"><a class="page-link"
+				href="/view/page?page=2">Last</a></li>
+		</ul>
+    </main>
+</body>
+
+</html>

@@ -48,25 +48,25 @@ public class ProductController {
 
     @RequestMapping("/product/price/1000000-2000000")
     public String price2(Model model) {
-        model.addAttribute("price", pdao.findByUnitPrice(1000000, 2000000));
+        model.addAttribute("price", pdao.findByUnitPrice(0, 1000000));
         return "product/findByPrice";
     }
 
     @RequestMapping("/product/price/2000000-5000000")
     public String price3(Model model) {
-        model.addAttribute("price", pdao.findByUnitPrice(2000000, 5000000));
+        model.addAttribute("price", pdao.findByUnitPrice(0, 1000000));
         return "product/findByPrice";
     }
 
     @RequestMapping("/product/price/5000000-10000000")
     public String price4(Model model) {
-        model.addAttribute("price", pdao.findByUnitPrice(5000000, 10000000));
+        model.addAttribute("price", pdao.findByUnitPrice(0, 1000000));
         return "product/findByPrice";
     }
 
     @RequestMapping("/product/price/10000000-50000000")
     public String price5(Model model) {
-        model.addAttribute("price", pdao.findByUnitPrice(10000000, 50000000));
+        model.addAttribute("price", pdao.findByUnitPrice(0, 1000000));
         return "product/findByPrice";
     }
 

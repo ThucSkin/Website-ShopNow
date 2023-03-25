@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/layout/index :: dynamic(~{::main})}">
+
+<body>
+    <main class="container-fluid ml-3">
+        <div class="row">
+            <div th:each="item: ${price}" class="col-sm-2">
+                <div class="card">
+					<div class="card-body list-item">
+						<div class="gif">
+							<img th:src="@{|/assets/images/${item.hotSale}|}">
+						</div>
+						<a th:href="@{|/product/detail/${item.productId}|}"> 
+							<img class="imgindex" th:src="@{|/assets/images/${item.image1}|}">
+						</a>
+					</div>
+					<div class="card-footer">
+						<a style="color: black; text-decoration:none" 
+							th:href="@{|/product/detail/${item.productId}|}" class="card-title">[(${item.name})]</a>
+						<div class="card-bottom">
+							<div>
+								<span class="price">[[${#numbers.formatInteger(item.unitPrice, 0,
+									'POINT')}]] <sup>đ</sup>
+								</span>
+							</div>
+							<div>
+								<span class="old_price">[[${#numbers.formatInteger(item.oldPrice, 0,
+									'POINT')}]] <sup>đ</sup>
+								</span>
+								<span class="discount">- [[${item.discount}]]%</span></div>
+							</div>
+						
+							<div class="card-bot">
+								<div>
+									<img th:src="|/assets/images/${item.image5}|">
+								</div>
+								<div class="icon__cart-like">
+									<a th:attr="ng-click=@{|cart.add(${item.productId})|}">
+										<i class="fa-solid fa-cart-shopping cart-shopping"></i></a> 
+									<a th:href="@{|/favorite/save/${item.productId}|}">
+										<i class="fa-regular fa-thumbs-up cart-shopping"></i></a>
+								</div>
+							</div>
+						
+					</div>
+				</div>
+            </div>
+        </div>
+        </div>
+
+    </main>
+</body>
+
+</html>
