@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/layout/index :: dynamic(~{::main})}">
+
+<body>
+	<main class="container-fluid ml-3">
+		<a th:href="@{/product/list/hotsale}"><button type="button" id="btn_search" class="btn btn-secondary mb-2 mr-4">
+			Các sản phẩm hot!
+		</button></a>
+		<div class="btn-group dropright mb-2">
+			<button type="button" class="btn btn-secondary dropdown-toggle" id="btn_search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Tìm kiếm theo giá:
+			</button>
+			<div class="dropdown-menu ml-2">
+				<a class="dropdown-item" id="dd--item" th:href="@{/price/duoi-2-trieu}">
+					Dưới 2 triệu</a>
+                <a class="dropdown-item" id="dd--item" th:href="@{/price/tu-2-4-trieu}">
+					Từ 2 - 4 triệu</a>
+                <a class="dropdown-item" id="dd--item" th:href="@{/price/tu-4-7-trieu}">
+					Từ 4 - 7 triệu</a>
+                <a class="dropdown-item" id="dd--item" th:href="@{/price/tu-7-13-trieu}">
+					Từ 7 - 13 triệu</a>
+				<a class="dropdown-item" id="dd--item" th:href="@{/price/tu-13-20-trieu}">
+					Từ 13 - 20 triệu</a>
+                <a class="dropdown-item" id="dd--item" th:href="@{/price/tren-20-trieu}">
+					Trên 20 triệu</a>
+			</div>
+		</div>
+		<div class="btn-group dropright mb-2 ml-4">
+			<button type="button" class="btn btn-secondary dropdown-toggle" id="btn_search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Hãng:
+			</button>
+			<div class="dropdown-menu ml-2">
+				<div class="btn__list_item_search">
+					<a class="dropdown-item" th:href="@{/dtdd-iphone}">
+						<label class="btn__search_item">Iphone</label></a>
+					<a class="dropdown-item" id="" th:href="@{/dtdd-samsum}">
+						<label class="btn__search_item">SAMSUM</label></a>
+					<a class="dropdown-item" id="dd--item" th:href="@{/dtdd-oppo}">
+						<label class="btn__search_item">OPPO</label></a>
+				</div>
+				<div class="btn__list_item_search">
+					<a class="dropdown-item" id="" th:href="@{/dtdd-xiaomi}">
+						<label class="btn__search_item">XIAOMI</label></a>
+					<a class="dropdown-item" id="" th:href="@{/dtdd-nokia}">
+						<label class="btn__search_item">NOKIA</label></a>
+					<a class="dropdown-item" id="dd--item" th:href="@{/dtdd-realme}">
+						<label class="btn__search_item">realme</label></a>
+				</div>
+			</div>
+		</div>
+		<div class="btn-group dropright mb-2 ml-4">
+			<button type="button" class="btn btn-secondary dropdown-toggle" id="btn_search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Hãng:
+			</button>
+			<div class="dropdown-menu ml-2">
+				<div class="btn__list_item_search">
+					<a class="dropdown-item" th:href="@{/dtdd-iphone}">
+						<label class="btn__search_item">Iphone</label></a>
+					<a class="dropdown-item" id="" th:href="@{/dtdd-samsum}">
+						<label class="btn__search_item">SAMSUM</label></a>
+					<a class="dropdown-item" id="dd--item" th:href="@{/dtdd-oppo}">
+						<label class="btn__search_item">OPPO</label></a>
+				</div>
+				<div class="btn__list_item_search">
+					<a class="dropdown-item" id="" th:href="@{/dtdd-xiaomi}">
+						<label class="btn__search_item">XIAOMI</label></a>
+					<a class="dropdown-item" id="" th:href="@{/dtdd-nokia}">
+						<label class="btn__search_item">NOKIA</label></a>
+					<a class="dropdown-item" id="dd--item" th:href="@{/dtdd-realme}">
+						<label class="btn__search_item">realme</label></a>
+				</div>
+			</div>
+		</div>
+		<div class="row" th:if="${!productPage.hasContent()}">
+			<div class="col mt-2 no-result">
+				<img src="/assets/images/No_r.png" alt=""><br>
+				<h5>Không tìm thấy kết quả nào</h5>
+				<h4 style="color: #938484;">Hãy thử sử dụng các từ khóa chung chung hơn</h4>
+			</div>
+		</div>
+		<div class="row">
+			<div th:each="item: ${productPage}" class="col-sm-2">
+				<div class="card">
+					<div class="card-body list-item">
+						<div class="gif">
+							<img th:src="@{|/assets/images/${item.hotSale}|}">
+						</div>
+						<a th:href="@{|/product/detail/${item.productId}|}"> 
+							<img class="imgindex" th:src="@{|/assets/images/${item.image1}|}">
+						</a>
+					</div>
+					<div class="card-footer">
+						<a style="color: black; text-decoration:none" 
+							th:href="@{|/product/detail/${item.productId}|}" class="card-title">[(${item.name})]</a>
+						<div class="card-bottom">
+							<div>
+								<span class="price">[[${#numbers.formatInteger(item.unitPrice, 0,
+									'POINT')}]] <sup>đ</sup>
+								</span>
+							</div>
+							<div>
+								<span class="old_price">[[${#numbers.formatInteger(item.oldPrice, 0,
+									'POINT')}]] <sup>đ</sup>
+								</span>
+								<span class="discount">- [[${item.discount}]]%</span></div>
+							</div>
+						
+							<div class="card-bot">
+								<div>
+									<img th:src="|/assets/images/${item.image5}|">
+								</div>
+								<div class="icon__cart-like">
+									<a th:attr="ng-click=@{|cart.add(${item.productId})|}">
+										<i class="fa-solid fa-cart-shopping cart-shopping"></i></a> 
+									<a th:href="@{|/favorite/save/${item.productId}|}">
+										<i class="fa-regular fa-thumbs-up cart-shopping"></i></a>
+								</div>
+							</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="page__navigation">
+			<div class="text-muted mt-3 mb-3">
+				<div aria-label="Page navigation"
+					th:if="${productPage.totalPages > 0}">
+					<ul class="pagination justify-content-center">
+						<li th:class="${1 == productPage.number + 1} ? 'page-item active' : 'page-item'">
+							<a th:href="@{/(name=${name}, size=${productPage.size}, page=${1})}"
+							class="page-link">Firts</a>
+						</li>
+	
+						<li class="page-item active" th:each="pageNumber : ${pageNumbers}"
+							th:if="${productPage.totalPages > 1}"
+							th:class="${pageNumber == productPage.number + 1} ? 'page-item active' : 'page-item'">
+							<a th:href="@{/(name=${name}, size=${productPage.size}, page=${pageNumber})}"
+							class="page-link" th:text="${pageNumber}"></a>
+						</li>
+	
+						<li th:class="${productPage.totalPages == productPage.number + 1} ? 'page-item active' : 'page-item'">
+							<a
+							th:href="@{/(name=${name}, size=${productPage.size}, page=${productPage.totalPages})}"
+							class="page-link">Last</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+	</main>
+</body>
+</html>
