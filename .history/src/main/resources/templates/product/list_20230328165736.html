@@ -126,7 +126,7 @@
 					</div>
 					<div class="card-footer">
 						<a style="color: black; text-decoration:none" 
-							th:href="@{|/product/detail/${item.productId}|}" class="card-title">[(${item.name})] / [(${item.RAM})]</a>
+							th:href="@{|/product/detail/${item.productId}|}" class="card-title">[(${item.name})] ([(${item.theFirm})]GB)</a>
 						<div class="card-bottom">
 							<div>
 								<span class="price">[[${#numbers.formatInteger(item.unitPrice, 0,

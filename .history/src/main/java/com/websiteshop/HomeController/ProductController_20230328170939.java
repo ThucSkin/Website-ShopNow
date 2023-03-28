@@ -33,41 +33,25 @@ public class ProductController {
     @Autowired
     ProductDAO pdao;
 
-    @GetMapping("/")
-    public String list(ModelMap model,
+    @RequestMapping("/product/list")
+    public String list(Model model, @RequestParam("cid") Optional<Long> cid,
             @RequestParam(name = "name", required = false) String name,
-            @RequestParam("page") Optional<Integer> page,
-            @RequestParam("size") Optional<Integer> size) {
-        int currentPage = page.orElse(1);
-        int pageSize = size.orElse(18);
-        Pageable pageable = PageRequest.of(currentPage - 1, pageSize);
-        Page<Product> resultPage = null;
+            @RequestParam("page") Optional<Integer> page) {
 
+        if (cid.isPresent()) {
+            List<Product> list = productService.findByCategoryId(cid.get());
+            model.addAttribute("item", list);
+            return "product/list_search";
+        }
+
+        Page<Product> pageProduct = null;
+        Pageable pageable = PageRequest.of(page.orElse(0), 30, Sort.by("name"));
         if (StringUtils.hasText(name)) {
-            resultPage = productService.findByNameContaining(name, pageable);
-            model.addAttribute("name", name);
+            pageProduct = productService.findByNameContaining(name, pageable);
         } else {
-            resultPage = productService.findAll(pageable);
+            pageProduct = productService.findAll(pageable);
         }
-
-        int totalPages = resultPage.getTotalPages();
-        if (totalPages > 0) {
-            int start = Math.max(1, currentPage - 2);
-            int end = Math.min(currentPage + 2, totalPages);
-
-            if (totalPages > 3) {
-                if (end == totalPages)
-                    start = end - 4;
-                else if (start == 1)
-                    end = start + 4;
-            }
-            List<Integer> pageNumbers = IntStream.rangeClosed(start, end)
-                    .boxed()
-                    .collect(Collectors.toList());
-            model.addAttribute("pageNumbers", pageNumbers);
-        }
-
-        model.addAttribute("productPage", resultPage);
+        model.addAttribute("item", pageProduct);
         return "product/list";
     }
 
@@ -240,31 +224,31 @@ public class ProductController {
 
     @RequestMapping("/dtdd-ram-3-GB")
     public String ram3gb(Model model) {
-        model.addAttribute("item", pdao.findByRAM("3 GB"));
+        model.addAttribute("item", pdao.findByRAM(3));
         return "product/list_search";
     }
 
     @RequestMapping("/dtdd-ram-4-GB")
     public String ram4gb(Model model) {
-        model.addAttribute("item", pdao.findByRAM("4 GB"));
+        model.addAttribute("item", pdao.findByRAM(4));
         return "product/list_search";
     }
 
     @RequestMapping("/dtdd-ram-6-GB")
     public String ram6gb(Model model) {
-        model.addAttribute("item", pdao.findByRAM("6 GB"));
+        model.addAttribute("item", pdao.findByRAM(6));
         return "product/list_search";
     }
 
     @RequestMapping("/dtdd-ram-8-GB")
     public String ram8gb(Model model) {
-        model.addAttribute("item", pdao.findByRAM("8 GB"));
+        model.addAttribute("item", pdao.findByRAM(8));
         return "product/list_search";
     }
 
     @RequestMapping("/dtdd-ram-12-GB")
     public String ram12gb(Model model) {
-        model.addAttribute("item", pdao.findByRAM("12 GB"));
+        model.addAttribute("item", pdao.findByRAM(12));
         return "product/list_search";
     }
 }
