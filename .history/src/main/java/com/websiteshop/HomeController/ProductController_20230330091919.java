@@ -75,11 +75,11 @@ public class ProductController {
     public String list(Model model, @RequestParam("cid") Optional<Long> cid) {
 
         if (!cid.isPresent()) {
-            return "redirect:/home404";
+            List<Product> list = productService.findByCategoryId(cid.get());
+            model.addAttribute("item", list);
+            return "product/list_search";
         }
-        List<Product> list = productService.findByCategoryId(cid.get());
-        model.addAttribute("item", list);
-        return "product/list_search";
+        return "redirect:/home404";
     }
 
     @RequestMapping("/product/detail/{productId}")

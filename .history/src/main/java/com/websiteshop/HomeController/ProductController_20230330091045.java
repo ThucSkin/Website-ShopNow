@@ -34,7 +34,7 @@ public class ProductController {
     ProductDAO pdao;
 
     @GetMapping("/")
-    public String home(ModelMap model,
+    public String list(ModelMap model,
             @RequestParam(name = "name", required = false) String name,
             @RequestParam("page") Optional<Integer> page,
             @RequestParam("size") Optional<Integer> size) {
@@ -71,15 +71,42 @@ public class ProductController {
         return "product/list";
     }
 
-    @RequestMapping("/product/list")
-    public String list(Model model, @RequestParam("cid") Optional<Long> cid) {
+    @GetMapping("/product/list")
+    public String list1(ModelMap model,
+            @RequestParam(name = "name", required = false) String name,
+            @RequestParam("page") Optional<Integer> page,
+            @RequestParam("size") Optional<Integer> size) {
+        int currentPage = page.orElse(1);
+        int pageSize = size.orElse(18);
+        Pageable pageable = PageRequest.of(currentPage - 1, pageSize);
+        Page<Product> resultPage = null;
 
-        if (!cid.isPresent()) {
-            return "redirect:/home404";
+        if (StringUtils.hasText(name)) {
+            resultPage = productService.findByNameContaining(name, pageable);
+            model.addAttribute("name", name);
+        } else {
+            resultPage = productService.findAll(pageable);
         }
-        List<Product> list = productService.findByCategoryId(cid.get());
-        model.addAttribute("item", list);
-        return "product/list_search";
+
+        int totalPages = resultPage.getTotalPages();
+        if (totalPages > 0) {
+            int start = Math.max(1, currentPage - 2);
+            int end = Math.min(currentPage + 2, totalPages);
+
+            if (totalPages > 3) {
+                if (end == totalPages)
+                    start = end - 4;
+                else if (start == 1)
+                    end = start + 4;
+            }
+            List<Integer> pageNumbers = IntStream.rangeClosed(start, end)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+
+        model.addAttribute("productPage", resultPage);
+        return "product/list";
     }
 
     @RequestMapping("/product/detail/{productId}")

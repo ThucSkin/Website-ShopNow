@@ -34,7 +34,7 @@ public class ProductController {
     ProductDAO pdao;
 
     @GetMapping("/")
-    public String home(ModelMap model,
+    public String list(ModelMap model,
             @RequestParam(name = "name", required = false) String name,
             @RequestParam("page") Optional<Integer> page,
             @RequestParam("size") Optional<Integer> size) {
@@ -72,14 +72,25 @@ public class ProductController {
     }
 
     @RequestMapping("/product/list")
-    public String list(Model model, @RequestParam("cid") Optional<Long> cid) {
+    public String list(Model model, @RequestParam("cid") Optional<Long> cid,
+            @RequestParam(name = "name", required = false) String name,
+            @RequestParam("page") Optional<Integer> page) {
 
-        if (!cid.isPresent()) {
-            return "redirect:/home404";
+        if (cid.isPresent()) {
+            List<Product> list = productService.findByCategoryId(cid.get());
+            model.addAttribute("items", list);
+            return "product/listOfCategory";
         }
-        List<Product> list = productService.findByCategoryId(cid.get());
-        model.addAttribute("item", list);
-        return "product/list_search";
+
+        Page<Product> pageProduct = null;
+        Pageable pageable = PageRequest.of(page.orElse(0), 30, Sort.by("name"));
+        if (StringUtils.hasText(name)) {
+            pageProduct = productService.findByNameContaining(name, pageable);
+        } else {
+            pageProduct = productService.findAll(pageable);
+        }
+        model.addAttribute("items", pageProduct);
+        return "product/list";
     }
 
     @RequestMapping("/product/detail/{productId}")
