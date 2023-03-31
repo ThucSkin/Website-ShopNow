@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/layout/fragment :: dynamic(~{::main})}">
+<body>
+	<main class="container-fluid ml-3">
+		<div class="card">
+			<b class="mt-2 mb-2 card-header text-center" style="font-size: 20px">
+				<i class="fa-solid fa-clock-rotate-left"></i> [[#{order.list}]]
+			</b>
+			<div class="status_cart">
+				<a th:href=@{/orderHistory/view/page} id="btn_search"><label
+					class="status_cart_item">Tất Cả</label></a> 
+				<a th:href=@{/orderHistory/confirmation} id="btn_search"><label
+					class="status_cart_item">
+					<i class="fa-solid fa-circle-check"></i> Chờ Xác Nhận</label></a> 
+				<a th:href=@{/orderHistory/transported}><label
+					class="status_cart_item"><i class="fa-solid fa-truck"></i>
+						Chờ Vận Chuyển</label></a> 
+				<a th:href=@{/orderHistory/delivered}><label
+					class="status_cart_item"><i class="fa-solid fa-face-smile"></i>
+						Đã Giao Hàng</label></a> 
+				<a th:href=@{/orderHistory/cancel}><label
+					class="status_cart_item"><i class="fa-solid fa-road"></i>
+						Đã Hủy</label></a>
+			</div>
+		<table class="table table-hover">
+				<thead class="bg-light ">
+					<tr>
+						<th>No.</th>
+						<th>[[#{order.Code_orders}]]</th>
+						<th>[[#{order.name}]]</th>
+						<th>[[#{order.date}]]</th>
+						<th>[[#{order.phone}]]</th>
+						<th>Email</th>
+						<th>[[#{order.address}]]</th>
+						<th>[[#{cart.status}]]</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each=" order,state: ${orders}">
+						<td>[[${state.index}]]</td>
+						<td>[[${order.orderId}]]</td>
+						<td>[[${order.name}]]</td>
+						<td>[[${order.createDay}]]</td>
+						<td>[[${order.telePhone}]]</td>
+						<td>[[${order.email}]]</td>
+						<td>[[${order.address}]]</td>
+						<td>[[${order.status}]]</td>
+
+						<th><a th:href="@{|/orderHistory/detail/${order.orderId}|}"
+							class="btn btn-default"> <i
+								class="fa-solid fa-magnifying-glass-plus"></i>
+						</a></th>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</main>
+</body>
+
+</html>
