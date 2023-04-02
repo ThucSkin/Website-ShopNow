@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    th:replace="~{/layout/fragment :: dynamic(~{::main})}">
+
+    <body>
+        <main th:object="${item}" class="container-fluid" >
+            <div class="category-title"> 
+                <div>[[#{detail.name}]]:</div>
+                <div class="category-name">[(*{category.name})].</div> 	
+            </div>
+            <div class="row" >
+                <article class="col-sm-8">
+                    <div class="row poly-cart">
+                        <div class="col-sm-4 img-detail">
+                            <img class="img-1" th:src="@{|/assets/images/*{image1}|}">
+                        </div>
+                        <div class="col-sm-7">
+                            <fieldset style="line-height: 30px;">
+                                <li>[[#{cart.name}]]: <label class="category-name">[(*{name})] [(*{RAM})].</label></li>
+                                <li>[[#{cart.price}]]: <label class="price">[[*{#numbers.formatInteger(unitPrice, 0, 'DEFAULT')}]] <sup>đ</sup></label></li>
+                                <li><label class="old_price">[[*{#numbers.formatInteger(oldPrice, 0, 'DEFAULT')}]] <sup>đ</sup></label></li>
+                                <li>[[#{cart.discount}]]: <label class="discount">[(*{discount})]%</label></li>
+                                <li><span class="badge badge-danger">[[#{detail.des}]] </li> 
+                                    <div class="discription" style="white-space: pre-wrap; line-height: 2.0;">[(*{discription})]</div>                               		                                            
+                                <div class="form-group">
+                                    <li><a th:href="@{|/comments/add/${productId}|}" class="feedback"><lable th:text="#{detail.feedb}"></a></lable>:</li>
+                                    <div class="bot mt-4">
+                                        <a th:href="@{/}" class="btn btn-warning btn__confirm mr-3">
+                                            <i class="fa fa-angle-left"></i> <lable th:text="#{product.btn.continute}"></lable>
+                                        </a>
+                                        <button th:attr="ng-click=@{|cart.add(${item.productId})|}"
+                                            class="btn btn-success btn__confirm">
+                                            <i class="fas fa-shopping-cart"></i> <a th:text="#{product.btn.cart}"></a>
+                                        </button>
+                                    </div>
+                                </div>                        
+                            </fieldset>
+                        </div>                       
+                    </div>   
+                </article>
+                <aside class="col-sm-3">
+                    d
+                </aside>
+            </div>
+            
+            <!-- **************************************************************** -->
+            <h5 class="mt-5"><b>Phụ kiện thường mua cùng: [[${totalItems}]] sản phẩm</b></h4>
+            <div class="row">		
+                <div th:each=" item: ${phukien}" class="col-sm-2">
+                    <div class="card">
+                        <div class="card-body list-item">
+                            <div class="gif">
+                                <img th:src="@{|/assets/images/${item.hotSale}|}">
+                            </div>
+                            <a th:href="@{|/product/detail/${item.productId}|}"> 
+                                <img class="imgindex" th:src="@{|/assets/images/${item.image1}|}">
+                            </a>
+                        </div>
+                        <div class="card-footer">
+                            <a th:href="@{|/product/detail/${item.productId}|}" class="card-title">[(${item.name})] [(${item.RAM})]</a>
+                            <div class="card-bottom">
+                                <div>
+                                    <span class="price">[[${#numbers.formatInteger(item.unitPrice, 0,
+                                        'POINT')}]] <sup>đ</sup>
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="old_price">[[${#numbers.formatInteger(item.oldPrice, 0,
+                                        'POINT')}]] <sup>đ</sup>
+                                    </span>
+                                    <span class="discount">- [[${item.discount}]]%</span></div>
+                                </div>
+                            
+                                <div class="card-bot">
+                                    <div>
+                                        <img th:src="|/assets/images/${item.image5}|">
+                                    </div>
+                                    <div class="icon__cart-like">
+                                        <a th:attr="ng-click=@{|cart.add(${item.productId})|}">
+                                            <i class="fa-solid fa-cart-shopping cart-shopping"></i></a> 
+                                        <a th:href="@{|/favorite/save/${item.productId}|}">
+                                            <i class="fa-regular fa-thumbs-up cart-shopping"></i></a>
+                                    </div>
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h4 class="mt-5"><b>Xem thêm sản phẩm cùng hãng khác: </b></h4>
+                <div class="flex mb-3 a">
+                    <a th:href="@{/dtdd-iphone}">
+                        <div class="box-quicklink__item">
+                            <img src="//cdn.tgdd.vn/Brand/1/logo-iphone-220x48.png" width="100" class="no-text">
+                        </div>
+                    </a>
+                    <a th:href="@{/dtdd-samsum}">
+                        <div class="box-quicklink__item">
+                            <img src="https://cdn.tgdd.vn/Brand/1/samsungnew-220x48-1.png" width="100" class="no-text">
+                        </div>
+                    </a>
+                    <a th:href="@{/dtdd-oppo}">
+                        <div class="box-quicklink__item">
+                            <img src="//cdn.tgdd.vn/Brand/1/OPPO42-b_5.jpg" width="100" class="no-text">
+                        </div>
+                    </a>
+                    <a th:href="@{/dtdd-xiaomi}">
+                        <div class="box-quicklink__item">
+                            <img src="//cdn.tgdd.vn/Brand/1/logo-xiaomi-220x48-5.png" width="100" class="no-text" data-metatip="true">
+                        </div>
+                    </a>
+                    <a th:href="@{/dtdd-vivo}">
+                        <div class="box-quicklink__item">
+                            <img src="https://cdn.tgdd.vn/Brand/1/vivo-logo-220-220x48-3.png" width="100" class="no-text">
+                        </div>
+                    </a>
+                    <a th:href="@{/dtdd-realme}">
+                        <div class="box-quicklink__item">
+                            <img src="//cdn.tgdd.vn/Brand/1/Realme42-b_37.png" width="100" class="no-text">
+                        </div>
+                    </a>
+                    <a th:href="@{/dtdd-nokia}">
+                        <div class="box-quicklink__item">
+                            <img src="//cdn.tgdd.vn/Brand/1/Nokia42-b_21.jpg" width="100" class="no-text">
+                        </div>
+                    </a>
+                    
+                    <a th:href="@{/dtdd-itel}">
+                        <div class="box-quicklink__item">
+                            <img src="//cdn.tgdd.vn/Brand/1/Itel42-b_54.jpg" width="100" class="no-text">
+                        </div>
+                    </a>
+                    <a th:href="@{/dtdd-masstel}">
+                        <div class="box-quicklink__item">
+                            <img src="//cdn.tgdd.vn/Brand/1/Masstel42-b_0.png" width="100" class="no-text">
+                        </div>
+                    </a>
+                </div> 
+            </div>
+            <div class="row">
+                <div th:each="item: *{category.products}" class="col-sm-2">
+                    <div class="card">
+                        <div class="card-body list-item">
+                            <div class="gif">
+                                <img th:src="@{|/assets/images/${item.hotSale}|}">
+                            </div>
+                            <a th:href="@{|/product/detail/${item.productId}|}"> 
+                                <img class="imgindex" th:src="@{|/assets/images/${item.image1}|}">
+                            </a>
+                        </div>
+                        <div class="card-footer">
+                            <a th:href="@{|/product/detail/${item.productId}|}" class="card-title">[(${item.name})] [(${item.RAM})]</a>
+                            <div class="card-bottom">
+                                <div>
+                                    <span class="price">[[${#numbers.formatInteger(item.unitPrice, 0,
+                                        'POINT')}]] <sup>đ</sup>
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="old_price">[[${#numbers.formatInteger(item.oldPrice, 0,
+                                        'POINT')}]] <sup>đ</sup>
+                                    </span>
+                                    <span class="discount">- [[${item.discount}]]%</span>
+                                </div>
+                            </div>
+                            <div class="card-bot">
+                                <div>
+                                    <img th:src="|/assets/images/${item.image5}|">
+                                </div>
+                                <div>
+                                    <a th:attr="ng-click=@{|cart.add(${item.productId})|}">
+                                        <i class="fa-solid fa-cart-shopping cart-shopping"></i></a> 
+                                    <a th:href="@{|/favorite/save/${item.productId}|}">
+                                        <i class="fa-regular fa-thumbs-up cart-shopping"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+</body>
+</html>
+

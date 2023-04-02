@@ -1,0 +1,105 @@
+.discription{
+	font-size: 11px;
+}
+.bot{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.img-detail{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.img-child{
+    display: flex;
+    text-align: center;
+    justify-content: space-between;
+}
+.img-child img{
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+}
+.img-1{
+    width: 300px;
+}
+.cancel{
+	display: flex;
+	justify-content: center;
+    align-items: center;
+}
+.category-title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+.category-name{
+    margin-left: 10px;
+    font-weight: bolder;
+}
+/* slide */
+.mySlides {
+    display:none
+}
+.w3-left, .w3-right, .w3-badge {
+    cursor:pointer
+}
+.w3-badge {
+    height:13px;
+    width:13px;
+    padding:0
+}
+.img--item{
+    width: 50px;
+    height: 50px;
+    margin-right: 6px;
+}
+.list-group-item{
+    display: flex;
+}
+
+.btn__confirm:hover{
+    transition: transform 1.5s;
+    transform: scale(1.1);
+}
+.flex{
+    display: flex;
+}
+.pr-top {
+    background-color: #f6f6f6;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 8px 10px;
+}
+.pr-txtb {
+    font-weight: bold;
+}
+.pr-top .pr-txt {
+    color: #666;
+    font-size: 12px;
+    line-height: 1.4;
+    margin-top: 5px;
+    font-style: normal;
+}
+.divb .nb {
+    background-color: #4a90e2;
+    border-radius: 50%;
+    color: #fff;
+    display: inline-block;
+    font-size: 11px;
+    float: left;
+    height: 16px;
+    line-height: 16px;
+    margin-top: 2px;
+    text-align: center;
+    width: 16px;
+}
+.divb-right {
+    padding-left: 1px;
+}
+.divb .divb-right p {
+    font-size: 14px;
+}
+
+

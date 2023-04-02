@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    th:replace="~{/layout/fragment :: dynamic(~{::main})}">
+
+    <body>
+        <main th:object="${item}" class="container-fluid" >
+            <div class="category-title"> 
+                <div>[[#{detail.name}]]:</div>
+                <div class="category-name">[(*{category.name})].</div> 	
+            </div>
+            <div class="row" >
+                <article class="col-sm-9">
+                    <div class="row poly-cart">
+                        <div class="col-sm-4 img-detail">
+                            <img class="img-1" th:src="@{|/assets/images/*{image1}|}">
+                        </div>
+                        <div class="col-sm-7">
+                            <fieldset style="line-height: 30px;">
+                                <li>[[#{cart.name}]]: <label class="category-name">[(*{name})] [(*{RAM})].</label></li>
+                                <li>[[#{cart.price}]]: <label class="price">[[*{#numbers.formatInteger(unitPrice, 0, 'DEFAULT')}]] <sup>đ</sup></label></li>
+                                <li><label class="old_price">[[*{#numbers.formatInteger(oldPrice, 0, 'DEFAULT')}]] <sup>đ</sup></label></li>
+                                <li>[[#{cart.discount}]]: <label class="discount">[(*{discount})]%</label></li>
+                                <li>[[#{detail.qty}]]: [[*{quantity}]]</li>
+                                <li><span class="badge badge-danger">[[#{detail.des}]] </li> 
+                                    <div class="discription">
+                                        [(*{discription})] 
+                                    </div>                               		                                            
+                                <div class="form-group">
+                                    <li><a th:href="@{|/comments/add/${productId}|}" class="feedback"><lable th:text="#{detail.feedb}"></a></lable>:</li>
+                                    <div class="bot mt-4">
+                                        <a th:href="@{/}" class="btn btn-warning btn__confirm mr-3">
+                                            <i class="fa fa-angle-left"></i> <lable th:text="#{product.btn.continute}"></lable>
+                                        </a>
+                                        <button th:attr="ng-click=@{|cart.add(${item.productId})|}"
+                                            class="btn btn-success btn__confirm">
+                                            <i class="fas fa-shopping-cart"></i> <a th:text="#{product.btn.cart}"></a>
+                                        </button>
+                                    </div>
+                                </div>                        
+                            </fieldset>
+                        </div>                       
+                    </div>   
+                </article>
+                <!-- <aside class="col-sm-3" >
+                    <div class="card poly-cart " data-toggle="collapse" href="#chungloai">
+                        <div class="card-header head" style="cursor: pointer;">
+                            <span class="glyphicon glyphicon-th-list">
+                                <i class="fa-solid fa-list-ul"></i> [[#{product.same_item}]]
+                            </span>:
+                        </div>                       
+                        <div  id="chungloai" th:each=" item:*{category.products}">
+                            <a class="item_category" th:href="@{|/product/detail/${item.productId}|}">
+                                <img th:src="@{|/assets/images/${item.image1}|}" class="img--item">
+                                <div class="item-same__name">[(${item.name})] [(${item.RAM})]</div>
+                            </a>
+                        </div> 
+                    </div>
+                </aside>                -->
+            </div>
+
+            <!-- **************************************************************** -->
+            <h5 class="mt-5"><b>Xem thêm điện thoại khác</b></h4>
+            <div class="row">		
+                <div th:each=" item:*{category.products}" class="col-sm-2">
+                    <div class="card">
+                        <div class="card-body list-item">
+                            <div class="gif">
+                                <img th:src="@{|/assets/images/${item.hotSale}|}">
+                            </div>
+                            <a th:href="@{|/product/detail/${item.productId}|}"> 
+                                <img class="imgindex" th:src="@{|/assets/images/${item.image1}|}">
+                            </a>
+                        </div>
+                        <div class="card-footer">
+                            <a th:href="@{|/product/detail/${item.productId}|}" class="card-title">[(${item.name})] [(${item.RAM})]</a>
+                            <div class="card-bottom">
+                                <div>
+                                    <span class="price">[[${#numbers.formatInteger(item.unitPrice, 0,
+                                        'POINT')}]] <sup>đ</sup>
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="old_price">[[${#numbers.formatInteger(item.oldPrice, 0,
+                                        'POINT')}]] <sup>đ</sup>
+                                    </span>
+                                    <span class="discount">- [[${item.discount}]]%</span></div>
+                                </div>
+                            
+                                <div class="card-bot">
+                                    <div>
+                                        <img th:src="|/assets/images/${item.image5}|">
+                                    </div>
+                                    <div class="icon__cart-like">
+                                        <a th:attr="ng-click=@{|cart.add(${item.productId})|}">
+                                            <i class="fa-solid fa-cart-shopping cart-shopping"></i></a> 
+                                        <a th:href="@{|/favorite/save/${item.productId}|}">
+                                            <i class="fa-regular fa-thumbs-up cart-shopping"></i></a>
+                                    </div>
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+</body>
+</html>
+

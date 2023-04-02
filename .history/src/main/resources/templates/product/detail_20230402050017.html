@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    th:replace="~{/layout/fragment :: dynamic(~{::main})}">
+
+    <body>
+        <main th:object="${item}" class="container-fluid" >
+            <div class="category-title"> 
+                <div>[[#{detail.name}]]:</div>
+                <div class="category-name">[(*{category.name})].</div> 	
+            </div>
+            <div class="row" >
+                <article class="col-sm-9">
+                    <div class="row poly-cart">
+                        <div class="col-sm-4 img-detail">
+                            <img class="img-1" th:src="@{|/assets/images/*{image1}|}">
+                        </div>
+                        <div class="col-sm-7">
+                            <fieldset style="line-height: 30px;">
+                                <li>[[#{cart.name}]]: <label class="category-name">[(*{name})] [(*{RAM})].</label></li>
+                                <li>[[#{cart.price}]]: <label class="price">[[*{#numbers.formatInteger(unitPrice, 0, 'DEFAULT')}]] <sup>đ</sup></label></li>
+                                <li><label class="old_price">[[*{#numbers.formatInteger(oldPrice, 0, 'DEFAULT')}]] <sup>đ</sup></label></li>
+                                <li>[[#{cart.discount}]]: <label class="discount">[(*{discount})]%</label></li>
+                                <li>[[#{detail.qty}]]: [[*{quantity}]]</li>
+                                <li><span class="badge badge-danger">[[#{detail.des}]] </li> 
+                                    <div class="discription">
+                                        [(*{discription})] 
+                                    </div>                               		                                            
+                                <div class="form-group">
+                                    <li><a th:href="@{|/comments/add/${productId}|}" class="feedback"><lable th:text="#{detail.feedb}"></a></lable>:</li>
+                                    <div class="bot mt-4">
+                                        <a th:href="@{/}" class="btn btn-warning btn__confirm mr-3">
+                                            <i class="fa fa-angle-left"></i> <lable th:text="#{product.btn.continute}"></lable>
+                                        </a>
+                                        <button th:attr="ng-click=@{|cart.add(${item.productId})|}"
+                                            class="btn btn-success btn__confirm">
+                                            <i class="fas fa-shopping-cart"></i> <a th:text="#{product.btn.cart}"></a>
+                                        </button>
+                                    </div>
+                                </div>                        
+                            </fieldset>
+                        </div>                       
+                    </div>   
+                </article>
+                <!-- <aside class="col-sm-3" >
+                    <div class="card poly-cart " data-toggle="collapse" href="#chungloai">
+                        <div class="card-header head" style="cursor: pointer;">
+                            <span class="glyphicon glyphicon-th-list">
+                                <i class="fa-solid fa-list-ul"></i> [[#{product.same_item}]]
+                            </span>:
+                        </div>                       
+                        <div  id="chungloai" th:each=" item:*{category.products}">
+                            <a class="item_category" th:href="@{|/product/detail/${item.productId}|}">
+                                <img th:src="@{|/assets/images/${item.image1}|}" class="img--item">
+                                <div class="item-same__name">[(${item.name})] [(${item.RAM})]</div>
+                            </a>
+                        </div> 
+                    </div>
+                </aside>                -->
+            </div>
+
+            <!-- **************************************************************** -->
+		<div class="row" th:if="${item == null or item.isEmpty()}">
+			<div class="col mt-2 no-result">
+				<img src="/assets/images/No_r.png" alt=""><br>
+				<h5>Không tìm thấy kết quả nào</h5>
+				<h4 style="color: #938484;">Có thể sản phẩm đã ngừng kinh doanh</h4>
+			</div>
+		</div>
+        <div class="row">		
+            <div th:each="item:*{category.products}" class="col-sm-2">
+                <a class="item_category" th:href="@{|/product/detail/${item.productId}|}">
+                    <img th:src="@{|/assets/images/${item.image1}|}" class="img--item">
+                    <div class="item-same__name">[(${item.name})] [(${item.RAM})]</div>
+                </a>
+            </div>
+        </div>
+        </main>
+</body>
+</html>
+
