@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+th:replace="~{/layout/fragment :: dynamic(~{::main})}">
+<html>
+
+<body>
+    <main role="main">
+        <div class="container">
+            <form>
+                <div class="text-center">
+                    <h3 class="mt-3 mb-5"><i class="fa-solid fa-file-signature"></i> <lable th:text="#{checkout.title}"></lable></h3>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 order-md-2 mb-4">
+                        <h4 class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="mb-3"><i class="fa-solid fa-credit-card"></i> <lable th:text="#{checkout.Payments}"></lable></h4>
+                            <div class="d-block my-3">
+                                <div class="custom-control custom-radio">
+                                    <input id="httt-1" name="httt_ma" type="radio" class="custom-control-input" required=""
+                                        value="1" checked="checked">
+                                    <label class="custom-control-label" for="httt-1"><lable th:text="#{checkout.Cash}"></lable></label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input id="httt-2" name="httt_ma" type="radio" class="custom-control-input" required=""
+                                        value="2">
+                                    <label class="custom-control-label" for="httt-2"><lable th:text="#{checkout.Transfer}"></lable></label>
+                                </div>
+                            </div>
+                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                <div>
+                                    <h6 class="my-0"><i class="fa-solid fa-truck-arrow-right"></i> <lable th:text="#{checkout.Transportation_costs}"></lable></h6>
+                                </div>
+                                <b class="">30.000 <sup>đ</sup></b>
+                            </li>
+                            <div class="am mt-4">
+								<span><i class="fa-solid fa-coins"></i> <lable th:text="#{checkout.Total}"></lable></span>
+								<button class="vnd">{{cart.amount + 30000 | number : 0 }} VND</button>
+                            </div> 
+                        <div class="cart_sub mt-4">
+                            <button class="order btn__confirm" ng-click="order.purchase()"><lable th:text="#{checkout.purchase}"></lable></button>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-8 order-md-1">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label><i class="fa-solid fa-pen-nib"></i> <lable th:text="#{checkout.name}"></lable></label>
+                                <input ng-model="order.name" minlength="4" type="text" class="form-control" required autofocus>
+                            </div>
+                            <div class="col-md-6">
+                                <label><i class="fa-solid fa-calendar-days"></i> <lable th:text="#{order.date}"></lable>:</label>
+                                <div class="form-control">{{order.createDay | date:'dd-MM-yyyy'}}</div>
+                            </div>
+                            <div class="col-md-6 mt-3">
+                                <label><i class="fa-solid fa-phone"></i> <lable th:text="#{order.phone}"></lable>:</label>
+                                <input ng-model="order.telePhone" type="text" minlength="10" maxlength="10" class="form-control" required>
+                            </div>
+                            <div class="col-md-6 mt-3">
+                                <label><i class="fa-solid fa-pen-nib"></i> Email:</label>
+                                <input ng-model="order.email" type="email" class="form-control" required>
+                            </div>
+                            <div class="col-md-12 mt-3">
+                                <div><i class="fa-solid fa-location-dot"></i> <lable th:text="#{order.address}"></lable>:</div>
+                                <textarea rows="3" ng-model="order.address" class="form-control mt-2" required placeholder="VD: 21 Phú Thạnh 1, Hòa Khánh Bắc, Liên Chiểu, Đà Nẵng."></textarea>
+                            </div>
+                            <div class="form-group col-sm-3 mt-3" hidden>
+                                <label>[[#{checkout.acc}]]</label>
+                                <div class="form-control" id="username">[[${#request.remoteUser}]]</div>
+                            </div>
+                        </div>                       
+                    </div>
+                </div>                                                
+                    <div class="container"> 
+                        <table class="table table-hover table-condensed"> 
+                            <thead> 
+                                <tr> 
+                                <th><lable th:text="#{cart.code}"></lable></th> 
+                                <th><lable th:text="#{cart.image}"></lable></th> 
+                                <th><lable th:text="#{cart.name}"></lable></th> 
+                                <th><lable th:text="#{cart.price}"></lable></th> 
+                                <th><lable th:text="#{cart.qty}"></lable></th> 
+                                <th><lable th:text="#{cart.amount}"></lable></th> 
+                                <th> </th> 
+                                </tr> 
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="item in cart.items" >
+                                <td>{{item.productId}}</a></td>
+                                <td>
+                                    <img ng-src="/assets/images/{{item.image1}}" class="img--item">
+                                </td>
+                                <td>{{item.name}} {{item.ram}}</td>
+                                <td>{{item.unitPrice | number : 0}} <sup>đ</sup></td>
+                                <td><input ng-change="cart.saveToLocalStorage()" ng-model="item.qty" type="number" min="1" style="width: 50px;"></td>
+                                <td>{{item.qty*item.unitPrice | number : 0}} <sup>đ</sup></td>
+                                <td>
+                                <!-- <button ng-click="cart.remove(item.productId)" class="btn btn-sm btn-danger">
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </button> -->
+                                </td>
+                            </tr>
+                            </tbody>         
+                        </table> 
+                        <div class="total">
+                            <lable th:text="#{cart.total}"></lable>: <span class="badge badge-danger">{{cart.amount | number : 0}} VND</span>
+                        </div>
+                    </div> 
+            </form>
+            <!-- **************************************************************** -->
+		<div class="row" th:if="${item == null or item.isEmpty()}">
+			<div class="col mt-2 no-result">
+				<img src="/assets/images/No_r.png" alt=""><br>
+				<h5>Không tìm thấy kết quả nào</h5>
+				<h4 style="color: #938484;">Có thể sản phẩm đã ngừng kinh doanh</h4>
+			</div>
+		</div>
+        <h5>Xem thêm các sản phẩm khác: <b>[[${totalItems}]] sản phẩm</b></h5>
+        <div class="flex mb-3 a">
+            <a th:href="@{/dtdd-iphone}">
+                <div class="box-quicklink__item">
+                    <img src="//cdn.tgdd.vn/Brand/1/logo-iphone-220x48.png" width="100" class="no-text">
+                </div>
+            </a>
+            <a th:href="@{/dtdd-samsum}">
+                <div class="box-quicklink__item">
+                    <img src="https://cdn.tgdd.vn/Brand/1/samsungnew-220x48-1.png" width="100" class="no-text">
+                </div>
+            </a>
+            <a th:href="@{/dtdd-oppo}">
+                <div class="box-quicklink__item">
+                    <img src="//cdn.tgdd.vn/Brand/1/OPPO42-b_5.jpg" width="100" class="no-text">
+                </div>
+            </a>
+            <a th:href="@{/dtdd-xiaomi}">
+                <div class="box-quicklink__item">
+                    <img src="//cdn.tgdd.vn/Brand/1/logo-xiaomi-220x48-5.png" width="100" class="no-text" data-metatip="true">
+                </div>
+            </a>
+            <a th:href="@{/dtdd-vivo}">
+                <div class="box-quicklink__item">
+                    <img src="https://cdn.tgdd.vn/Brand/1/vivo-logo-220-220x48-3.png" width="100" class="no-text">
+                </div>
+            </a>
+            <a th:href="@{/dtdd-realme}">
+                <div class="box-quicklink__item">
+                    <img src="//cdn.tgdd.vn/Brand/1/Realme42-b_37.png" width="100" class="no-text">
+                </div>
+            </a>
+            <a th:href="@{/dtdd-nokia}">
+                <div class="box-quicklink__item">
+                    <img src="//cdn.tgdd.vn/Brand/1/Nokia42-b_21.jpg" width="100" class="no-text">
+                </div>
+            </a>
+            
+            <a th:href="@{/dtdd-itel}">
+                <div class="box-quicklink__item">
+                    <img src="//cdn.tgdd.vn/Brand/1/Itel42-b_54.jpg" width="100" class="no-text">
+                </div>
+            </a>
+            <a th:href="@{/dtdd-masstel}">
+                <div class="box-quicklink__item">
+                    <img src="//cdn.tgdd.vn/Brand/1/Masstel42-b_0.png" width="100" class="no-text">
+                </div>
+            </a>
+        </div>
+        <div class="row">		
+            <div th:each="item: ${item}" class="col-sm-2">
+                <div class="card">
+					<div class="card-body list-item">
+						<div class="gif">
+							<img th:src="@{|/assets/images/${item.hotSale}|}">
+						</div>
+						<a th:href="@{|/product/detail/${item.productId}|}"> 
+							<img class="imgindex" th:src="@{|/assets/images/${item.image1}|}">
+						</a>
+					</div>
+					<div class="card-footer">
+						<a th:href="@{|/product/detail/${item.productId}|}" class="card-title">[(${item.name})] [(${item.RAM})]</a>
+						<div class="card-bottom">
+							<div>
+								<span class="price">[[${#numbers.formatInteger(item.unitPrice, 0,
+									'POINT')}]] <sup>đ</sup>
+								</span>
+							</div>
+							<div>
+								<span class="old_price">[[${#numbers.formatInteger(item.oldPrice, 0,
+									'POINT')}]] <sup>đ</sup>
+								</span>
+								<span class="discount">- [[${item.discount}]]%</span></div>
+							</div>
+						
+							<div class="card-bot">
+								<div>
+									<img th:src="|/assets/images/${item.image5}|">
+								</div>
+								<div class="icon__cart-like">
+									<a th:attr="ng-click=@{|cart.add(${item.productId})|}">
+										<i class="fa-solid fa-cart-shopping cart-shopping"></i></a> 
+									<a th:href="@{|/favorite/save/${item.productId}|}">
+										<i class="fa-regular fa-thumbs-up cart-shopping"></i></a>
+								</div>
+							</div>
+						
+					</div>
+				</div>
+            </div>
+        </div>
+        </div>
+    </main>
+</body>
+
+</html>
