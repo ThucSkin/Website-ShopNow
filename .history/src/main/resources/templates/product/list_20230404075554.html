@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/layout/index :: dynamic(~{::main})}">
+
+<body>
+	<main class="container-fluid">
+		<div class="btn-group dropdown mb-2 mr-2">
+			<button type="button" class="btn btn-secondary" id="btn_search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<i class="fa-solid fa-filter"></i> Bộ lọc
+			</button>
+		</div>
+		<div class="btn-group dropdown mb-2 ml-2">
+			<button type="button" class="btn btn-secondary dropdown-toggle" id="btn_search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Giá
+			</button>
+			<div class="dropdown-menu mt-2">
+				<a class="dropdown-item" id="dd--item" th:href="@{/price/duoi-2-trieu}">
+					Dưới 2 triệu</a>
+                <a class="dropdown-item" id="dd--item" th:href="@{/price/tu-2-4-trieu}">
+					Từ 2 - 4 triệu</a>
+                <a class="dropdown-item" id="dd--item" th:href="@{/price/tu-4-7-trieu}">
+					Từ 4 - 7 triệu</a>
+                <a class="dropdown-item" id="dd--item" th:href="@{/price/tu-7-13-trieu}">
+					Từ 7 - 13 triệu</a>
+				<a class="dropdown-item" id="dd--item" th:href="@{/price/tu-13-20-trieu}">
+					Từ 13 - 20 triệu</a>
+                <a class="dropdown-item" id="dd--item" th:href="@{/price/tren-20-trieu}">
+					Trên 20 triệu</a>
+			</div>
+		</div>
+		<div class="btn-group dropdown mb-2 ml-2">
+			<button type="button" class="btn btn-secondary dropdown-toggle" id="btn_search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Hãng
+			</button>
+			<div class="dropdown-menu mt-2">
+				<div class="btn__list_item_search">
+					<a th:href="@{/dtdd-iphone}">
+						<div class="box-quicklink__item">
+							<img src="//cdn.tgdd.vn/Brand/1/logo-iphone-220x48.png" width="100" class="no-text">
+						</div>
+					</a>
+					<a th:href="@{/dtdd-samsum}">
+						<div class="box-quicklink__item">
+							<img src="https://cdn.tgdd.vn/Brand/1/samsungnew-220x48-1.png" width="100" class="no-text">
+						</div>
+					</a>
+					<a th:href="@{/dtdd-oppo}">
+						<div class="box-quicklink__item">
+							<img src="//cdn.tgdd.vn/Brand/1/OPPO42-b_5.jpg" width="100" class="no-text">
+						</div>
+					</a>
+				</div>
+				<div class="btn__list_item_search">
+					<a th:href="@{/dtdd-xiaomi}">
+						<div class="box-quicklink__item">
+							<img src="//cdn.tgdd.vn/Brand/1/logo-xiaomi-220x48-5.png" width="100" class="no-text" data-metatip="true">
+						</div>
+					</a>
+					<a th:href="@{/dtdd-realme}">
+						<div class="box-quicklink__item">
+							<img src="//cdn.tgdd.vn/Brand/1/Realme42-b_37.png" width="100" class="no-text">
+						</div>
+					</a>
+					<a th:href="@{/dtdd-nokia}">
+						<div class="box-quicklink__item">
+							<img src="//cdn.tgdd.vn/Brand/1/Nokia42-b_21.jpg" width="100" class="no-text">
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="btn-group dropdown mb-2 ml-2">
+			<button type="button" class="btn btn-secondary dropdown-toggle" id="btn_search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				RAM
+			</button>
+			<div class="dropdown-menu mt-2">
+				<div class="btn__list_item_search">
+					<a class="dropdown-item" id="btn__ram_item" th:href="@{/dtdd-ram-2-GB}">
+						<button type="button" id="btn_search">
+							2 GB
+						</button></a>
+					<a class="dropdown-item" id="btn__ram_item" th:href="@{/dtdd-ram-3-GB}">
+						<button type="button" id="btn_search">
+							3 GB
+						</button>
+					</a>
+					<a class="dropdown-item" id="btn__ram_item" th:href="@{/dtdd-ram-4-GB}">
+						<button type="button" id="btn_search">
+							4 GB
+						</button>
+					</a>
+				</div>
+				<div class="btn__list_item_search">
+					<a class="dropdown-item" id="btn__ram_item" th:href="@{/dtdd-ram-6-GB}">
+						<button type="button" id="btn_search">
+							6 GB
+						</button></a>
+					<a class="dropdown-item" id="btn__ram_item" th:href="@{/dtdd-ram-8-GB}">
+						<button type="button" id="btn_search">
+							8 GB
+						</button>
+					</a>
+					<a class="dropdown-item" id="btn__ram_item" th:href="@{/dtdd-ram-12-GB}">
+						<button type="button" id="btn_search">
+							12 GB
+						</button>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="btn-group dropdown mb-2 ml-2">
+			<button type="button" class="btn btn-secondary dropdown-toggle" id="btn_search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Nhu cầu
+			</button>
+			<div class="dropdown-menu mt-2">
+				<div class="btn__list_item_search a">
+					<a th:href="@{/dtdd-choi-game}">
+						<div class="box-quicklink__item"  style="width: 200px;">
+							Chơi game / Cấu hình cao
+						</div>
+					</a>
+					<a th:href="@{/dtdd-chup-anh}">
+						<div class="box-quicklink__item" style="width: 200px;">
+							Chụp ảnh, quay phim
+						</div>
+					</a>
+					<a th:href="@{/dtdd-mong-nhe}">
+						<div class="box-quicklink__item">
+							Mỏng nhẹ
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="btn-group dropdown mb-2 ml-2">
+			<button type="button" class="btn btn-secondary dropdown-toggle" id="btn_search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Dung lượng lưu trữ
+			</button>
+			<div class="dropdown-menu mt-2">
+				<div class="btn__list_item_search">
+					<a class="dropdown-item" id="btn__ram_item" th:href="@{/dtdd-rom-32-GB}">
+						<button type="button" id="btn_search">
+							32 GB
+						</button></a>
+					<a class="dropdown-item" id="btn__ram_item" th:href="@{/dtdd-rom-64-GB}">
+						<button type="button" id="btn_search">
+							64 GB
+						</button>
+					</a>
+					<a class="dropdown-item" id="btn__ram_item" th:href="@{/dtdd-rom-128-GB}">
+						<button type="button" id="btn_search">
+							128 GB
+						</button>
+					</a>
+				</div>
+				<div class="btn__list_item_search">
+					<a class="dropdown-item" id="btn__ram_item" th:href="@{/dtdd-rom-256-GB}">
+						<button type="button" id="btn_search">
+							256 GB
+						</button></a>
+					<a class="dropdown-item" id="btn__ram_item" th:href="@{/dtdd-rom-512-GB}">
+						<button type="button" id="btn_search">
+							512 GB
+						</button>
+					</a>
+					<a class="dropdown-item" id="btn__ram_item" th:href="@{/dtdd-rom-1-TB}">
+						<button type="button" id="btn_search">
+							1 TB
+						</button>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="btn-group dropdown mb-2 ml-2">
+			<button type="button" class="btn btn-secondary dropdown-toggle" id="btn_search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Pin & Sạc
+			</button>
+			<div class="dropdown-menu mt-2">
+				<div class="btn__list_item_search2">
+					<a class="dropdown-item" id="btn__ram_item" th:href="@{/dtdd-pin-5000mAh}">
+						<button type="button" id="btn_search">
+							Pin khủng trên 5000 mAh
+						</button></a>
+					<a class="dropdown-item" id="btn__ram_item" th:href="@{/dtdd-sac-pin-nhanh}">
+						<button type="button" id="btn_search">
+							Sạc nhanh (từ 18W)
+						</button>
+					</a>
+					<a class="dropdown-item" id="btn__ram_item" th:href="@{/dtdd-sac-pin-sieu-nhanh}">
+						<button type="button" id="btn_search">
+							Sạc siêu nhanh (từ 33W)
+						</button>
+					</a>
+					<a class="dropdown-item" id="btn__ram_item" th:href="@{/dtdd-sac-khong-day}">
+						<button type="button" id="btn_search">
+							Sạc không dây
+						</button>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="btn-group dropdown mb-2 ml-2">
+			<button type="button" class="btn btn-secondary dropdown-toggle" id="btn_search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Tính năng đặc biệt
+			</button>
+			<div class="dropdown-menu mt-2">
+				<div class="btn__list_item_search2">
+					<a class="dropdown-item" id="btn__ram_item" th:href="@{/dtdd-khang-nuoc}">
+						<button type="button" id="btn_search">
+							Kháng nước, bụi
+						</button></a>
+					<a class="dropdown-item" id="btn__ram_item" th:href="@{/dtdd-ho-tro-5G}">
+						<button type="button" id="btn_search">
+							Hỗ trợ 5G
+						</button>
+					</a>
+					<a class="dropdown-item" id="btn__ram_item" th:href="@{/dtdd-bao-mat-3D}">
+						<button type="button" id="btn_search">
+							Bảo mật khuôn mặt 3D
+						</button>
+					</a>
+					<a class="dropdown-item" id="btn__ram_item" th:href="@{/dtdd-chong-rung}">
+						<button type="button" id="btn_search">
+							Chống rung quang học
+						</button>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="row mb-3 a">
+			<a th:href="@{/dtdd-iphone}">
+				<div class="box-quicklink__item">
+					<img src="//cdn.tgdd.vn/Brand/1/logo-iphone-220x48.png" width="100" class="no-text">
+				</div>
+			</a>
+			<a th:href="@{/dtdd-samsum}">
+				<div class="box-quicklink__item">
+					<img src="https://cdn.tgdd.vn/Brand/1/samsungnew-220x48-1.png" width="100" class="no-text">
+				</div>
+			</a>
+			<a th:href="@{/dtdd-oppo}">
+				<div class="box-quicklink__item">
+					<img src="//cdn.tgdd.vn/Brand/1/OPPO42-b_5.jpg" width="100" class="no-text">
+				</div>
+			</a>
+			<a th:href="@{/dtdd-xiaomi}">
+				<div class="box-quicklink__item">
+					<img src="//cdn.tgdd.vn/Brand/1/logo-xiaomi-220x48-5.png" width="100" class="no-text" data-metatip="true">
+				</div>
+			</a>
+			<a th:href="@{/dtdd-vivo}">
+				<div class="box-quicklink__item">
+					<img src="https://cdn.tgdd.vn/Brand/1/vivo-logo-220-220x48-3.png" width="100" class="no-text">
+				</div>
+			</a>
+			<a th:href="@{/dtdd-realme}">
+				<div class="box-quicklink__item">
+					<img src="//cdn.tgdd.vn/Brand/1/Realme42-b_37.png" width="100" class="no-text">
+				</div>
+			</a>
+			<a th:href="@{/dtdd-nokia}">
+				<div class="box-quicklink__item">
+					<img src="//cdn.tgdd.vn/Brand/1/Nokia42-b_21.jpg" width="100" class="no-text">
+				</div>
+			</a>
+			<a th:href="@{/dtdd-tcl}">
+				<div class="box-quicklink__item">
+					<img src="https://cdn.tgdd.vn/Brand/1/tcl-logo-lon-220x48.jpg" width="100" class="no-text">
+				</div>
+			</a>
+			<a th:href="@{/dtdd-mobell}">
+				<div class="box-quicklink__item">
+					<img src="https://cdn.tgdd.vn/Brand/1/Mobell42-b_19.jpg" width="100" class="no-text">
+				</div>
+			</a>
+			<a th:href="@{/dtdd-itel}">
+				<div class="box-quicklink__item">
+					<img src="//cdn.tgdd.vn/Brand/1/Itel42-b_54.jpg" width="100" class="no-text">
+				</div>
+			</a>
+			<a th:href="@{/dtdd-masstel}">
+				<div class="box-quicklink__item">
+					<img src="//cdn.tgdd.vn/Brand/1/Masstel42-b_0.png" width="100" class="no-text">
+				</div>
+			</a>
+		</div>
+		<label for="">Chọn điện thoại theo nhu cầu:</label>
+		<div class="row a mb-2">
+			<a th:href="@{/dtdd-choi-game}">
+				<div class="box-quicklink__item"  style="width: 200px;">
+					Chơi game / Cấu hình cao
+				</div>
+			</a>
+			<a th:href="@{/dtdd-chup-anh}">
+				<div class="box-quicklink__item" style="width: 200px;">
+					Chụp ảnh, quay phim
+				</div>
+			</a>
+			<a th:href="@{/dtdd-mong-nhe}">
+				<div class="box-quicklink__item">
+					Mỏng nhẹ
+				</div>
+			</a>
+			<a th:href="@{/dtdd-pin-5000mAh}">
+				<div class="box-quicklink__item" style="width: 200px;">
+					Pin trên 5000 mAh
+				</div>
+			</a>
+			<a th:href="@{/dtdd-sac-pin-nhanh}">
+				<div class="box-quicklink__item" style="width: 200px;">
+					Sạc nhanh (Từ 18W)
+				</div>
+			</a>
+			<a th:href="@{/dtdd-sac-pin-sieu-nhanh}">
+				<div class="box-quicklink__item" style="width: 200px;">
+					Sạc siêu nhanh (Từ 33W)
+				</div>
+			</a>
+		</div>
+		<div class="center">
+			<p>Tổng: <b>[[${totalItems}]] sản phẩm</b></p>
+			<label class="center-fl">
+				<input type="checkbox" name="" id="" class="tick-checkbox">
+				<img src="//cdn.tgdd.vn/mwgcart/mwgcore/ContentMwg/images/icon-thunder.png" style="width: 11px;margin-right: 5px;">Giao nhanh</label>
+			<label class="center"><input type="checkbox" name="" id="" class="tick-checkbox">Giảm giá</label>
+			<label class="center"><input type="checkbox" name="" id="" class="tick-checkbox">Góp 0% - 1%</label>
+			<label class="center"><input type="checkbox" name="" id="" class="tick-checkbox">Độc quyền</label>
+			<label class="center"><input type="checkbox" name="" id="" class="tick-checkbox">Mới</label>
+			<a th:href="@{/price-sale-flash}">
+				<button type="button" id="btn_search" class="btn btn-secondary mb-2 ml-5">
+					Siêu giảm giá
+				</button>
+			</a>
+			
+			<a th:href="@{/product/list/hotsale}">
+				<button type="button" id="btn_search" class="btn btn-secondary mb-2 ml-3">
+					Các sản phẩm hot!
+				</button>
+			</a>
+			<div class="click-sort mb-2">
+				<div class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Xếp theo: Nổi bật</div>
+				<div class="dropdown-menu mt-3">
+					<a class="dropdown-item" id="dd--item1" th:href="@{/product/list/hotsale}">
+						<i class="fa-solid fa-check"></i> Nổi bật</a>
+					<a class="dropdown-item" id="dd--item1" th:href="@{/price-giam}">
+						% Giảm</a>
+					<a class="dropdown-item" id="dd--item1" th:href="@{/price-cao-den-thap}">
+						Giá cao đến thấp</a>
+					<a class="dropdown-item" id="dd--item1" th:href="@{/price-thap-den-cao}">
+						Giá thấp đến cao</a>
+				</div>
+			</div>
+		</div>
+		<!-- **************************************** -->
+		<div class="row" th:if="${!productPage.hasContent()}">
+			<div class="col mt-2 no-result">
+				<img src="/assets/images/No_r.png" alt=""><br>
+				<h5>Không tìm thấy kết quả nào</h5>
+				<h4 style="color: #938484;">Hãy thử sử dụng các từ khóa chung chung hơn</h4>
+			</div>
+		</div>
+		<div class="row">
+			<div th:each="item: ${productPage}" class="col-sm-2">
+				<div class="card">
+					<div class="card-body list-item">
+						<div class="gif">
+							<img th:src="@{|/assets/images/${item.hotSale}|}">
+						</div>
+						<a th:href="@{|/product/detail/${item.productId}|}"> 
+							<img class="imgindex" th:src="@{|/assets/images/${item.image1}|}">
+						</a>
+					</div>
+					<div class="card-footer">
+						<a th:href="@{|/product/detail/${item.productId}|}" class="card-title">[(${item.name})] [(${item.RAM})]</a>
+						<div class="card-bottom">
+							<div>
+								<span class="price">[[${#numbers.formatInteger(item.unitPrice, 0,
+									'POINT')}]] <sup>đ</sup>
+								</span>
+							</div>
+							<div>
+								<span class="old_price">[[${#numbers.formatInteger(item.oldPrice, 0,
+									'POINT')}]] <sup>đ</sup>
+								</span>
+								<span class="discount">- [[${item.discount}]]%</span>
+							</div>
+						</div>
+						<div class="card-bot">
+							<div>
+								<img th:src="|/assets/images/${item.image5}|">
+							</div>
+							<div>
+								<a th:attr="ng-click=@{|cart.add(${item.productId})|}">
+									<i class="fa-solid fa-cart-shopping cart-shopping"></i></a> 
+								<a th:href="@{|/favorite/save/${item.productId}|}">
+									<i class="fa-regular fa-thumbs-up cart-shopping"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="page__navigation">
+			<div class="text-muted mt-3 mb-3">
+				<div aria-label="Page navigation"
+					th:if="${productPage.totalPages > 0}">
+					<ul class="pagination justify-content-center">
+						<li th:class="${1 == productPage.number + 1} ? 'page-item active' : 'page-item'">
+							<a th:href="@{/(name=${name}, size=${productPage.size}, page=${1})}"
+							class="page-link">Firts</a>
+						</li>
+	
+						<li class="page-item active" th:each="pageNumber : ${pageNumbers}"
+							th:if="${productPage.totalPages > 1}"
+							th:class="${pageNumber == productPage.number + 1} ? 'page-item active' : 'page-item'">
+							<a th:href="@{/(name=${name}, size=${productPage.size}, page=${pageNumber})}"
+							class="page-link" th:text="${pageNumber}"></a>
+						</li>
+	
+						<li th:class="${productPage.totalPages == productPage.number + 1} ? 'page-item active' : 'page-item'">
+							<a
+							th:href="@{/(name=${name}, size=${productPage.size}, page=${productPage.totalPages})}"
+							class="page-link">Last</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+	</main>
+</body>
+</html>
