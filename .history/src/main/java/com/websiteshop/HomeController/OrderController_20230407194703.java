@@ -43,15 +43,13 @@ public class OrderController {
     @Autowired
     ProductService productService;
 
-    private void All_item(Model model) {
+    @GetMapping("/order/checkout")
+    public String checkout(Model model) {
         model.addAttribute("item", productService.findAll());
+        // get totalsize item
         List<Product> items = productService.findAll();
         int totalItems = items.size();
         model.addAttribute("totalItems", totalItems);
-    }
-
-    @GetMapping("/order/checkout")
-    public String checkout(Model model) {
         return "order/checkout";
     }
 
@@ -69,8 +67,11 @@ public class OrderController {
     public String detail(@PathVariable("orderId") Long orderId, Model model) {
         try {
             model.addAttribute("order", orderService.findById(orderId));
+            model.addAttribute("item", productService.findAll());
             // get totalsize item
-            All_item(model);
+            List<Product> items = productService.findAll();
+            int totalItems = items.size();
+            model.addAttribute("totalItems", totalItems);
             return "order/detail";
         } catch (Exception e) {
             return "redirect:/home404";
@@ -85,9 +86,11 @@ public class OrderController {
         String username = request.getRemoteUser();
 
         model.addAttribute("orders", odao.findByStatus(status, username));
+        model.addAttribute("item", productService.findAll());
         // get totalsize item
-        All_item(model);
-
+        List<Product> items = productService.findAll();
+        int totalItems = items.size();
+        model.addAttribute("totalItems", totalItems);
         return "order/history";
     }
 
@@ -97,9 +100,12 @@ public class OrderController {
         String username = request.getRemoteUser();
         String status = "Đang vận chuyển";
         model.addAttribute("orders", odao.findByStatus(status, username));
+        model.addAttribute("item", productService.findAll());
         // get totalsize item
-        All_item(model);
-        return "order/history";
+        List<Product> items = productService.findAll();
+        int totalItems = items.size();
+        model.addAttribute("totalItems", totalItems);
+        return "orderHistory/list";
     }
 
     @GetMapping("/cancel")
@@ -107,9 +113,12 @@ public class OrderController {
         String status = "Đã hủy";
         String username = request.getRemoteUser();
         model.addAttribute("orders", odao.findByStatus(status, username));
+        model.addAttribute("item", productService.findAll());
         // get totalsize item
-        All_item(model);
-        return "order/history";
+        List<Product> items = productService.findAll();
+        int totalItems = items.size();
+        model.addAttribute("totalItems", totalItems);
+        return "orderHistory/list";
     }
 
     @GetMapping("/delivered")
@@ -117,25 +126,12 @@ public class OrderController {
         String status = "Đã giao hàng";
         String username = request.getRemoteUser();
         model.addAttribute("orders", odao.findByStatus(status, username));
+        model.addAttribute("item", productService.findAll());
         // get totalsize item
-        All_item(model);
-        return "order/history";
-    }
-
-    @GetMapping("/view/page")
-    public String viewPage(Model model, HttpServletRequest request,
-            @RequestParam(name = "name", required = false) String name,
-            @RequestParam("page") Optional<Integer> page) {
-
-        Pageable pageable = PageRequest.of(page.orElse(0), 100, Sort.by("name"));
-        Page<Order> pageProduct = null;
-        String username = request.getRemoteUser();
-
-        pageProduct = orderService.findByUsername(username, pageable);
-        model.addAttribute("orders", pageProduct);
-        // get totalsize item
-        All_item(model);
-        return "order/history";
+        List<Product> items = productService.findAll();
+        int totalItems = items.size();
+        model.addAttribute("totalItems", totalItems);
+        return "orderHistory/list";
     }
 
     @GetMapping("/view/page2")
@@ -149,12 +145,14 @@ public class OrderController {
         Page<Order> resultPage = null;
 
         if (StringUtils.hasText(name)) {
-            String username = request.getRemoteUser();
-            resultPage = orderService.findByUsername(username, pageable);
+            // resultPage = orderService.findByFullnameContaining(name, pageable);
             model.addAttribute("username", name);
         } else {
-            resultPage = orderService.findAll(pageable);
+            String username = request.getRemoteUser();
+            resultPage = orderService.findByUsername(username, pageable);
+            // resultPage = accountService.findAll(pageable);
         }
+
         int totalPages = resultPage.getTotalPages();
         if (totalPages > 0) {
             int start = Math.max(1, currentPage - 2);
@@ -172,7 +170,26 @@ public class OrderController {
             model.addAttribute("pageNumbers", pageNumbers);
         }
 
-        model.addAttribute("orders", resultPage);
+        model.addAttribute("orderPage", resultPage);
+        return "orderHistory/list";
+    }
+
+    @GetMapping("/view/page")
+    public String viewPage(Model model, HttpServletRequest request,
+            @RequestParam(name = "name", required = false) String name,
+            @RequestParam("page") Optional<Integer> page) {
+
+        Pageable pageable = PageRequest.of(page.orElse(0), 100, Sort.by("name"));
+        Page<Order> pageProduct = null;
+        String username = request.getRemoteUser();
+
+        pageProduct = orderService.findByUsername(username, pageable);
+        model.addAttribute("orders", pageProduct);
+        model.addAttribute("item", productService.findAll());
+        // get totalsize item
+        List<Product> items = productService.findAll();
+        int totalItems = items.size();
+        model.addAttribute("totalItems", totalItems);
         return "order/history";
     }
 }

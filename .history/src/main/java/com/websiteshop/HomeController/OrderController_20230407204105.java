@@ -172,7 +172,7 @@ public class OrderController {
             model.addAttribute("pageNumbers", pageNumbers);
         }
 
-        model.addAttribute("orders", resultPage);
+        model.addAttribute("orderPage", resultPage);
         return "order/history";
     }
 }

@@ -149,12 +149,14 @@ public class OrderController {
         Page<Order> resultPage = null;
 
         if (StringUtils.hasText(name)) {
-            String username = request.getRemoteUser();
-            resultPage = orderService.findByUsername(username, pageable);
+            // resultPage = orderService.findByFullnameContaining(name, pageable);
             model.addAttribute("username", name);
         } else {
-            resultPage = orderService.findAll(pageable);
+            String username = request.getRemoteUser();
+            resultPage = orderService.findByNameContaining(username, pageable);
+            // resultPage = accountService.findAll(pageable);
         }
+
         int totalPages = resultPage.getTotalPages();
         if (totalPages > 0) {
             int start = Math.max(1, currentPage - 2);
@@ -172,7 +174,7 @@ public class OrderController {
             model.addAttribute("pageNumbers", pageNumbers);
         }
 
-        model.addAttribute("orders", resultPage);
-        return "order/history";
+        model.addAttribute("orderPage", resultPage);
+        return "orderHistory/list";
     }
 }

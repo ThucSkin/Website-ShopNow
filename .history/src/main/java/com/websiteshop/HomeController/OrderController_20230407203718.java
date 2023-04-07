@@ -152,8 +152,6 @@ public class OrderController {
             String username = request.getRemoteUser();
             resultPage = orderService.findByUsername(username, pageable);
             model.addAttribute("username", name);
-        } else {
-            resultPage = orderService.findAll(pageable);
         }
         int totalPages = resultPage.getTotalPages();
         if (totalPages > 0) {
@@ -172,7 +170,7 @@ public class OrderController {
             model.addAttribute("pageNumbers", pageNumbers);
         }
 
-        model.addAttribute("orders", resultPage);
+        model.addAttribute("orderPage", resultPage);
         return "order/history";
     }
 }
