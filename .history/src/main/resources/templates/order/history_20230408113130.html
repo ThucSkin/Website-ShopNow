@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/layout/fragment :: dynamic(~{::main})}">
+<body>
+	<main class="container-fluid ml-3">
+		<div class="status_cart">
+			<a th:href=@{/orderHistory/view/page}><label id="btn_search"
+				class="status_cart_item"> [[#{OH.all}]]</label></a> 
+			<a th:href=@{/orderHistory/confirmation}><label id="btn_search"
+				class="status_cart_item">
+				<i class="fa-solid fa-circle-check"></i> [[#{OH.confirm}]]</label></a> 
+			<a th:href=@{/orderHistory/transported}><label id="btn_search"
+				class="status_cart_item"><i class="fa-solid fa-truck"></i>
+				[[#{OH.transported}]]</label></a> 
+			<a th:href=@{/orderHistory/delivered}><label id="btn_search"
+				class="status_cart_item"><i class="fa-solid fa-face-smile"></i>
+				[[#{OH.delivered}]]</label></a> 
+			<a th:href=@{/orderHistory/cancel}><label id="btn_search"
+				class="status_cart_item"><i class="fa-solid fa-road"></i>
+				[[#{OH.cancel}]]</label></a>
+		</div>
+		<div class="card-body">
+            <div class="row">
+              <div class="col">
+                  <form th:action="@{/orderHistory/list}">
+                      <div class="form-inline float-left">
+                        <input type="text" class="form-control" name="name" id="name"
+                          aria-describedby="helpId" placeholder="Tên loại hàng">
+                          <button class="btn btn-outline-primary ml-2">Tìm kiếm</button>
+                      </div>
+                  </form>
+              </div>
+            </div>
+          </div>
+		<div class="card mb-3">
+			<table class="table table-hover">
+			<thead class="bg-light ">
+				<tr>
+					<th>No.</th>
+					<th>[[#{order.Code_orders}]]</th>
+					<th>[[#{order.name}]]</th>
+					<th>[[#{order.date}]]</th>
+					<th>[[#{order.phone}]]</th>
+					<th>Email</th>
+					<th>[[#{order.address}]]</th>
+					<th>[[#{cart.status}]]</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each=" order,state: ${orderPage}">
+					<td>[[${state.index}]]</td>
+					<td>[[${order.orderId}]]</td>
+					<td>[[${order.name}]]</td>
+					<td>[[${order.createDay}]]</td>
+					<td>[[${order.telePhone}]]</td>
+					<td>[[${order.email}]]</td>
+					<td>[[${order.address}]]</td>
+					<td>[[${order.status}]]</td>
+					<th><a th:href="@{|/orderHistory/detail/${order.orderId}|}"
+						class="btn btn-default"><i class="fa-solid fa-magnifying-glass-plus"></i>
+					</a></th>
+				</tr>
+			</tbody>
+			</table>
+		</div>
+		<form action="">
+			<div class="form-inline float-left">
+				<label class="mr-3" for="size">Kích thước: </label>
+				<select name="size" id="size" class="form-control "
+					onchange="this.form.submit()">
+					<option th:selected="${orderPage.size == 5}" class="dropdown dropdown-toggle" value="5">5</option>
+					<option th:selected="${orderPage.size == 10}" value="10">10</option>
+					<option th:selected="${orderPage.size == 15}" value="15">15</option>
+					<option th:selected="${orderPage.size == 20}" value="20">20</option>
+					<option th:selected="${orderPage.size == 30}" value="30">30</option>
+				</select>
+			</div>
+		</form>
+		<div aria-label="Page navigation"
+			th:if="${orderPage.totalPages > 0}">
+			<ul class="pagination justify-content-center">
+				<li th:class="${1 == orderPage.number + 1} ? 'page-item active' : 'page-item'">
+					<a th:href="@{/orderHistory/list(name=${name}, size=${orderPage.size}, page=${1})}"
+					class="page-link">Đầu</a>
+				</li>
+
+				<li class="page-item active"
+				th:each="pageNumber : ${pageNumbers}"
+				th:if="${orderPage.totalPages > 1}"
+				th:class="${pageNumber == orderPage.number + 1} ? 'page-item active' : 'page-item'">
+				<a th:href="@{/orderHistory/list(name=${name}, size=${orderPage.size}, page=${pageNumber})}"
+				class="page-link"
+				th:text="${pageNumber}"></a>
+				</li>
+
+				<li th:class="${orderPage.totalPages == orderPage.number + 1} ? 'page-item active' : 'page-item'">
+					<a th:href="@{/orderHistory/list(name=${name}, size=${orderPage.size}, page=${orderPage.totalPages})}"
+					class="page-link">Cuối</a>
+				</li>
+			</ul>	
+		</div>
+		<!-- **************************************************************** -->
+		<div class="row" th:if="${item == null or item.isEmpty()}">
+			<div class="col mt-2 no-result">
+				<img src="/assets/images/No_r.png" alt=""><br>
+				<h5>Không tìm thấy kết quả nào</h5>
+				<h4 style="color: #938484;">Có thể sản phẩm đã ngừng kinh doanh</h4>
+			</div>
+		</div>
+        <h5>Xem thêm các sản phẩm khác: </h5>
+        <div class="flex mb-3 a">
+            <a th:href="@{/dtdd-iphone}">
+                <div class="box-quicklink__item">
+                    <img src="//cdn.tgdd.vn/Brand/1/logo-iphone-220x48.png" width="100" class="no-text">
+                </div>
+            </a>
+            <a th:href="@{/dtdd-samsum}">
+                <div class="box-quicklink__item">
+                    <img src="https://cdn.tgdd.vn/Brand/1/samsungnew-220x48-1.png" width="100" class="no-text">
+                </div>
+            </a>
+            <a th:href="@{/dtdd-oppo}">
+                <div class="box-quicklink__item">
+                    <img src="//cdn.tgdd.vn/Brand/1/OPPO42-b_5.jpg" width="100" class="no-text">
+                </div>
+            </a>
+            <a th:href="@{/dtdd-xiaomi}">
+                <div class="box-quicklink__item">
+                    <img src="//cdn.tgdd.vn/Brand/1/logo-xiaomi-220x48-5.png" width="100" class="no-text" data-metatip="true">
+                </div>
+            </a>
+            <a th:href="@{/dtdd-vivo}">
+                <div class="box-quicklink__item">
+                    <img src="https://cdn.tgdd.vn/Brand/1/vivo-logo-220-220x48-3.png" width="100" class="no-text">
+                </div>
+            </a>
+            <a th:href="@{/dtdd-realme}">
+                <div class="box-quicklink__item">
+                    <img src="//cdn.tgdd.vn/Brand/1/Realme42-b_37.png" width="100" class="no-text">
+                </div>
+            </a>
+        </div>
+        <div class="row">		
+            <div th:each="item, itemIndex: ${item}" th:if="${itemIndex.index} &lt; 6" class="col-sm-2">
+                <div class="card">
+					<div class="card-body list-item">
+						<div class="gif">
+							<img th:src="@{|/assets/images/${item.hotSale}|}">
+						</div>
+						<a th:href="@{|/product/detail/${item.productId}|}"> 
+							<img class="imgindex" th:src="@{|/assets/images/${item.image1}|}">
+						</a>
+					</div>
+					<div class="card-footer">
+						<a th:href="@{|/product/detail/${item.productId}|}" class="card-title">[(${item.name})] [(${item.RAM})]</a>
+						<div class="card-bottom">
+							<div>
+								<span class="price">[[${#numbers.formatInteger(item.unitPrice, 0,
+									'POINT')}]] <sup>đ</sup>
+								</span>
+							</div>
+							<div>
+								<span class="old_price">[[${#numbers.formatInteger(item.oldPrice, 0,
+									'POINT')}]] <sup>đ</sup>
+								</span>
+								<span class="discount">- [[${item.discount}]]%</span>
+							</div>
+						</div>
+						<div class="card-bot">
+							<div>
+								<img th:src="|/assets/images/${item.image5}|">
+							</div>
+							<div class="icon__cart-like">
+								<a th:attr="ng-click=@{|cart.add(${item.productId})|}">
+									<i class="fa-solid fa-cart-shopping cart-shopping"></i></a> 
+								<a th:href="@{|/favorite/save/${item.productId}|}">
+									<i class="fa-regular fa-thumbs-up cart-shopping"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+            </div>
+        </div>
+		<div class="text-center mt-4 mb-4">
+			<a th:href="@{|/|}" class="btn btn-success dropdown-toggle" id="btn_search">Xem thêm [[${totalItems} - 6]] sản phẩm</a>
+		</div>
+	</main>
+</body>
+
+</html>
