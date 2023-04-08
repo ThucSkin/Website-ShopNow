@@ -3,38 +3,27 @@
 	th:replace="~{/layout/fragment :: dynamic(~{::main})}">
 <body>
 	<main class="container-fluid ml-3">
-            <div class="row mt-2">
-				<div class="col-sm-8">
-					<div class="status_cart">
-						<a th:href=@{/orderHistory/list}><label id="btn_search"
-							class="status_cart_item"> [[#{OH.all}]]</label></a> 
-						<a th:href=@{/orderHistory/confirmation}><label id="btn_search"
-							class="status_cart_item">
-							<i class="fa-solid fa-circle-check"></i> [[#{OH.confirm}]]</label></a> 
-						<a th:href=@{/orderHistory/transported}><label id="btn_search"
-							class="status_cart_item"><i class="fa-solid fa-truck"></i>
-							[[#{OH.transported}]]</label></a> 
-						<a th:href=@{/orderHistory/delivered}><label id="btn_search"
-							class="status_cart_item"><i class="fa-solid fa-face-smile"></i>
-							[[#{OH.delivered}]]</label></a> 
-						<a th:href=@{/orderHistory/cancel}><label id="btn_search"
-							class="status_cart_item"><i class="fa-solid fa-road"></i>
-							[[#{OH.cancel}]]</label></a>
-					</div>
-				</div>
-				<div class="col-sm-4">
-					<form th:action="@{/orderHistory/list}">
-						<div class="form-inline float-right">
-							<input type="text" class="form-control" name="name" id="name"
-								aria-describedby="helpId" placeholder="Tìm kiếm">
-							<button class="btn btn-outline-primary ml-2"><i class="fa fa-search"></i></button>
-						</div>
-					</form>
-				</div>
+        <div class="row mt-2">
+            <div class="col">
+                <div class="status_cart">
+                    <a th:href=@{/orderHistory/list}><label id="btn_search"
+                        class="status_cart_item"> [[#{OH.all}]]</label></a> 
+                    <a th:href=@{/orderHistory/confirmation}><label id="btn_search"
+                        class="status_cart_item">
+                        <i class="fa-solid fa-circle-check"></i> [[#{OH.confirm}]]</label></a> 
+                    <a th:href=@{/orderHistory/transported}><label id="btn_search"
+                        class="status_cart_item"><i class="fa-solid fa-truck"></i>
+                        [[#{OH.transported}]]</label></a> 
+                    <a th:href=@{/orderHistory/delivered}><label id="btn_search"
+                        class="status_cart_item"><i class="fa-solid fa-face-smile"></i>
+                        [[#{OH.delivered}]]</label></a> 
+                    <a th:href=@{/orderHistory/cancel}><label id="btn_search"
+                        class="status_cart_item"><i class="fa-solid fa-road"></i>
+                        [[#{OH.cancel}]]</label></a>
+                </div>
             </div>
-			<!-- **************************************** -->
-		
-		<div class="card mt-2">
+        </div>
+		<div class="card mt-2 mb-2">
 			<table class="table table-hover">
 			<thead class="bg-light ">
 				<tr>
@@ -50,7 +39,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each=" order,state: ${orderPage}">
+				<tr th:each=" order,state: ${orders}">
 					<td>[[${state.index}]]</td>
 					<td>[[${order.orderId}]]</td>
 					<td>[[${order.name}]]</td>
@@ -72,41 +61,7 @@
 				</div>
 			</div>
 		</div>
-		<form action="">
-			<div class="form-inline float-left mt-3">
-				<label class="mr-3 mt-3 mb-3" for="size">Kích thước: </label>
-				<select name="size" id="size" onchange="this.form.submit()">
-					<option th:selected="${orderPage.size == 5}" value="5">5</option>
-					<option th:selected="${orderPage.size == 10}" value="10">10</option>
-					<option th:selected="${orderPage.size == 15}" value="15">15</option>
-					<option th:selected="${orderPage.size == 20}" value="20">20</option>
-					<option th:selected="${orderPage.size == 30}" value="30">30</option>
-				</select>
-			</div>
-		</form>
-		<div aria-label="navigation"
-			th:if="${orderPage.totalPages > 0}">
-			<ul class="pagination">
-				<li th:class="${1 == orderPage.number + 1} ? 'page-item active' : 'page-item'">
-					<a th:href="@{/orderHistory/list(name=${name}, size=${orderPage.size}, page=${1})}"
-					class="page-link">Đầu</a>
-				</li>
 
-				<li class="page-item active"
-				th:each="pageNumber : ${pageNumbers}"
-				th:if="${orderPage.totalPages > 1}"
-				th:class="${pageNumber == orderPage.number + 1} ? 'page-item active' : 'page-item'">
-				<a th:href="@{/orderHistory/list(name=${name}, size=${orderPage.size}, page=${pageNumber})}"
-				class="page-link"
-				th:text="${pageNumber}"></a>
-				</li>
-
-				<li th:class="${orderPage.totalPages == orderPage.number + 1} ? 'page-item active' : 'page-item'">
-					<a th:href="@{/orderHistory/list(name=${name}, size=${orderPage.size}, page=${orderPage.totalPages})}"
-					class="page-link">Cuối</a>
-				</li>
-			</ul>	
-		</div>
 		<!-- **************************************************************** -->
 		<div class="row" th:if="${item == null or item.isEmpty()}">
 			<div class="col mt-2 no-result">
@@ -115,7 +70,6 @@
 				<h4 style="color: #938484;">Có thể sản phẩm đã ngừng kinh doanh</h4>
 			</div>
 		</div>
-			<hr>
         <h5>Xem thêm các sản phẩm khác: </h5>
         <div class="flex mb-3 a">
             <a th:href="@{/dtdd-iphone}">

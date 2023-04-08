@@ -65,11 +65,11 @@
 				</tr>
 			</tbody>
 			</table>
-			<div class="row" th:if="${!orderPage.hasContent()}">
-				<div class="col mt-2 no-result">
-					<img src="/assets/images/No_r.png" alt=""><br>
-					<h5>Không tìm thấy kết quả nào</h5>
-				</div>
+		</div>
+		<div class="row" th:if="${!orderPage.hasContent()}">
+			<div class="col mt-2 no-result">
+				<img src="/assets/images/No_r.png" alt=""><br>
+				<h5>Không tìm thấy kết quả nào</h5>
 			</div>
 		</div>
 		<form action="">
@@ -109,7 +109,7 @@
 		</div>
 		<!-- **************************************************************** -->
 		<div class="row" th:if="${item == null or item.isEmpty()}">
-			<div class="col mt-2 no-result">
+			<div class="col mt-2 ml-3 no-result">
 				<img src="/assets/images/No_r.png" alt=""><br>
 				<h5>Không tìm thấy kết quả nào</h5>
 				<h4 style="color: #938484;">Có thể sản phẩm đã ngừng kinh doanh</h4>
