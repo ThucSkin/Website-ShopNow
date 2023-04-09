@@ -20,8 +20,6 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 
 import com.websiteshop.entity.Account;
-import com.websiteshop.model.FacebookClientRegistration;
-import com.websiteshop.model.FacebookOAuth2UserService;
 import com.websiteshop.service.AccountService;
 import com.websiteshop.service.CustomerService;
 
@@ -70,7 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().oauth2Login()
                 .loginPage("/security/login/form")
                 .userInfoEndpoint()
-                .userService(facebookOAuth2UserService());
+                .userService(facebookOAuth2UserService);
 
         http.formLogin()
                 .loginPage("/security/login/form")
@@ -93,11 +91,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizationEndpoint()
                 .baseUri("/oauth2/authorization")
                 .and()
-                .loginProcessingUrl("/oauth2/authorization/facebook")
+                .loginProcessingUrl("/oauth2/login/facebook")
                 .userInfoEndpoint()
-                .userService(facebookOAuth2UserService())
+                .userService(facebookOAuth2UserService)
                 .and()
-                .defaultSuccessUrl("/oauth2/login/success", true);
+                .successHandler(oAuth2LoginSuccessHandler);
 
     }
 

@@ -1,7 +1,6 @@
 
 package com.websiteshop.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -13,7 +12,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,8 +19,6 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.stereotype.Service;
 import com.websiteshop.dao.AccountDAO;
 import com.websiteshop.entity.Account;
-import com.websiteshop.entity.Authority;
-import com.websiteshop.entity.Role;
 import com.websiteshop.service.AccountService;
 
 @Service
@@ -218,46 +214,37 @@ public class AccountServiceImpl implements AccountService {
     // SecurityContextHolder.getContext().setAuthentication(auth);
     // }
 
-    // Luu vào CSDL
+    // luu vao database
     @Override
     public void loginFormOAuth2(OAuth2AuthenticationToken oauth2) {
+        String userId = oauth2.getPrincipal().getAttribute("sub");
         String email = oauth2.getPrincipal().getAttribute("email");
-        String username = email.substring(0, email.indexOf("@")).trim();
         String password = Long.toHexString(System.currentTimeMillis());
 
-        // Tạo tài khoản mới từ thông tin được truyền vào
         Account account = new Account();
-        account.setUsername(username);
+        account.setUsername(userId);
         account.setPassword(password);
         account.setFullname(oauth2.getPrincipal().getAttribute("name"));
         account.setEmail(email);
-        account.setAddress(oauth2.getPrincipal().getAttribute("address")); // thêm địa chỉ
-        account.setImage(oauth2.getPrincipal().getAttribute("image")); // thêm ảnh
-        account.setTelePhone(oauth2.getPrincipal().getAttribute("phone"));
-        // Thêm quyền vào tài khoản
-        List<Authority> authorities = account.getAuthorities();
-        if (authorities == null) {
-            authorities = new ArrayList<Authority>();
-            account.setAuthorities(authorities);
-        }
-        Role role = new Role();
-        role.setRoleId("CUST");
-        Authority authority = new Authority();
-        authority.setAccount(account);
-        authority.setRole(role);
-        authorities.add(authority);
 
-        // Lưu thông tin tài khoản vào trong CSDL
-        accountService.save(account);
+        // tạo danh sách quyền cho tài khoản
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_USER")); // ví dụ có quyền USER
 
-        // Đánh dấu việc đăng nhập thành công bằng cách set đối tượng Authentication vào
+        account.setAuthorities(authorities);
+
+        // lưu thông tin tài khoản vào trong CSDL
+        accountRepository.save(account);
+
+        // đánh dấu việc đăng nhập thành công bằng cách set đối tượng Authentication vào
         // trong SecurityContextHolder
-        UserDetails user = User.withUsername(username).password(password).roles("CUST").build();
-        Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(auth);
+        UserDetails user = User.withUsername(userId).password(password).authorities(authorities).build();
+        Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
     // reset password
+
     public void updateResetPasswordToken(String token, String email) {
         Account account = adao.findByEmail(email);
 

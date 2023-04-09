@@ -258,6 +258,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     // reset password
+
     public void updateResetPasswordToken(String token, String email) {
         Account account = adao.findByEmail(email);
 

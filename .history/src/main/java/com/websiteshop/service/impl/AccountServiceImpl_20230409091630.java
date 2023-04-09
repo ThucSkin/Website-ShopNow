@@ -222,7 +222,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void loginFormOAuth2(OAuth2AuthenticationToken oauth2) {
         String email = oauth2.getPrincipal().getAttribute("email");
-        String username = email.substring(0, email.indexOf("@")).trim();
+        String username = oauth2.getPrincipal().getAttribute("sub");
         String password = Long.toHexString(System.currentTimeMillis());
 
         // Tạo tài khoản mới từ thông tin được truyền vào

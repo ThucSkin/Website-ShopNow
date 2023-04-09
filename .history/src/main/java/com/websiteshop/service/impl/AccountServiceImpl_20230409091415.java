@@ -221,7 +221,7 @@ public class AccountServiceImpl implements AccountService {
     // Luu vào CSDL
     @Override
     public void loginFormOAuth2(OAuth2AuthenticationToken oauth2) {
-        String email = oauth2.getPrincipal().getAttribute("email");
+        String email = oauth2.getPrincipal().getAttribute("name");
         String username = email.substring(0, email.indexOf("@")).trim();
         String password = Long.toHexString(System.currentTimeMillis());
 

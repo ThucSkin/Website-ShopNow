@@ -93,7 +93,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizationEndpoint()
                 .baseUri("/oauth2/authorization")
                 .and()
-                .loginProcessingUrl("/oauth2/authorization/facebook")
+                .loginProcessingUrl("/oauth2/login/facebook")
                 .userInfoEndpoint()
                 .userService(facebookOAuth2UserService())
                 .and()

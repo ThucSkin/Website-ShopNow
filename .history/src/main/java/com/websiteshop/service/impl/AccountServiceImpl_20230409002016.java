@@ -223,6 +223,7 @@ public class AccountServiceImpl implements AccountService {
     public void loginFormOAuth2(OAuth2AuthenticationToken oauth2) {
         String email = oauth2.getPrincipal().getAttribute("email");
         String username = email.substring(0, email.indexOf("@")).trim();
+        
         String password = Long.toHexString(System.currentTimeMillis());
 
         // Tạo tài khoản mới từ thông tin được truyền vào
@@ -231,9 +232,7 @@ public class AccountServiceImpl implements AccountService {
         account.setPassword(password);
         account.setFullname(oauth2.getPrincipal().getAttribute("name"));
         account.setEmail(email);
-        account.setAddress(oauth2.getPrincipal().getAttribute("address")); // thêm địa chỉ
-        account.setImage(oauth2.getPrincipal().getAttribute("image")); // thêm ảnh
-        account.setTelePhone(oauth2.getPrincipal().getAttribute("phone"));
+
         // Thêm quyền vào tài khoản
         List<Authority> authorities = account.getAuthorities();
         if (authorities == null) {
@@ -252,12 +251,13 @@ public class AccountServiceImpl implements AccountService {
 
         // Đánh dấu việc đăng nhập thành công bằng cách set đối tượng Authentication vào
         // trong SecurityContextHolder
-        UserDetails user = User.withUsername(username).password(password).roles("CUST").build();
+        UserDetails user = User.withUsername(userId).password(password).roles("CUST").build();
         Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
     }
 
     // reset password
+
     public void updateResetPasswordToken(String token, String email) {
         Account account = adao.findByEmail(email);
 

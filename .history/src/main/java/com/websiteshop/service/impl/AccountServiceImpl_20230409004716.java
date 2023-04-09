@@ -231,9 +231,7 @@ public class AccountServiceImpl implements AccountService {
         account.setPassword(password);
         account.setFullname(oauth2.getPrincipal().getAttribute("name"));
         account.setEmail(email);
-        account.setAddress(oauth2.getPrincipal().getAttribute("address")); // thêm địa chỉ
-        account.setImage(oauth2.getPrincipal().getAttribute("image")); // thêm ảnh
-        account.setTelePhone(oauth2.getPrincipal().getAttribute("phone"));
+
         // Thêm quyền vào tài khoản
         List<Authority> authorities = account.getAuthorities();
         if (authorities == null) {
@@ -258,6 +256,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     // reset password
+
     public void updateResetPasswordToken(String token, String email) {
         Account account = adao.findByEmail(email);
 

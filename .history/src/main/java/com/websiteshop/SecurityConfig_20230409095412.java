@@ -70,7 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().oauth2Login()
                 .loginPage("/security/login/form")
                 .userInfoEndpoint()
-                .userService(facebookOAuth2UserService());
+                .userService(facebookOAuth2UserService);
 
         http.formLogin()
                 .loginPage("/security/login/form")
@@ -93,11 +93,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizationEndpoint()
                 .baseUri("/oauth2/authorization")
                 .and()
-                .loginProcessingUrl("/oauth2/authorization/facebook")
+                .loginProcessingUrl("/oauth2/login/facebook")
                 .userInfoEndpoint()
-                .userService(facebookOAuth2UserService())
+                .userService(facebookOAuth2UserService)
                 .and()
-                .defaultSuccessUrl("/oauth2/login/success", true);
+                .successHandler(oAuth2LoginSuccessHandler);
 
     }
 

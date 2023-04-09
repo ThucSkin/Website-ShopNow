@@ -16,12 +16,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 
 import com.websiteshop.entity.Account;
-import com.websiteshop.model.FacebookClientRegistration;
-import com.websiteshop.model.FacebookOAuth2UserService;
 import com.websiteshop.service.AccountService;
 import com.websiteshop.service.CustomerService;
 
@@ -66,11 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/orderHistory/**", "/favorite/**", "/comments/**").authenticated()
                 .antMatchers("/admin/**").hasAnyRole("STAF", "DIRE")
                 .antMatchers("/authority", "/security/statitic", "/statistical").hasRole("DIRE")
-                .anyRequest().permitAll()
-                .and().oauth2Login()
-                .loginPage("/security/login/form")
-                .userInfoEndpoint()
-                .userService(facebookOAuth2UserService());
+                .anyRequest().permitAll();
 
         http.formLogin()
                 .loginPage("/security/login/form")
@@ -93,23 +85,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizationEndpoint()
                 .baseUri("/oauth2/authorization")
                 .and()
-                .loginProcessingUrl("/oauth2/authorization/facebook")
+                .loginProcessingUrl("/oauth2/login/facebook")
                 .userInfoEndpoint()
-                .userService(facebookOAuth2UserService())
+                .userService(facebookOAuth2UserService)
                 .and()
-                .defaultSuccessUrl("/oauth2/login/success", true);
+                .successHandler(oAuth2LoginSuccessHandler);
 
-    }
-
-    @Bean
-    public ClientRegistrationRepository clientRegistrationRepository() {
-        return new InMemoryClientRegistrationRepository(
-                FacebookClientRegistration.clientRegistration());
-    }
-
-    @Bean
-    public FacebookOAuth2UserService facebookOAuth2UserService() {
-        return new FacebookOAuth2UserService();
     }
 
     // Cho phep truy xuat Rest API ben ngoai Domain khac
