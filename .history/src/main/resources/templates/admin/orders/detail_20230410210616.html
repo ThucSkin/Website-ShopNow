@@ -1,0 +1,83 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/admin/dist/fragment :: dynamic(~{::main})}">
+
+<body >
+    <main th:object="${order}" class="container">
+        <form class="container col-md-7 mx-auto">
+            <div class="text-center">
+                <h2 class="alert mb-5"><i class="fa-solid fa-circle-info"></i> <lable th:text="#{detail.title}"></lable></h2>
+            </div>
+            <div class="col-md-12 order-md-1">
+                <div class="row">                  
+                    <div class="col-md-6">
+                        <label><i class="fa-solid fa-pen-nib"></i> <lable th:text="#{checkout.name}"></lable></label>
+                        <input th:field="*{name}" class="form-control" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label><i class="fa-solid fa-calendar-days"></i> <lable th:text="#{order.date}"></lable>:</label>
+                        <input class="form-control" th:field="*{createDay}" readonly></input>
+                    </div>
+                    <div class="col-md-6 mt-3">
+                        <label><i class="fa-solid fa-phone"></i> <lable th:text="#{order.phone}"></lable>:</label>
+                        <input th:field="*{telePhone}" class="form-control" readonly>
+                    </div>
+                    <div class="col-md-6 mt-3">
+                        <label for="kh_ten"><i class="fa-solid fa-tag"></i> Email:</label>
+                        <input class="form-control" th:field="*{email}" readonly></input>                       
+                    </div>
+                    <div class="col-md-12 mt-3">
+                        <div><i class="fa-solid fa-location-dot"></i> <lable th:text="#{order.address}"></lable>:</div>
+                        <textarea th:field="*{address}" class="form-control" readonly></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="card card-primary mt-5">
+                <div class="card-header"><i class="fa-solid fa-list"></i> <lable th:text="#{product.title}"></lable></div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Mã HD chi tiết</th>
+                            <th>Mã đơn</th>
+                            <th>Mã SP</th>
+                            <th>Image</th>
+                            <th><lable th:text="#{cart.name}"></lable></th>
+                            <th><lable th:text="#{cart.price}"></lable></th>
+                            <th><lable th:text="#{cart.qty}"></lable></th>
+                            <th><lable th:text="#{cart.amount}"></lable></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="detail: *{orderDetails}" th:object="${detail}">
+                            <td>[[*{orderDetailId}]]</td>
+                            <td>[[*{order.orderId}]]</td>
+                            <td>[[*{product.productId}]]</td>
+                            <td>
+                                <img th:src="@{|/assets/images/${detail.product.image1}|}" class="img--stt">
+                            </td>
+                            <td>[[*{product.name}]]</td>
+                            <td>[[*{#numbers.formatInteger(price, 0, 'DEFAULT')}]]<sup>đ</sup></td> 
+                            <td>[[*{quantity}]]</td>  
+                            <td>[[*{#numbers.formatInteger(price * quantity, 0, 'DEFAULT')}]]<sup>đ</sup></td>   
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="margin-left: auto; padding:10px;">
+                    Tổng tiền: <span class="badge badge-danger" style="font-size: 20px;">[[|${#numbers.formatInteger(order.total, 0, 'DEFAULT')}|]] <sup>đ</sup></span>
+                </div>  
+            </div>
+            
+        </form>
+        <div class="text-center mt-2 mb-3"> 
+            <a th:href="@{/admin/orders/list}" >
+                <button class="btn btn-success">
+                    <i class="fa-solid fa-list"></i> Danh sách đơn hàng
+                </button></a>
+            <!-- <a th:href="@{/admin/orderDetails}" >
+                <button class="btn btn-primary">
+                    Danh sách đơn chi tiết
+                </button></a> -->
+        </div>
+    </main>
+</body>
+</html>

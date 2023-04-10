@@ -1,0 +1,143 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/admin/dist/fragment :: dynamic(~{::main})}">
+<body>
+	<main>
+		<div class="card">
+			<div class="card-header">
+				<h3><i class="fa-solid fa-list"></i> Danh sách phản hồi về hệ thống</h3>
+			</div>
+			<div class="card-body">
+                <div class="row">
+					<div class="col">
+						<label class="float-left">Total: <b>[[${totalSize}]]</b></label>
+						<form th:action="@{/admin/feedbacks}">
+							<div class="form-inline float-right">
+								<input type="text" class="form-control" name="name" id="username"
+									aria-describedby="helpId" placeholder="Tên tài khoản">
+								<button class="btn btn-outline-primary ml-2">Tìm kiếm</button>
+							</div>
+						</form>
+					</div>
+				</div>
+            </div>
+			<div class="card-body">
+				<div th:if="${message != null}" class="alert alert-primary"
+                    role="alert"> 
+					<i>[[${message}]]</i>
+				</div>
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>Mã</th>
+							<th>username</th>
+							<th>Hình ảnh</th>
+							<th>Họ và tên</th>
+							<th>SDT</th>
+							<th>Email</th>
+							<th>Phản hồi</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="item: ${feedbackPage}">
+							<td th:utext="${item.feedbackId}"></td>
+							<td>[[${item.account.username}]]</td>
+							<td><img th:src="@{|/assets/images/${item.account.image}|}" class="img--itemm"></td>
+							<td th:utext="${item.account.fullname}"></td>
+							<td>[[${item.account.telePhone}]]</td>
+							<td th:utext="${item.account.email}"></td>
+							<td><b>[[${item.description}]]</b></td>
+							<td>
+								<div class="btn-group btn-group-xs">
+									<a class="btn btn-danger" th:data-id="${item.feedbackId}"
+										th:data-name="${item.feedbackId}"
+										onclick="showConfirmModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))">
+										<i class="fa-solid fa-trash-can"></i>
+									</a>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+					<script>
+						function showConfirmModalDialog(id, name) {
+							$('#feedbackId').text(name);
+							$('#yesOption').attr('href',
+									'/admin/feedbacks/delete/' + id);
+							$('#noOption').attr('href', '/admin/feedbacks');
+							$('#confirmationId').modal('show');
+						}
+					</script>
+					<div class="modal fade" id="confirmationId" tabindex="-1"
+						role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title">Xác nhận</h5>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									Bạn có muốn xóa phản hồi mã "<span id="feedbackId"></span>"?
+								</div>
+								<div class="modal-footer">
+									<a id="yesOption" type="button" class="btn btn-danger">Đồng
+										ý</a> <a id="noOption" type="button" class="btn btn-secondary"
+										data-dismiss="modal">Hủy</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</table>
+				<div class="row" th:if="${!feedbackPage.hasContent()}">
+					<div class="col mt-2 no-result">
+						<img src="/assets/images/No_r.png" alt=""><br>
+						<h5>Không tìm thấy kết quả nào</h5>
+						<h4 style="color: #938484;">Hãy thử sử dụng các từ khóa chung chung hơn</h4>
+					</div>
+				</div>	
+				<div class="card-footer text-muted">
+                          <form action="">
+                            <div class="form-inline float-left">
+                              <label class="mr-3" for="size">Kích thước: </label>
+                              <select name="size" id="size" class="form-control"
+                              onchange="this.form.submit()">
+                                <option th:selected="${feedbackPage.size == 5}" value="5">5</option>
+                                <option th:selected="${feedbackPage.size == 10}" value="10">10</option>
+                                <option th:selected="${feedbackPage.size == 15}" value="15">15</option>
+                                <option th:selected="${feedbackPage.size == 20}" value="20">20</option>
+                                <option th:selected="${feedbackPage.size == 30}" value="30">30</option>
+                              </select>
+                            </div>
+                          </form>
+                           <nav aria-label="Page navigation"
+                           th:if="${feedbackPage.totalPages > 0}">
+                            <ul class="pagination justify-content-center">
+                              <li th:class="${1 == feedbackPage.number + 1} ? 'page-item active' : 'page-item'">
+                                <a th:href="@{/admin/feedbacks(name=${name}, size=${feedbackPage.size}, page=${1})}"
+                                class="page-link">Đầu</a>
+                              </li>
+
+                              <li class="page-item active"
+                              th:each="pageNumber : ${pageNumbers}"
+                              th:if="${feedbackPage.totalPages > 1}"
+                              th:class="${pageNumber == feedbackPage.number + 1} ? 'page-item active' : 'page-item'">
+                              <a th:href="@{/admin/feedbacks(name=${name}, size=${feedbackPage.size}, page=${pageNumber})}"
+                              class="page-link"
+                              th:text="${pageNumber}"></a>
+                              </li>
+
+                              <li th:class="${feedbackPage.totalPages == feedbackPage.number + 1} ? 'page-item active' : 'page-item'">
+                                <a th:href="@{/admin/feedbacks(name=${name}, size=${feedbackPage.size}, page=${feedbackPage.totalPages})}"
+                                class="page-link">Cuối</a>
+                              </li>
+                            </ul>
+                          </nav>
+                        </div>
+			</div>
+		</div>
+	</main>
+</body>
+</html>
