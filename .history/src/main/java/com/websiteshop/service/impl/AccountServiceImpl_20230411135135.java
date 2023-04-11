@@ -222,7 +222,7 @@ public class AccountServiceImpl implements AccountService {
         String address = oauth2.getPrincipal().getAttribute("address");
         String fullname = oauth2.getPrincipal().getAttribute("name");
         String phone = oauth2.getPrincipal().getAttribute("phone");
-        String picture = oauth2.getPrincipal().getAttribute("picture");
+        // String picture = oauth2.getPrincipal().getAttribute("picture");
         String id = oauth2.getPrincipal().getAttribute("sub");
 
         // Tạo tài khoản mới từ thông tin được truyền vào
