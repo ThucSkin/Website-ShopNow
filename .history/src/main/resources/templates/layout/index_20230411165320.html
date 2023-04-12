@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+	th:fragment="dynamic(main)">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="/assets/css/index.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<link
+	href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css"
+	rel="stylesheet" />
+<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js"
+	crossorigin="anonymous"></script>
+<!--  Angular -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+<title>ShopNow</title>
+<link rel="shortcut icon" href=/assets/images/avata2.png/>
+</head>
+
+<body class="container-fluid" ng-app="shopping-cart-app"
+	ng-controller="shopping-cart-ctrl">
+	<div class="row">
+		<div class="col-sm-12">
+			<img class="img-title" src="/assets/images/banner-title.png" alt="">
+		</div>
+	</div>
+	<nav class="col-sm-12">
+		<ul>
+			<li class="ml-4"><a th:href="@{/}"><img class="imgHome"
+					src="/assets/images/img_logoHome.png" alt=""></a></li>
+			<li>
+				<form th:action="@{/}" class="nav-search">
+					<input type="text" name="name" id="name" aria-describedby="helpId"
+						placeholder=" Bạn tìm gì...">
+					<button>
+						<i class="fa fa-search"></i>
+					</button>
+				</form>
+			</li>
+			<li>
+				<a th:href="@{/cart/view}" class="cart-i a mr-5">
+					<i class="fas fa-shopping-cart cart"></i> 
+					<label class="num">{{cart.count}}</label></a>
+			</li>
+			<li th:block th:if="${#request.remoteUser}">
+				<a style="text-decoration: none;" th:href="@{/orderHistory/list}">
+					<i class="fa-solid fa-clock-rotate-left icon"></i> 
+					<label th:text="#{nav.order_history}"></label>
+				</a>
+			</li>
+			<li><a style="text-decoration: none;" th:href="@{/help}">
+				<i class="fa-regular fa-circle-question icon"></i> 
+				<label th:text="#{nav.answer}"></label></a>
+			</li>
+			<li class="nav-item  navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+				<a class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
+					role="button" data-bs-toggle="dropdown" aria-expanded="false">
+					<i class="fa-solid fa-language icon"></i> <label th:text="#{nav.language}"></label>
+				</a>
+				<ul class="dropdown-menu dropdown">
+					<li><a class="dropdown-item" id="btn_search" href="?lang=en">English</a></li>
+					<li><a class="dropdown-item" id="btn_search" href="?lang=vi">Việt Nam</a></li>
+				</ul>
+			</li>
+			<li th:if="${#request.isUserInRole('DIRE') or #request.isUserInRole('STAF')}">
+				<a style="text-decoration: none;" th:href="@{/admin/accounts/list}">
+					<i class="fa-solid fa-lock-open icon"></i> 
+					<label th:text="#{nav.admin}"></label></a>
+			</li>
+			<th:block th:unless="${#request.remoteUser}">
+				<li class="nav-item"><a class="nav-link item"
+					th:href="@{/security/register}"> 
+					<i class="fa-solid fa-earth-americas icon"></i> 
+					<label th:text="#{nav.register}"></label></a>
+				</li>
+			</th:block>
+			<th:block th:unless="${#request.remoteUser}">
+				<li class="nav-item"><a class="nav-link item"
+					th:href="@{/security/login/form}" > 
+					<i class="fa-solid fa-earth-americas icon"></i> 
+					<label th:text="#{nav.sign}"></label></a>
+				</li>
+			</th:block>
+			<th:block th:if="${#request.remoteUser}">
+				<li class="nav-item dropdown navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+					<a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+						data-bs-toggle="dropdown" aria-expanded="false">
+						<i class="fas fa-user fa-fw icon"></i> 
+						<label>[[${#request.remoteUser}]]</label></a>
+					<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+						<li><a class="dropdown-item" href="#!" id="btn_search">
+							<i class="fa-solid fa-gear"></i> [[#{nav.setting}]]</a></li>
+						<li><a th:href="@{|/info/${#request.remoteUser}|}" id="btn_search"
+							class="dropdown-item"> 
+							<i class="fa-solid fa-circle-user"></i> [[#{nav.infoAcc}]]</a></li>
+							<li><a class="dropdown-item" id="btn_search"
+							th:href="@{/favorite}">
+							<i class="fa-brands fa-gratipay"></i> [[#{nav.Favorite}]]</a></li>
+						<li><a class="dropdown-item" id="btn_search"
+							th:href="@{/forgot_password}">
+							<i class="fa-solid fa-pen-nib"></i> [[#{nav.change_password}]]</a></li>
+						<li><a class="dropdown-item" id="btn_search"
+							th:href="@{|/user/feedback/${#request.remoteUser}|}">
+							<i class="fa-solid fa-pen"></i> [[#{nav.Feedback}]]</a></li>
+						<li><hr class="dropdown-divider" /></li>
+						<li><a class="dropdown-item" id="btn_search" th:href="@{/security/logoff}">
+							<i class="fa-solid fa-power-off"></i> [[#{nav.sign_out}]]</a></li>
+					</ul>
+				</li>
+			</th:block>
+		</ul>
+	</nav>
+	<section class="menu-bar">
+		<div class="container">
+			<div class="menu-bar-content">
+				<ul>
+					<li><a href="/product/list?cid=2"><i
+							class="fa-solid fa-mobile-screen-button"></i> <lable
+								th:text="#{section.phone}"></lable></a></li>
+					<li><a href="/product/list?cid=3"><i
+							class="fa-solid fa-laptop"></i> Laptop</a></li>
+					<li><a href="/product/list?cid=4"><i
+							class="fa-solid fa-tablet-screen-button"></i> Ipad</a></li>
+					<li><a href="/product/list?cid=5"><i
+							class="fa-regular fa-clock"></i> <lable
+								th:text="#{section.watch}"></lable></a></li>
+					<li><a href="/product/list?cid=2005"><i
+							class="fa-solid fa-tv"></i> <lable th:text="#{section.computer}"></lable></a></li>
+					<li><a href="/product/list?cid=8"><i
+							class="fa-solid fa-headphones"></i> <lable
+								th:text="#{section.accessory}"></lable></a></li>
+				</ul>
+			</div>
+		</div>
+	</section>
+	<!-- <div class="imgSale mb-2">
+		<img src="/assets/images/img-sale4.png" alt=""> <img
+			src="/assets/images/bannerSale1.png" alt=""> <img
+			src="/assets/images/img-sale9.png" alt=""> <img
+			src="/assets/images/bannerSale3.png" alt=""> <img
+			src="/assets/images/img-sale6.png" alt="">
+	</div> -->
+	<div class="row">
+		<div class="col-sm-8 slide-left">
+			<div class="w3-content w3-section">
+				<img class="mySlides w3-animate-left slide"
+					src="/assets/images/bannerSale.png"> 
+				<img class="mySlides w3-animate-left slide"
+					src="/assets/images/slide_banner1.png"> 
+				<img class="mySlides w3-animate-left slide"
+					src="/assets/images/img-sale5.png"> 
+			</div>
+		</div>
+		<div class="col-sm-4 slide-right">
+			<img src="/assets/images/img-sale8png.png" alt="" class="m mb-1 mt-3">
+			<img src="/assets/images/slide_banner3.png" alt="" class="m">
+		</div>
+	</div>
+	<!-- <div class="page">
+		<div class="row">
+			<div class="col">
+				<a th:href="@{/product/list/hotsale}">
+					<img class="hotsale ml-4" src="/assets/images/hotSale.png" alt="">
+					<p class="km" th:text="#{main.PROMOTION}"></p>
+				</a>
+			</div>
+		</div>
+		<div>
+			<Strong> <marquee class="marquee">
+					<label>[[#{maquee.title}]]</label> <i class="fas fa-heart"></i>
+				</marquee>
+			</Strong>
+		</div> 
+	</div> -->
+
+	<!--           main             -->
+	<div class="row mt-4">
+		<div class="col">
+			<div th:replace="${main}"></div>
+		</div>
+	</div>
+	<hr>
+	<hr>
+	<footer class="ml-3">
+		<div>
+			<h2 class="ShopNow-footer-section__heading">
+				<span style="font-size: 12px"><span
+					style="font-family: Roboto, sans-serif"><span
+						style="color: #000000"><b>MUA SẮM VÀ BÁN HÀNG ONLINE
+								ĐƠN GIẢN, NHANH CHÓNG VÀ AN TOÀN</b></span></span></span>
+			</h2>
+			<p class="ShopNow-footer-section__content">
+				<span style="font-size: 12px"><span
+					style="font-family: Roboto, sans-serif"><span
+						style="color: #000000">Nếu bạn đang tìm kiếm một trang web
+							để mua và bán hàng trực tuyến thì Shopnow.vn là một sự lựa chọn
+							tuyệt vời dành cho bạn. Bản chất của Shop now là một social
+							E-commerce platform - nền tảng trang web <b>thương mại điện
+								tử</b> tích hợp mạng xã hội. Điều này cho phép người mua và người
+							bán hàng dễ dàng tương tác, trao đổi thông tin về sản phẩm và
+							chương trình khuyến mãi của shop. Nhờ nền tảng đó, việc mua bán
+							trên Shopnow trở nên nhanh chóng và đơn giản hơn. Bạn có thể trò
+							chuyện trực tiếp với nhà bán hàng để hỏi trực tiếp về mặt hàng
+							cần mua. Còn nếu bạn muốn tìm mua những dòng sản phẩm chính hãng,
+							uy tín,
+					</span></span><u><a style="color: inherit" href=""><span
+							style="font-family: Roboto, sans-serif"><b><u>Shopnow
+										Mall</u></b></span></a></u><span style="font-family: Roboto, sans-serif"><span
+						style="color: #000000"> chính là sự lựa chọn lí tưởng dành
+							cho bạn. Để bạn có thể dễ dàng khi tìm hiểu và sử dụng sản phẩm,
+					</span></span><u><a style="color: inherit" href=""><span
+							style="font-family: Roboto, sans-serif"><b><u>Shop
+										now Blog</u></b></span></a></u><span style="font-family: Roboto, sans-serif"><u><a
+							style="color: inherit" href=""> - <b>trang
+									blog thông tin chính thức của Shop now</b></a></u><span
+						style="color: #000000"> Sẽ giúp bạn có thể tìm được cho
+							mình các kiến thức về xu hướng thời trang, review công nghệ, mẹo
+							làm đẹp, tin tức tiêu dùng và deal giá tốt bất ngờ.</span></span></span> <hr>
+							<span style="font-size: 12px"><b>MUA HÀNG CHÍNH HÃNG TỪ CÁC THƯƠNG HIỆU LỚN VỚI SHOPNOW</b><br>
+								Mua hàng trên ShopNow luôn là một trải nghiệm ấn tượng. Dù bạn đang có nhu cầu mua bất kỳ
+								mặt hàng thời trang nam,thời trang nữ,đồng hồ, điện thoại,nước rửa tay khô hay 
+								khẩu trang N95 thì ShopNow cũng sẽ đảm bảo cung cấp cho bạn những sản phẩm ưng ý. 
+								Bên cạnh đó, ShopNow cũng có sự tham gia của các thương hiệu hàng đầu thế giới ở 
+								đa dạng nhiều lĩnh vực khác nhau. Trong đó có thể kể đến Samsung, OPPO, Xiaomi, 
+								Innisfree, Unilever, P&G, Biti’s,...Các thương hiệu này hiện cũng đã có cửa hàng 
+								chính thức trên ShopNow Mall với hàng trăm mặt hàng chính hãng, được cập nhập liên tục. 
+								Là một kênh bán hàng uy tín, ShopNow luôn cam kết mang lại cho khách hàng những 
+								trải nghiệm mua sắm online giá rẻ, an toàn và tin cậy. Mọi thông tin về người bán 
+								và người mua đều được bảo mật tuyệt đối. Các hoạt động giao dịch thanh toán tại 
+								ShopNow luôn được đảm bảo diễn ra nhanh chóng, an toàn. Một vấn đề nữa khiến cho 
+								các khách hàng luôn quan tâm đó chính là mua hàng trên ShopNow có đảm bảo không.
+								ShopNow luôn cam kết mọi sản phẩm trên ShopNow, đặc biệt là ShopNow Mall đều là
+								những sản phẩm chính hãng, đầy đủ tem nhãn, bảo hành từ nhà bán hàng. 
+								Ngoài ra, ShopNow bảo vệ người mua và người bán bằng cách giữ số tiền giao dịch 
+								đến khi người mua xác nhận đồng ý với đơn hàng và không có yêu cầu khiếu nại, 
+								trả hàng hay hoàn tiền nào. Thanh toán sau đó sẽ được chuyển đến cho người bán. 
+								Đến với ShopNow ngay hôm nay để mua hàng online giá rẻ và trải nghiệm dịch vụ 
+								chăm sóc khách hàng tuyệt vời tại đây. Đặc biệt khi mua sắm trên ShopNow Mall, 
+								bạn sẽ được miễn phí vận chuyển, giao hàng tận nơi và 7 ngày miễn phí trả hàng. 
+								Ngoài ra, khách hàng có thể sử dụngShopNow Xu để đổi lấy mã giảm giá có giá trị 
+								cao và voucher dịch vụ hấp dẫn. Tiếp đến là ShopNow Home Club, ShopNow Mum Club, 
+								ShopNow Beauty Club vàShopNow Book Club với các ưu đãi độc quyền từ các thương 
+								hiệu lớn có những khách hàng đã đăng ký làm thành viên. Hãy truy cập ngay ShopNow.
+								vn hoặc tải ngay ứng dụng ShopNow về điện thoại ngay hôm nay!</span><hr>
+								<span><h2>ShopNow Affiliate Program</h2><br>
+									<b>Thông tin liên lạc</b> <br>
+									Địa chỉ: 21 Đ. Phú Thạnh 1, Hòa Khánh Bắc, Quận Liên Chiểu, Thành phố Đà Nẵng <br>
+									Tổng đài: 1900 1221 <br>
+									Email: support@shopnow.vn</span> <hr>
+									<img>Theo dõi ShopNow Affiliate Program tại <a href="https://www.facebook.com/ThucSkin202"><img src="/assets/images/fb1.png"></a></h4>
+			</p>
+		</div>
+		<div style="float: right;" class="mb-3">Shop Now &copy;2022.All rights
+			reserved.
+		</div>
+		<div class="zalo-chat-widget" data-oaid="1417344681825631378" data-welcome-message="Rất vui khi được hỗ trợ bạn!" data-autopopup="0" data-width="" data-height=""></div>
+	</footer>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+	<!-- Icon  -->
+	<script src="/assets/js/all.min.js"></script>
+	<script src="/assets/js/shopping-cart-app.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+	<!-- slide-banner -->
+	<script src="/assets/js/slide-banner.js"></script>
+	<script src="/assets/js/scripts.js"></script>
+	<script src="https://sp.zalo.me/plugins/sdk.js"></script>
+</body>
+
+</html>

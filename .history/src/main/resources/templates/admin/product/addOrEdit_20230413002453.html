@@ -1,0 +1,246 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" 
+    th:replace="~{/admin/dist/fragment :: dynamic(~{::main})}">
+    <body>
+       <main>
+		<form action="/admin/product/saveOrUpdate" method="post"
+			enctype="multipart/form-data" th:object="${product}">
+			<div class="card">
+				<div class="card-header card bg-primary text-white"
+					style="text-align: center">
+					<h2><i class="fa-solid fa-pen-to-square"></i> [[${product.isEdit ? 'Cập nhật sản phẩm' : 'Thêm mới sản phẩm'}]]</h2>
+				</div>
+				<div th:if="${message != null}" class="alert alert-primary"
+                    role="alert"> 
+					<i>[[${message}]]</i>
+				</div>
+				<div class="card-body">
+					<div class="row">
+					<input type="hidden" th:field="*{isEdit}">
+						<div class="col-sm-4 img">
+							<div class="row">
+								<img id="image1" th:field="*{image1}" name="image1"
+									th:src="${product.image1 != null? '/admin/product/images/' + product.image1 : '/assets/images/no-image-product.jpg'}"
+									src="/assets/images/noimage.jpg" class="img_main" alt="">
+							</div>
+							<div class="row img-child"> 
+								<img id="image2" th:field="*{image2}" name="image2"
+								th:src="${product.image2 != null? '/admin/product/images/' + product.image2 : '/assets/images/no-image-product.jpg'}"
+								src="/assets/images/noimage.jpg" alt="">
+                                <img id="image3" th:field="*{image3}" name="image3"
+								th:src="${product.image3 != null? '/admin/product/images/' + product.image3 : '/assets/images/no-image-product.jpg'}"
+								src="/assets/images/noimage.jpg" alt="">
+								<img id="image4" th:field="*{image4}" name="image4"
+								th:src="${product.image4 != null? '/admin/product/images/' + product.image4 : '/assets/images/no-image-product.jpg'}"
+								src="/assets/images/noimage.jpg" alt="">
+                            </div>
+							<div class="row mb-3">
+								<div class="col-sm-12">
+									<label for="">Image Main:</label>
+									<input type="file" name="image1File" 
+									onchange="chooseFile(this)" placeholder="Product Image"
+									aria-describedby="productImageHid"
+									class="form-control" id="productImage">
+								</div>
+								<div class="col-sm-4 mt-3">
+									<label for="">Image2:</label>
+									<input type="file" name="image2File"
+									onchange="chooseFile2(this)" placeholder="Product Image"
+									aria-describedby="productImageHid"
+									class="form-control" id="productImage"> 
+								</div>
+								<div class="col-sm-4 mt-3">
+									<label for="">Image3:</label>
+									<input type="file" name="image3File"
+									onchange="chooseFile3(this)" placeholder="Product Image"
+									aria-describedby="productImageHid"
+									class="form-control" id="productImage">
+								</div>
+								<div class="col-sm-4 mt-3">
+									<label for="">Image4:</label>
+									<input type="file" name="image4File"
+									onchange="chooseFile4(this)" placeholder="Product Image"
+									aria-describedby="productImageHid"
+									class="form-control" id="productImage"> 
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-8 ses ">
+							<div class="row">
+								<div class="form-group col-sm-3" hidden>
+									<div>image1:</div>
+									<input th:field="*{image1}"  name="image1"
+										placeholder="Unit Price" class="form-control mt-2">
+								</div>
+								<div class="form-group col-sm-3" hidden>
+									<div>image2:</div>
+									<input th:field="*{image2}"  name="image2"  
+										placeholder="Unit Price" class="form-control mt-2">
+								</div>
+								<div class="form-group col-sm-3" hidden>
+									<div>image3:</div>
+									<input th:field="*{image3}"  name="image3"  
+										placeholder="Unit Price" class="form-control mt-2">
+								</div>
+								<div class="form-group col-sm-3" hidden>
+									<div>image4:</div>
+									<input th:field="*{image4}" name="image4" 
+										placeholder="Unit Price" class="form-control mt-2">
+								</div>
+								<div class="form-group col-sm-3">
+									<label for="productId">Mã sản phẩm: </label> <input type="text"
+										readonly="readonly" class="form-control" name="productId" 
+										id="productId" th:field="*{productId}"
+										aria-describedby="productIdHid" placeholder="Product ID">
+								</div>
+								<div class="form-group col-sm-3">
+									<div>Giá mới:</div>
+									<input th:field="*{unitPrice}" type="number" name="price" min="0" required
+										placeholder="Unit Price" class="form-control mt-2">
+								</div>
+								<div class="form-group col-sm-3">
+									<div>Giá cũ:</div>
+									<input th:field="*{oldPrice}" type="number" name="oldPrice" 
+										placeholder="Old Price" class="form-control mt-2">
+								</div>
+								<div class="form-group col-sm-3">
+									<div>Sale:</div>
+									<select name="hotSale" th:field="*{hotSale}" id="hotSale" class="form-control mt-2">
+										<option name="hotSale" value="white-img.png">No Hot Sale</option>
+										<option name="hotSale" value="hot-icon.gif">Hot Sale</option>
+									</select>
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-group col-sm-3">
+									<div>Tên sản phẩm:</div>
+									<input th:field="*{name}" type="text" name="name" required
+										placeholder="Name" class="form-control mt-2">
+								</div>
+								<div class="form-group col-sm-3 ">
+									<div>RAM:</div>
+									<select name="RAM" th:field="*{RAM}" id="" class="form-control mt-2">
+										<option name="RAM" value=""></option>
+										<option name="RAM" value="/ 2GB">2 GB</option> 
+										<option name="RAM" value="/ 3GB">3 GB</option>
+										<option name="RAM" value="/ 4GB">4 GB</option>
+										<option name="RAM" value="/ 6GB">6 GB</option>
+										<option name="RAM" value="/ 8GB">8 GB</option>
+										<option name="RAM" value="/ 12GB">12 GB</option>
+									</select>
+								</div>	
+								<div class="form-group col-sm-3">
+									<label for="categoryId">Loại hàng:</label> 
+										<select	class="form-control" name="categoryId" id="categoryId"
+											th:field="*{categoryId}">
+											<option th:each="item : ${categories}"
+											th:value="${item.categoryId}" th:text="${item.name}"
+											th:selected="${item.categoryId == product.categoryId}">Loại hàng</option>
+										</select>
+								</div>
+								<div class="form-group col-sm-3 ">
+									<div>Hãng:</div>
+									<select name="theFirm" th:field="*{theFirm}" id="" class="form-control mt-2">
+										<option name="theFirm" value=""></option>
+										<option name="theFirm" value="iphone">Iphone</option>
+										<option name="theFirm" value="samsum">Samsum</option>
+										<option name="theFirm" value="oppo">Oppo</option>
+										<option name="theFirm" value="nokia">Nokia</option>
+										<option name="theFirm" value="realme">Realme</option>
+										<option name="theFirm" value="xiaomi">Xiaomi</option>
+										<option name="theFirm" value="vivo">Vivo</option>
+										<option name="theFirm" value="tcl">TCL</option>
+										<option name="theFirm" value="mobell">Mobell</option>
+										<option name="theFirm" value="itel">Itel</option>
+										<option name="theFirm" value="masstel">Masstel</option>
+									</select>
+								</div>			
+							</div>
+							<div class="row">
+								<div class="form-group col-sm-3 ">
+									<div>Ngày tạo:</div>
+									<input th:field="*{enteredDay}" type="date" name="enteredDay" required
+										class="form-control mt-2">
+								</div>
+								<div class="form-group col-sm-3 ">
+									<div>Đánh giá:</div>
+									<select name="image5" th:field="*{image5}" id="image5" class="form-control mt-2">
+										<option name="image5" value="5sao.png">5 Sao</option>
+										<option name="image5" value="4sao.png">4 Sao</option>
+										<option name="image5" value="3sao.png">3 Sao</option>
+										<option name="image5" value="2sao.png">2 Sao</option>
+										<option name="image5" value="1sao.png">1 Sao</option>
+									</select>
+								</div>
+								<div class="form-group col-sm-3">
+									<div>Số lượng:</div>
+									<input th:field="*{quantity}" type="number" min="1" required
+										placeholder="0" class="form-control mt-2"></input>
+								</div>
+								<div class="form-group col-sm-3">
+									<div>Giảm giá (%):</div>
+									<input th:field="*{discount}" type="number" min="0" required
+										placeholder="Discount"
+										class="form-control mt-2">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<div>Mô tả:</div>
+									<textarea rows="4"th:field="*{discription}" placeholder="Description"
+										class="mt-2 form-control description"></textarea>
+								</div>
+							</div>
+							<div class="card-footer text-center mt-2">
+								<button class="btn btn-primary mr-3">
+									<i class="fas fa-save"></i> [[${product.isEdit? 'Cập nhật':'Thêm mới'}]]
+								</button>
+								<a th:href="@{/admin/product/list}" class="btn btn-success mr-2">
+									<i class="fa-solid fa-list"></i> Danh sách sản phẩm</a>
+								<a class="btn btn-danger mr-2" th:if="${product.isEdit}"
+									th:data-id="${product.productId}" th:data-name="${product.name}"
+									onclick="showConfirmModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))">
+									<i class="fa-regular fa-trash-can"></i> Xóa 
+								</a> <a th:href="@{/admin/product/add}" class="btn btn-info mr-3">
+									<i class="fa-regular fa-window-restore"></i> Làm mới 
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<script>
+				function showConfirmModalDialog(id, name) {
+					$('#username').text(name);
+					$('#yesOption')
+							.attr('href', '/admin/product/delete/' + id);
+					$('#noOption').attr('href', '/admin/product/edit/' + id);
+					$('#confirmationId').modal('show');
+				}
+			</script>
+			<div class="modal fade" id="confirmationId" tabindex="-1"
+				role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">Xác nhận</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							Bạn có muốn xóa "<span id="username"></span>"?
+						</div>
+						<div class="modal-footer">
+							<a id="yesOption" type="button" class="btn btn-danger">Đồng ý</a>
+							<a id="noOption" type="button" class="btn btn-secondary"
+								data-dismiss="modal">Hủy</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+		</form>
+	</main>  
+    </body>
+</html>

@@ -1,0 +1,170 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/admin/dist/fragment :: dynamic(~{::main})}">
+<body>
+	<main>
+		<div class="card">
+			<div class="card-header">
+				<h3>
+					<i class="fa-solid fa-list"></i> Danh sách đơn hàng
+				</h3>
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col">
+						<label class="float-left">Tất cả: <b>[[${totalSize}]]</b> đơn hàng</label>
+						<form th:action="@{/admin/orders/list}">
+							<div class="form-inline float-right">
+								<input type="text" class="form-control" name="name" id="name"
+									aria-describedby="helpId" placeholder="Tên khách hàng">
+								<button class="btn btn-outline-primary ml-2">Tìm kiếm</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="card-body">
+				<div th:if="${message != null}" class="alert alert-primary"
+					role="alert">
+					<i>[[${message}]]</i>
+				</div>
+				<table class="table table-hover">
+					<thead class="bg-light">
+						<tr>
+							<th>ID</th>
+							<th>Hình</th>
+							<th>Họ tên</th>
+							<th>Ngày đặt</th>
+							<th>SDT</th>
+							<th>Email</th>
+							<th>Tổng đơn</th>
+							<th>Trạng thái</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody class="text_tbody">
+						<tr th:each="item, state: ${orderPage.content}">
+							<td th:utext="${item.orderId}"></td>
+							<td><img th:src="@{|/assets/images/${item.account.image}|}" class="img--itemm"></td>
+							<td th:utext="${item.name}"></td>
+							<td th:utext="${item.createDay}"></td>
+							<td th:utext="${item.telePhone}"></td>
+							<td th:utext="${item.email}"></td>
+							<td><b>[[*{#numbers.formatInteger(item.total, 0, 'DEFAULT')}]] <sup>đ</sup></b></td>
+							<td>
+								<label class="status_order" 
+									th:style="${item.status == 'Đã giao hàng' ? 'background-color: yellowgreen;' : (item.status == 'Đang vận chuyển' ? 'background-color: hsl(35, 56%, 64%);' : (item.status == 'Đã hủy' ? 'background-color: red;' : (item.status == 'Đang chờ xác nhận' ? 'background-color: color: #c3bbbb;;' : '')))}">
+									<b>[[${item.status}]]</b>
+								</label>
+							</td>
+							  
+							<td>
+								<div class="btn-group btn-group-xs">
+									<a th:href="@{|/admin/orders/detail/${item.orderId}|}"
+										class="btn btn-default" id="btn_detail_history"> 
+										<i class="fa-solid fa-magnifying-glass-plus"></i>
+										Xem chi tiết đơn
+									</a>
+									<button class="btn btn-primary" id="btn_duyet" data-toggle="modal"
+										data-target="#exampleModal-3">
+										<span>Duyệt</span>
+									</button>
+									<form th:action="@{/admin/orders/updateStatus}"
+										th:object="${LISTSTATUS}" method="POST">
+										<div class="modal fade" id="exampleModal-3" tabindex="-1"
+											role="dialog" aria-labelledby="exampleModalLabel-3"
+											aria-hidden="true" style="display: none;">
+											<div class="modal-dialog " role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title" id="exampleModalLabel-3">Trạng
+															thái</h5>
+														<a type="button" class="close" data-dismiss="modal"
+															aria-label="Close"> <span aria-hidden="true">×</span>
+														</a>
+													</div>
+													<div class="modal-body">
+														<div class="form-group text-center">
+															<select class="form-control" name="orderId">
+																<option th:each="order : ${orders}" th:value="${order.orderId}" th:text="${order.orderId}"></option>
+															</select>															
+														</div>
+													</div>
+													<div class="modal-body">
+														<div class="form-group text-center">
+															<select th:field="*{status}" class="form-control">
+																<option th:each="item2 : ${list_status}"
+																	th:value="${item2.status}" th:text="${item2.status}">1</option>
+															</select>
+														</div>
+													</div>
+
+													<div class="modal-footer">
+														<button style="color: white;" type="submit"
+															class="btn btn-success">Duyệt</button>
+														<a type="button" class="btn btn-light"
+															data-dismiss="modal">Thoát</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="row" th:if="${!orderPage.hasContent()}">
+					<div class="col mt-2 no-result">
+						<img src="/assets/images/No_r.png" alt=""><br>
+						<h5>Không tìm thấy kết quả nào</h5>
+						<h4 style="color: #938484;">Hãy thử sử dụng các từ khóa chung chung hơn</h4>
+					</div>
+				</div>
+				<div class="card-footer text-muted">
+					<form action="">
+						<div class="form-inline float-left">
+							<label class="mr-3" for="size">Kích thước: </label> <select
+								name="size" id="size" class="form-control"
+								onchange="this.form.submit()">
+								<option th:selected="${orderPage.size == 5}" value="5">5</option>
+								<option th:selected="${orderPage.size == 10}" value="10">10</option>
+								<option th:selected="${orderPage.size == 15}" value="15">15</option>
+								<option th:selected="${orderPage.size == 20}" value="20">20</option>
+								<option th:selected="${orderPage.size == 30}" value="30">30</option>
+							</select>
+						</div>
+					</form>
+					<nav aria-label="Page navigation"
+						th:if="${orderPage.totalPages > 0}">
+						<ul class="pagination justify-content-center">
+							<li
+								th:class="${1 == orderPage.number + 1} ? 'page-item active' : 'page-item'">
+								<a
+								th:href="@{/admin/orders/list(name=${name}, size=${orderPage.size}, page=${1})}"
+								class="page-link">Đầu</a>
+							</li>
+
+							<li class="page-item active"
+								th:each="pageNumber : ${pageNumbers}"
+								th:if="${orderPage.totalPages > 1}"
+								th:class="${pageNumber == orderPage.number + 1} ? 'page-item active' : 'page-item'">
+								<a
+								th:href="@{/admin/orders/list(name=${name}, size=${orderPage.size}, page=${pageNumber})}"
+								class="page-link" th:text="${pageNumber}"></a>
+							</li>
+
+							<li
+								th:class="${orderPage.totalPages == orderPage.number + 1} ? 'page-item active' : 'page-item'">
+								<a
+								th:href="@{/admin/orders/list(name=${name}, size=${orderPage.size}, page=${orderPage.totalPages})}"
+								class="page-link">Cuối</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</main>
+</body>
+</html>
