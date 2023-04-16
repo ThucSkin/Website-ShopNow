@@ -1,0 +1,72 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{/admin/dist/fragment :: dynamic(~{::main})}">
+<body>
+    <main>
+        <div class="card">
+            <div class="card-header card bg-primary text-white"
+				style="text-align: center">
+				<h3><i class="fa-solid fa-list"></i> Danh sách đơn hàng</h3>
+			</div>
+            <table class="table table-hover" id="datatablesSimple">
+                <div class="order-status mt-2 mb-2">
+                    <a th:href=@{/admin/orderDetails/confirmation}><label onmousemove="mDown(this)"><i class="fa-solid fa-circle-check"></i> [[#{order.waiting}]]</label></a>
+                    <a th:href=@{/admin/orderDetails/transported}><label onmousemove="mDown(this)"><i class="fa-solid fa-truck"></i> [[#{order.Being_transported}]]</label></a>
+                    <a th:href=@{/admin/orderDetails/delivery}><label onmousemove="mDown(this)"><i class="fa-solid fa-road"></i> [[#{order.Delivery_in_progress}]]</label></a>
+                    <a th:href=@{/admin/orderDetails/delivered}><label onmousemove="mDown(this)"><i class="fa-solid fa-face-smile"></i> [[#{order.Delivered}]]</label></a>
+                </div>
+                <script>
+                    function mDown(obj) {
+                        obj.style.color = "red";
+                    }
+                </script>
+				<thead class="bg-light ">
+                    <tr>
+                        <!-- <th>No.</th> -->
+                        <th>[[#{order.Code_orders}]]</th>
+                        <th>[[#{order.name}]]</th>
+                        <th>[[#{order.date}]]</th>                       
+                        <th>[[#{order.phone}]]</th>
+                        <th>Email</th>
+                        <th>[[#{order.address}]]</th>
+                        <th>[[#{cart.status}]]</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each=" order,state: ${orders}">
+                        <!-- <td>[[${state.index}]]</td> -->
+                        <td>[[${order.orderId}]]</td>
+                        <td>[[${order.name}]]</td>
+                        <td>[[${order.createDay}]]</td>
+                        <td>[[${order.telePhone}]]</td>
+                        <td>[[${order.email}]]</td>              
+                        <td>[[${order.address}]]</td> 
+                        <td style="color: red; font-weight: bold;">[[${order.status}]]</td>
+                        <th class="btn-group btn-group-xs">
+                            <a th:href="@{|/admin/orders/detail/${order.orderId}|}" class="btn btn-default">
+                                <i class="fa-solid fa-magnifying-glass-plus"></i>
+                            </a>
+                            <a class="btn btn-warning"
+								th:href="@{'/admin/orders/edit/' + ${order.orderId}}">
+								<i class="fa-regular fa-pen-to-square"></i>
+							</a>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center mb-3 "> 
+                <a th:href="@{/admin/orders}" >
+                    <button class="btn btn-success">
+                        Danh sách đơn hàng
+                    </button></a>
+                <!-- <a th:href="@{/admin/orderDetails}" >
+                    <button class="btn btn-primary">
+                        Danh sách đơn chi tiết
+                    </button></a> -->
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
