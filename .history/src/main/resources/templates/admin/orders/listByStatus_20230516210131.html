@@ -65,6 +65,50 @@
 								<i class="fa-solid fa-magnifying-glass-plus"></i>
 								Xem chi tiết đơn
 							</a>
+							<button class="btn btn-primary" id="btn_duyet" data-toggle="modal"
+								data-target="#exampleModal-3">
+								<span>Duyệt</span>
+							</button>
+							<form th:action="@{/admin/orders/updateStatus}"
+								th:object="${LISTSTATUS}" method="POST">
+								<div class="modal fade" id="exampleModal-3" tabindex="-1"
+									role="dialog" aria-labelledby="exampleModalLabel-3"
+									aria-hidden="true" style="display: none;">
+									<div class="modal-dialog " role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="exampleModalLabel-3">Trạng
+													thái</h5>
+												<a type="button" class="close" data-dismiss="modal"
+													aria-label="Close"> <span aria-hidden="true">×</span>
+												</a>
+											</div>
+											<div class="modal-body">
+												<div class="form-group text-center">
+													<select class="form-control" name="orderId">
+														<option th:each="order : ${orders}" th:value="${order.orderId}" th:text="${order.orderId}"></option>
+													</select>															
+												</div>
+											</div>
+											<div class="modal-body">
+												<div class="form-group text-center">
+													<select th:field="*{status}" class="form-control">
+														<option th:each="item2 : ${list_status}"
+															th:value="${item2.status}" th:text="${item2.status}">1</option>
+													</select>
+												</div>
+											</div>
+
+											<div class="modal-footer">
+												<button style="color: white;" type="submit"
+													class="btn btn-success">Duyệt</button>
+												<a type="button" class="btn btn-light"
+													data-dismiss="modal">Thoát</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
 						</div>
 					</td>			
 				</tr>
