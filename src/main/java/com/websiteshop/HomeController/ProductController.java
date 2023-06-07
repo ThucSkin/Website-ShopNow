@@ -58,9 +58,8 @@ public class ProductController {
             resultPage = productService.findByNameContaining(name, pageable);
             model.addAttribute("name", name);
             // get size of the page
-            Page<Product> list = productService.findByNameContaining(name, pageable);
-            int listSize = list.getSize();
-            model.addAttribute("totalItems", listSize);
+            long totalSize = productService.countByNameContaining(name);
+            model.addAttribute("totalItems", totalSize);
         } else {
             resultPage = productService.findAll(pageable);
             List<Product> items = productService.findAll();

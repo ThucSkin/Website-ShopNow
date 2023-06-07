@@ -9,14 +9,28 @@ app.controller("shopping-cart-ctrl", function ($scope, $http) {
         add(id) {
             var item = this.items.find(item => item.productId == id);
             if (item) {
+                Toastify({
+                    text: "Đã thêm sản phẩm vào giỏ!",
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+                }).showToast();
                 item.qty++;
                 this.saveToLocalStorage();
-                alert("Đã thêm vào giỏ!");
+
             } else {
                 $http.get(`/rest/products/${id}`).then(resp => {
                     resp.data.qty = 1;
                     this.items.push(resp.data);
                     this.saveToLocalStorage();
+                    Toastify({
+                        text: "Đã thêm sản phẩm vào giỏ!",
+                        duration: 3000,
+                        gravity: "top",
+                        position: "right",
+                        backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+                    }).showToast();
                 })
             }
         },
@@ -26,10 +40,25 @@ app.controller("shopping-cart-ctrl", function ($scope, $http) {
             var index = this.items.findIndex(item => item.productId == id);
             this.items.splice(index, 1);
             this.saveToLocalStorage();
+            Toastify({
+                text: "Đã xóa sản phẩm khỏi giỏ hàng!",
+                duration: 3000,
+                gravity: "top",
+                position: "right",
+                backgroundColor: "linear-gradient(to right, #ff0000, #990000)",
+            }).showToast();
         },
         //clear
         clear() {
             this.items = [];
+            Toastify({
+                text: "Giỏ hàng đã được làm mới!",
+                duration: 3000,
+                gravity: "top", // Vị trí hiển thị (top, bottom, left, right)
+                position: "center", // Vị trí chi tiết (top-left, top-right, bottom-left, bottom-right, center)
+                backgroundColor: "linear-gradient(to right, #ff5722, #ff9800)",
+                className: "custom-toast" // Thêm class tùy chỉnh để điều chỉnh kích thước
+            }).showToast();
             this.saveToLocalStorage();
         },
         //tinhtiencua1sanpham
@@ -83,27 +112,39 @@ app.controller("shopping-cart-ctrl", function ($scope, $http) {
             });
         },
         purchase() {
+            var message = Toastify({
+                text: "Vui lòng nhập đầy đủ thông tin!",
+                duration: 3000,
+                gravity: "top", // Vị trí hiển thị (top, bottom, left, right)
+                position: "center", // Vị trí chi tiết (top-left, top-right, bottom-left, bottom-right, center)
+                backgroundColor: "linear-gradient(to right, #ff5722, #ff9800)",
+                className: "custom-toast" // Thêm class tùy chỉnh để điều chỉnh kích thước
+            }).showToast();
             var order = angular.copy(this);
             // Thực hiện đặt hàng
             if ($scope.order.total < 40000) {
                 alert("Vui lòng thêm sản phẩm trước khi đặt hàng!");
             } else if ($scope.order.name == "") {
-                alert("Vui lòng nhập đầy đủ thông tin!");
+                message();
             } else if ($scope.order.telePhone == "") {
-                alert("Vui lòng nhập đầy đủ thông tin!");
+                message();
             } else if ($scope.order.email == "") {
-                alert("Vui lòng nhập đầy đủ thông tin!");
+                message();
             } else if ($scope.order.address == "") {
-                alert("Vui lòng nhập đầy đủ thông tin!");
+                message();
             } else {
                 $http.post("/rest/orders", order).then(resp => {
-                    alert("Đặt hàng thành công!");
                     $scope.cart.clear();
                     location.href = "/orderHistory/detail/" + resp.data.orderId;
                 })
                     .catch(error => {
-                        alert("Đặt hàng thất bại!")
-                        console.log(error)
+                        Toastify({
+                            text: "Đặt hàng thất bại!",
+                            duration: 3000,
+                            gravity: "top",
+                            position: "right",
+                            backgroundColor: "linear-gradient(to right, #ff0000, #990000)",
+                        }).showToast();
                     })
             }
         }

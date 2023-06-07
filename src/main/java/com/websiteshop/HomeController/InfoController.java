@@ -4,6 +4,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+
 import com.websiteshop.entity.Account;
 import com.websiteshop.model.AccountDto;
 import com.websiteshop.service.AccountService;
@@ -85,4 +89,18 @@ public class InfoController {
                 .body(file);
     }
 
+    @GetMapping("/user/image")
+    public ResponseEntity<String> getUserImage() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        Account user = accountService.findByUsername(username);
+        if (user != null && user.getImage() != null) {
+            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(user.getImage());
+
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+
+    }
 }

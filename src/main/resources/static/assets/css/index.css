@@ -655,6 +655,12 @@ nav ul li a label {
   text-align: center;
   width: 20px;
 }
+.custom-toast {
+  width: 80vh;
+  font-size: 20px;
+  /* Các thuộc tính CSS khác để tùy chỉnh kích thước và vị trí */
+}
+
 
 
 
