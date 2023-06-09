@@ -103,13 +103,14 @@
     position: relative;
   }
   .num{
-    border-color:red;
+    border-color:rgb(234, 230, 6);
     border-radius:45%;
     border-style:solid;
     border-width:1.99479px;
-    color:yellow;
+    color:rgb(181, 228, 240);
     font-family:'Times New Roman', Times, serif;
     font-size:15px;
+    font-weight: bold;
     text-align:center;
     width: 28px;
     height: 27px;

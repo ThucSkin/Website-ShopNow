@@ -56,7 +56,7 @@ Một vài ảnh demo giao diện phía **Admin**:
 
 ### Hướng dẫn cấu hình kết nối DATABASE
 
-**Nhấn [vào đây](https://github.com/ThucSkin/Website-ShopNow/blob/main/src/main/resources/db/data_ShopNow.sql) để lấy Link DATABASE**
+**Nhấn [vào đây](https://drive.google.com/file/d/1fJ8lP4_UDuCgg2vN3sMAJab2kcNB4pYz/view) để lấy Link DATABASE**
 
 Chọn file **application.properties** và cấu hình theo hướng dẫn bên dưới:
 

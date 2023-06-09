@@ -65,10 +65,16 @@ app.controller("shopping-cart-ctrl", function ($scope, $http) {
         amt_of(item) { },
         //tinh tong so luong cac mat hang trong gio
         get count() {
-            return this.items
+            const total = this.items
                 .map(item => item.qty)
                 .reduce((total, qty) => total += qty, 0);
+            if (total > 9) {
+                return '9+';
+            } else {
+                return total.toString();
+            }
         },
+
         //tongthanhtien cac mat hang trong gio
         get amount() {
             return this.items
