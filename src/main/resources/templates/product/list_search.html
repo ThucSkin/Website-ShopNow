@@ -1,35 +1,37 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	th:replace="~{/layout/index :: dynamic(~{::main})}">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/layout/index :: dynamic(~{::main})}">
 
 <body>
-    <main class="container-fluid ml-3">
-        <div class="btn-group dropdown mb-2 mr-2">
-			<button type="button" class="btn btn-secondary" id="btn_search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	<main class="container-fluid ml-3">
+		<div class="btn-group dropdown mb-2 mr-2">
+			<button type="button" class="btn btn-secondary" id="btn_search" data-toggle="dropdown" aria-haspopup="true"
+				aria-expanded="false">
 				<i class="fa-solid fa-filter"></i> Bộ lọc
 			</button>
 		</div>
 		<div class="btn-group dropdown mb-2 ml-2">
-			<button type="button" class="btn btn-secondary dropdown-toggle" id="btn_search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<button type="button" class="btn btn-secondary dropdown-toggle" id="btn_search" data-toggle="dropdown"
+				aria-haspopup="true" aria-expanded="false">
 				Giá
 			</button>
 			<div class="dropdown-menu mt-2">
 				<a class="dropdown-item" id="dd--item" th:href="@{/price/duoi-2-trieu}">
 					Dưới 2 triệu</a>
-                <a class="dropdown-item" id="dd--item" th:href="@{/price/tu-2-4-trieu}">
+				<a class="dropdown-item" id="dd--item" th:href="@{/price/tu-2-4-trieu}">
 					Từ 2 - 4 triệu</a>
-                <a class="dropdown-item" id="dd--item" th:href="@{/price/tu-4-7-trieu}">
+				<a class="dropdown-item" id="dd--item" th:href="@{/price/tu-4-7-trieu}">
 					Từ 4 - 7 triệu</a>
-                <a class="dropdown-item" id="dd--item" th:href="@{/price/tu-7-13-trieu}">
+				<a class="dropdown-item" id="dd--item" th:href="@{/price/tu-7-13-trieu}">
 					Từ 7 - 13 triệu</a>
 				<a class="dropdown-item" id="dd--item" th:href="@{/price/tu-13-20-trieu}">
 					Từ 13 - 20 triệu</a>
-                <a class="dropdown-item" id="dd--item" th:href="@{/price/tren-20-trieu}">
+				<a class="dropdown-item" id="dd--item" th:href="@{/price/tren-20-trieu}">
 					Trên 20 triệu</a>
 			</div>
 		</div>
 		<div class="btn-group dropdown mb-2 ml-2">
-			<button type="button" class="btn btn-secondary dropdown-toggle" id="btn_search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<button type="button" class="btn btn-secondary dropdown-toggle" id="btn_search" data-toggle="dropdown"
+				aria-haspopup="true" aria-expanded="false">
 				Hãng
 			</button>
 			<div class="dropdown-menu mt-2">
@@ -53,7 +55,8 @@
 				<div class="btn__list_item_search">
 					<a th:href="@{/dtdd-xiaomi}">
 						<div class="box-quicklink__item">
-							<img src="//cdn.tgdd.vn/Brand/1/logo-xiaomi-220x48-5.png" width="100" class="no-text" data-metatip="true">
+							<img src="//cdn.tgdd.vn/Brand/1/logo-xiaomi-220x48-5.png" width="100" class="no-text"
+								data-metatip="true">
 						</div>
 					</a>
 					<a th:href="@{/dtdd-realme}">
@@ -70,7 +73,8 @@
 			</div>
 		</div>
 		<div class="btn-group dropdown mb-2 ml-2">
-			<button type="button" class="btn btn-secondary dropdown-toggle" id="btn_search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<button type="button" class="btn btn-secondary dropdown-toggle" id="btn_search" data-toggle="dropdown"
+				aria-haspopup="true" aria-expanded="false">
 				RAM
 			</button>
 			<div class="dropdown-menu mt-2">
@@ -109,13 +113,14 @@
 			</div>
 		</div>
 		<div class="btn-group dropdown mb-2 ml-2">
-			<button type="button" class="btn btn-secondary dropdown-toggle" id="btn_search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<button type="button" class="btn btn-secondary dropdown-toggle" id="btn_search" data-toggle="dropdown"
+				aria-haspopup="true" aria-expanded="false">
 				Nhu cầu
 			</button>
 			<div class="dropdown-menu mt-2">
 				<div class="btn__list_item_search a">
 					<a th:href="@{/dtdd-choi-game}">
-						<div class="box-quicklink__item" >
+						<div class="box-quicklink__item">
 							Chơi game / Cấu hình cao
 						</div>
 					</a>
@@ -133,7 +138,8 @@
 			</div>
 		</div>
 		<div class="btn-group dropdown mb-2 ml-2">
-			<button type="button" class="btn btn-secondary dropdown-toggle" id="btn_search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<button type="button" class="btn btn-secondary dropdown-toggle" id="btn_search" data-toggle="dropdown"
+				aria-haspopup="true" aria-expanded="false">
 				Dung lượng lưu trữ
 			</button>
 			<div class="dropdown-menu mt-2">
@@ -172,7 +178,8 @@
 			</div>
 		</div>
 		<div class="btn-group dropdown mb-2 ml-2">
-			<button type="button" class="btn btn-secondary dropdown-toggle" id="btn_search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<button type="button" class="btn btn-secondary dropdown-toggle" id="btn_search" data-toggle="dropdown"
+				aria-haspopup="true" aria-expanded="false">
 				Pin & Sạc
 			</button>
 			<div class="dropdown-menu mt-2">
@@ -200,7 +207,8 @@
 			</div>
 		</div>
 		<div class="btn-group dropdown mb-2 ml-2">
-			<button type="button" class="btn btn-secondary dropdown-toggle" id="btn_search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			<button type="button" class="btn btn-secondary dropdown-toggle" id="btn_search" data-toggle="dropdown"
+				aria-haspopup="true" aria-expanded="false">
 				Tính năng đặc biệt
 			</button>
 			<div class="dropdown-menu mt-2">
@@ -245,7 +253,8 @@
 			</a>
 			<a th:href="@{/dtdd-xiaomi}">
 				<div class="box-quicklink__item">
-					<img src="//cdn.tgdd.vn/Brand/1/logo-xiaomi-220x48-5.png" width="100" class="no-text" data-metatip="true">
+					<img src="//cdn.tgdd.vn/Brand/1/logo-xiaomi-220x48-5.png" width="100" class="no-text"
+						data-metatip="true">
 				</div>
 			</a>
 			<a th:href="@{/dtdd-vivo}">
@@ -321,7 +330,8 @@
 			<p>Tổng: <b>[[${totalItems}]] sản phẩm</b></p>
 			<label class="center-fl">
 				<input type="checkbox" name="" id="" class="tick-checkbox">
-				<img src="//cdn.tgdd.vn/mwgcart/mwgcore/ContentMwg/images/icon-thunder.png" style="width: 11px;margin-right: 5px;">Giao nhanh</label>
+				<img src="//cdn.tgdd.vn/mwgcart/mwgcore/ContentMwg/images/icon-thunder.png"
+					style="width: 11px;margin-right: 5px;">Giao nhanh</label>
 			<label class="center"><input type="checkbox" name="" id="" class="tick-checkbox">Giảm giá</label>
 			<label class="center"><input type="checkbox" name="" id="" class="tick-checkbox">Góp 0% - 1%</label>
 			<label class="center"><input type="checkbox" name="" id="" class="tick-checkbox">Độc quyền</label>
@@ -331,14 +341,15 @@
 					Siêu giảm giá
 				</button>
 			</a>
-			
+
 			<a th:href="@{/product/list/hotsale}">
 				<button type="button" id="btn_search" class="btn btn-secondary mb-2 ml-3">
 					Các sản phẩm hot!
 				</button>
 			</a>
 			<div class="click-sort mb-2">
-				<div class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Xếp theo: Nổi bật</div>
+				<div class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Xếp theo:
+					Nổi bật</div>
 				<div class="dropdown-menu mt-3">
 					<a class="dropdown-item" id="dd--item1" th:href="@{/product/list/hotsale}">
 						<i class="fa-solid fa-check"></i> Nổi bật</a>
@@ -359,94 +370,103 @@
 				<h4 style="color: #938484;">Có thể sản phẩm đã ngừng kinh doanh</h4>
 			</div>
 		</div>
-        <div class="row mb-4">		
-            <div th:each="item: ${item}" class="col-sm-2">
-                <div class="card">
+		<div class="row mb-4">
+			<div th:each="item: ${item}" class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+				<div class="card">
 					<div class="card-body list-item">
 						<div class="gif">
-							<img th:src="@{|/assets/images/${item.hotSale}|}" th:attr="style=${item.hotSale == 'pngegg.png' ? 'opacity: 0' : ''}" />
+							<img th:src="@{|/assets/images/${item.hotSale}|}"
+								th:attr="style=${item.hotSale == 'pngegg.png' ? 'opacity: 0' : ''}" />
 						</div>
-						<a th:href="@{|/product/detail/${item.productId}|}"> 
+						<a th:href="@{|/product/detail/${item.productId}|}">
 							<img class="imgindex" th:src="@{|/assets/images/${item.image1}|}">
 						</a>
 					</div>
 					<div class="card-footer">
-						<a th:href="@{|/product/detail/${item.productId}|}" class="card-title">[(${item.name})] [(${item.RAM})]</a>
+						<a th:href="@{|/product/detail/${item.productId}|}" class="card-title">[(${item.name})]
+							[(${item.RAM})]</a>
 						<div class="card-bottom">
 							<div>
 								<span class="price">[[${#numbers.formatInteger(item.unitPrice, 0,
 									'POINT')}]] <sup>đ</sup>
 								</span>
 							</div>
-							<div>
+							<div class="card-price">
 								<span class="old_price">[[${#numbers.formatInteger(item.oldPrice, 0,
 									'POINT')}]] <sup>đ</sup>
 								</span>
-								<span class="discount">- [[${item.discount}]]%</span></div>
+								<span class="discount">- [[${item.discount}]]%</span>
 							</div>
-						
-							<div class="card-bot">
-								<div>
-									<img th:src="|/assets/images/${item.image5}|">
-								</div>
-								<div class="icon__cart-like">
-									<a th:attr="ng-click=@{|cart.add(${item.productId})|}">
-										<i class="fa-solid fa-cart-shopping cart-shopping"></i></a> 
-									<a th:href="@{|/favorite/save/${item.productId}|}">
-										<i class="fa-regular fa-thumbs-up cart-shopping"></i></a>
-								</div>
+						</div>
+
+						<div class="card-bot">
+							<div>
+								<img th:src="|/assets/images/${item.image5}|">
 							</div>
-						
+							<div class="icon__cart-like">
+								<a th:attr="ng-click=@{|cart.add(${item.productId})|}">
+									<i class="fa-solid fa-cart-shopping cart-shopping"></i></a>
+								<a th:href="@{|/favorite/save/${item.productId}|}">
+									<i class="fa-regular fa-thumbs-up cart-like"></i></a>
+							</div>
+						</div>
+
 					</div>
 				</div>
-            </div>
-        </div>
+			</div>
+		</div>
 		<!-- **************************************************************** -->
-        <h5>Xem thêm các sản phẩm khác:</h5>
-        <div class="row">		
-            <div th:each="item, itemIndex: ${items}" th:if="${itemIndex.index} &lt; 12" class="col-sm-2">
-                <div class="card">
-                    <div class="card-body list-item">
-                        <div class="gif">
-							<img th:src="@{|/assets/images/${item.hotSale}|}" th:attr="style=${item.hotSale == 'pngegg.png' ? 'opacity: 0' : ''}" />
+		<h5>Xem thêm các sản phẩm khác:</h5>
+		<div class="row">
+			<div th:each="item, itemIndex: ${items}" th:if="${itemIndex.index} &lt; 12"
+				class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+				<div class="card">
+					<div class="card-body list-item">
+						<div class="gif">
+							<img th:src="@{|/assets/images/${item.hotSale}|}"
+								th:attr="style=${item.hotSale == 'pngegg.png' ? 'opacity: 0' : ''}" />
 						</div>
-                        <a th:href="@{|/product/detail/${item.productId}|}"> 
-                            <img class="imgindex" th:src="@{|/assets/images/${item.image1}|}">
-                        </a>
-                    </div>
-                    <div class="card-footer">
-                        <a th:href="@{|/product/detail/${item.productId}|}" class="card-title">[(${item.name})] [(${item.RAM})]</a>
-                        <div class="card-bottom">
-                            <div>
-                                <span class="price">[[${#numbers.formatInteger(item.unitPrice, 0, 'POINT')}]] <sup>đ</sup></span>
-                            </div>
-                            <div>
-                                <span class="old_price">[[${#numbers.formatInteger(item.oldPrice, 0, 'POINT')}]] <sup>đ</sup></span>
-                                <span class="discount">- [[${item.discount}]]%</span>
-                            </div>
-                        </div>
-                        <div class="card-bot">
-                            <div>
-                                <img th:src="|/assets/images/${item.image5}|">
-                            </div>
-                            <div class="icon__cart-like">
-                                <a th:attr="ng-click=@{|cart.add(${item.productId})|}">
-                                    <i class="fa-solid fa-cart-shopping cart-shopping"></i>
-                                </a> 
-                                <a th:href="@{|/favorite/save/${item.productId}|}">
-                                    <i class="fa-regular fa-thumbs-up cart-shopping"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="text-center mt-4 mb-4">
-            <a th:href="@{|/|}" class="btn btn-success dropdown-toggle" id="btn_search">Xem thêm [[${totalItemss} - ${totalItems} - 12]] sản phẩm</a>
-        </div>
-        </div>
-    </main>
+						<a th:href="@{|/product/detail/${item.productId}|}">
+							<img class="imgindex" th:src="@{|/assets/images/${item.image1}|}">
+						</a>
+					</div>
+					<div class="card-footer">
+						<a th:href="@{|/product/detail/${item.productId}|}" class="card-title">[(${item.name})]
+							[(${item.RAM})]</a>
+						<div class="card-bottom">
+							<div>
+								<span class="price">[[${#numbers.formatInteger(item.unitPrice, 0, 'POINT')}]]
+									<sup>đ</sup></span>
+							</div>
+							<div class="card-price">
+								<span class="old_price">[[${#numbers.formatInteger(item.oldPrice, 0, 'POINT')}]]
+									<sup>đ</sup></span>
+								<span class="discount">- [[${item.discount}]]%</span>
+							</div>
+						</div>
+						<div class="card-bot">
+							<div>
+								<img th:src="|/assets/images/${item.image5}|">
+							</div>
+							<div class="icon__cart-like">
+								<a th:attr="ng-click=@{|cart.add(${item.productId})|}">
+									<i class="fa-solid fa-cart-shopping cart-shopping"></i>
+								</a>
+								<a th:href="@{|/favorite/save/${item.productId}|}">
+									<i class="fa-regular fa-thumbs-up cart-like"></i>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="text-center mt-4 mb-4">
+			<a th:href="@{|/|}" class="btn btn-success dropdown-toggle" id="btn_search">Xem thêm [[${totalItemss} -
+				${totalItems} - 12]] sản phẩm</a>
+		</div>
+		</div>
+	</main>
 </body>
 
 </html>

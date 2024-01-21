@@ -1,34 +1,35 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" 
-    th:replace="~{/admin/dist/fragment :: dynamic(~{::main})}">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/admin/dist/fragment :: dynamic(~{::main})}">
+
 <body>
     <main>
         <div class="container-fluid px-4">
             <div class="card mb-4">
                 <div class="card-header">
-                <h3><i class="fa-solid fa-list"></i> Danh sách quyền truy cập</h3>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col">
-                        <label class="float-left">Tất cả: <b>[[${totalSize}]]</b> tài khoản</label>
-						<form th:action="@{/admin/authority}">
-							<div class="form-inline float-right">
-								<input type="text" class="form-control" name="username" id="username"
-									aria-describedby="helpId" placeholder="Tên tài khoản">
-								<button class="btn btn-outline-primary ml-2">Tìm kiếm</button>
-							</div>
-						</form>
+                    <h3><i class="fa-solid fa-list"></i> Danh sách quyền truy cập</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <label class="float-left">Tất cả: <b>[[${totalSize}]]</b> tài khoản</label>
+                            <form th:action="@{/admin/authority}">
+                                <div class="form-inline float-right">
+                                    <input type="text" class="form-control" name="username" id="username"
+                                        aria-describedby="helpId" placeholder="Tìm kiếm...">
+                                    <button class="btn btn-outline-primary ml-2">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-              </div>
                 <div class="card-body">
-                    <div th:if="${message != null}" class="alert alert-danger"
-                        role="alert"> 
+                    <div th:if="${message != null}" class="alert alert-danger" role="alert">
                         <i>[[${message}]]</i>
-                    </div> 
+                    </div>
                     <table class="table table-hover">
-                        <thead >
+                        <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Hình</th>
@@ -36,15 +37,13 @@
                                 <th>Họ tên</th>
                                 <th>SDT</th>
                                 <th>Email</th>
-                                <th>Vai trò</th>
-                                <th style="width: 15%;"></th>
+                                <th>Chức vụ</th>
                             </tr>
                         </thead>
                         <tbody class="text_tbody">
-                            <tr th:each="au: ${authorityPage.content}">            
+                            <tr th:each="au: ${authorityPage.content}">
                                 <td>[[${au.id}]]</td>
-                                <td><img th:src="@{|/assets/images/${au.account.image}|}"
-                                    class="img--itemm">
+                                <td><img th:src="@{|/assets/images/${au.account.image}|}" class="img--itemm">
                                 </td>
                                 <td>[[${au.account.username}]]</td>
                                 <td>[[${au.account.fullname}]]</td>
@@ -53,21 +52,20 @@
                                 <td>
                                     <label th:style="${au.role.name == 'Directors' ? 'background-color: red;' 
                                     : (au.role.name == 'Staffs' ? 'background-color: yellowgreen;' 
-                                    : (au.role.name == 'Customers' ? 'color: #f19999;' : ''))}" 
-                                    class="role_accounts">[[${au.role.name}]]</label>
-                                <td>
-                                    <a class="btn btn-warning"
-										th:href="@{'/authority/edit/' + ${au.id}}">
-										<i class="fa-regular fa-pen-to-square"></i>
-									</a> 
-                                    <a class="btn btn-danger" th:data-id="${au.id}" th:unless="${au.account.username} == 'T1'"
-										th:data-name="${au.id}"
-										onclick="showConfirmModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))">
-										<i class="fa-solid fa-trash-can"></i>
-									</a>
+                                    : (au.role.name == 'Customers' ? 'color: #f19999;' : ''))}"
+                                        class="role_accounts">[[${au.role.name}]]</label>
+                                <td class="fas-icon">
+                                    <a th:href="@{'/authority/edit/' + ${au.id}}">
+                                        <i class="fa-regular fa-pen-to-square"></i>
+                                    </a>
+                                    <a th:data-id="${au.id}" th:unless="${au.account.username} == 'T1'"
+                                        th:data-name="${au.id}"
+                                        onclick="showConfirmModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </a>
                                 </td>
                             </tr>
-                        </tbody> 
+                        </tbody>
                         <script>
                             function showConfirmModalDialog(id, name) {
                                 $('#id').text(name);
@@ -76,14 +74,13 @@
                                 $('#confirmationId').modal('show');
                             }
                         </script>
-                        <div class="modal fade" id="confirmationId" tabindex="-1"
-                            role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                        <div class="modal fade" id="confirmationId" tabindex="-1" role="dialog"
+                            aria-labelledby="modelTitleId" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title">Xác nhận</h5>
-                                        <button type="button" class="close" data-dismiss="modal"
-                                            aria-label="Close">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
@@ -110,8 +107,7 @@
                         <form action="">
                             <div class="form-inline float-left">
                                 <label class="mr-3" for="size">Kích thước: </label>
-                                <select name="size" id="size"
-                                    onchange="this.form.submit()">
+                                <select name="size" id="size" onchange="this.form.submit()">
                                     <option th:selected="${authorityPage.size == 5}" value="5">5</option>
                                     <option th:selected="${authorityPage.size == 10}" value="10">10</option>
                                     <option th:selected="${authorityPage.size == 15}" value="15">15</option>
@@ -120,22 +116,20 @@
                                 </select>
                             </div>
                         </form>
-                        <nav aria-label="Page navigation"
-                            th:if="${authorityPage.totalPages > 0}">
+                        <nav aria-label="Page navigation" th:if="${authorityPage.totalPages > 0}">
                             <ul class="pagination justify-content-center">
                                 <li th:class="${1 == authorityPage.number + 1} ? 'page-item active' : 'page-item'">
                                     <a th:href="@{/admin/authority(name=${name}, size=${authorityPage.size}, page=${1})}"
-                                    class="page-link">Trang đầu</a>
+                                        class="page-link">Trang đầu</a>
                                 </li>
-                                <li class="page-item active"
-                                    th:each="pageNumber : ${pageNumbers}"
+                                <li class="page-item active" th:each="pageNumber : ${pageNumbers}"
                                     th:if="${authorityPage.totalPages > 1}"
                                     th:class="${pageNumber == authorityPage.number + 1} ? 'page-item active' : 'page-item'">
                                     <a th:href="@{/admin/authority(name=${name}, size=${authorityPage.size}, page=${pageNumber})}"
-                                        class="page-link"
-                                        th:text="${pageNumber}"></a>
+                                        class="page-link" th:text="${pageNumber}"></a>
                                 </li>
-                                <li th:class="${authorityPage.totalPages == authorityPage.number + 1} ? 'page-item active' : 'page-item'">
+                                <li
+                                    th:class="${authorityPage.totalPages == authorityPage.number + 1} ? 'page-item active' : 'page-item'">
                                     <a th:href="@{/admin/authority(name=${name}, size=${authorityPage.size}, page=${authorityPage.totalPages})}"
                                         class="page-link">Trang cuối</a>
                                 </li>
@@ -147,4 +141,5 @@
         </div>
     </main>
 </body>
+
 </html>

@@ -34,5 +34,10 @@ public class StatisticalServiceImpl implements StatisticalService {
 	@Override
 	public List<StatisticalForProductProjections> statisticalForProduct() {
 		return sdao.statisticalForProduct();
-	}	
+	}
+
+	@Override
+	public List<StatisticalForProductProjections> top10SellingProducts() {
+		return sdao.top10SellingProducts();
+	}
 }

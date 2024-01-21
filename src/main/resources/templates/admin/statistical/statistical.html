@@ -1,7 +1,14 @@
-
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	th:replace="~{/admin/dist/fragment :: dynamic(~{::main})}">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/admin/dist/fragment :: dynamic(~{::main})}">
+
+<head>
+	<!-- Thêm thư viện Bootstrap và jQuery -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+
 <body>
 	<main>
 		<div class="container-scroller">
@@ -11,31 +18,41 @@
 						<div class="row">
 							<div class="col-lg-12 grid-margin stretch-card">
 								<div class="card">
-									<div class="card-header card bg-primary text-white"
-										style="text-align: center">
+									<div class="text-center">
 										<h3><i class="fa-solid fa-signal"></i> Thống kê</h3>
 									</div>
 									<div class="card-body">
 										<p class="card-description"></p>
 										<nav>
 											<div class="nav nav-tabs" id="nav-tab" role="tablist">
-												<a class="nav-item nav-link active" id="nav-home-tab"
-													data-toggle="tab" href="#nav-home" role="tab"
-													aria-controls="nav-home" aria-selected="true">
-													<i class="fa-solid fa-calendar-days"></i> Doanh Thu
-													Theo Tháng</a> <a class="nav-item nav-link"
-													id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
-													role="tab" aria-controls="nav-profile"
-													aria-selected="false"><i class="fa-solid fa-calendar-days"></i> Doanh Thu Theo Năm</a> <a
-													class="nav-item nav-link" id="nav-contact-tab"
-													data-toggle="tab" href="#nav-contact" role="tab"
-													aria-controls="nav-contact" aria-selected="false">
-													<i class="fa-brands fa-product-hunt"></i> Sản Phẩm Đã Bán</a>
+												<a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab"
+													href="#nav-home" role="tab" aria-controls="nav-home"
+													aria-selected="true">
+													<i class="fa-solid fa-calendar-days"></i> Doanh Thu Theo Tháng
+												</a>
+												<a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab"
+													href="#nav-profile" role="tab" aria-controls="nav-profile"
+													aria-selected="false">
+													<i class="fa-solid fa-calendar-days"></i> Doanh Thu Theo Năm
+												</a>
+												<a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab"
+													href="#nav-contact" role="tab" aria-controls="nav-contact"
+													aria-selected="false">
+													<i class="fa-brands fa-product-hunt"></i> Sản Phẩm Đã Bán
+												</a>
+												<!-- Thêm tab cho top 10 sản phẩm bán chạy -->
+												<a class="nav-item nav-link" id="nav-top10-tab" data-toggle="tab"
+													href="#nav-top10" role="tab" aria-controls="nav-top10"
+													aria-selected="false">
+													<i class="fa-brands fa-product-hunt"></i> Top 10 Sản Phẩm Bán Chạy
+												</a>
 											</div>
 										</nav>
+
+
 										<div class="tab-content" id="nav-tabContent">
-											<div class="tab-pane fade show active" id="nav-home"
-												role="tabpanel" aria-labelledby="nav-home-tab">
+											<div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+												aria-labelledby="nav-home-tab">
 												<table class="table table-hover">
 													<thead>
 														<tr>
@@ -49,11 +66,16 @@
 													</thead>
 													<tbody>
 														<tr th:each="month : ${months}">
-														<td class="py-1" th:text="${month.orderMonth + '/' + month.orderYear}">
-														<td th:text="${month.orderCount }"></td>
-														<td>[[*{#numbers.formatInteger(month.total, 0, 'DEFAULT')}]] <sup>đ</sup></td>
-														<td>[[*{#numbers.formatInteger(month.minTotal, 0, 'DEFAULT')}]] <sup>đ</sup></td>
-														<td>[[*{#numbers.formatInteger(month.maxTotal, 0, 'DEFAULT')}]] <sup>đ</sup></td>
+															<td class="py-1"
+																th:text="${month.orderMonth + '/' + month.orderYear}">
+															<td th:text="${month.orderCount }"></td>
+															<td>[[*{#numbers.formatInteger(month.total, 0, 'DEFAULT')}]]
+																<sup>đ</sup>
+															</td>
+															<td>[[*{#numbers.formatInteger(month.minTotal, 0,
+																'DEFAULT')}]] <sup>đ</sup></td>
+															<td>[[*{#numbers.formatInteger(month.maxTotal, 0,
+																'DEFAULT')}]] <sup>đ</sup></td>
 														</tr>
 													</tbody>
 												</table>
@@ -72,11 +94,16 @@
 													</thead>
 													<tbody>
 														<tr th:each="year : ${years}">
-														<td class="py-1" th:text=${year.orderYear}>
-														<td>[[*{#numbers.formatInteger(year.orderCount, 0, 'DEFAULT')}]]</td>
-														<td>[[*{#numbers.formatInteger(year.total, 0, 'DEFAULT')}]] <sup>đ</sup></td>
-														<td>[[*{#numbers.formatInteger(year.minTotal, 0, 'DEFAULT')}]] <sup>đ</sup></td>
-														<td>[[*{#numbers.formatInteger(year.maxTotal, 0, 'DEFAULT')}]] <sup>đ</sup></td>
+															<td class="py-1" th:text=${year.orderYear}>
+															<td>[[*{#numbers.formatInteger(year.orderCount, 0,
+																'DEFAULT')}]]</td>
+															<td>[[*{#numbers.formatInteger(year.total, 0, 'DEFAULT')}]]
+																<sup>đ</sup>
+															</td>
+															<td>[[*{#numbers.formatInteger(year.minTotal, 0,
+																'DEFAULT')}]] <sup>đ</sup></td>
+															<td>[[*{#numbers.formatInteger(year.maxTotal, 0,
+																'DEFAULT')}]] <sup>đ</sup></td>
 														</tr>
 													</tbody>
 												</table>
@@ -86,20 +113,61 @@
 												<table class="table table-hover">
 													<thead>
 														<tr>
+															<th>ID</th>
+															<th>Image</th>
 															<th>Tên Sản Phẩm</th>
 															<th>Số Lượng</th>
 															<th>Tổng tiền thu được</th>
 														</tr>
 													</thead>
 													<tbody>
-														<tr th:each="product : ${products}">
-															<td class="py-1" th:text="${product.name}"></td>
-															<td th:text="${product.soLuongBanDuoc}"></td>
-															<td>[[*{#numbers.formatInteger(product.tongTienThuDuoc, 0, 'DEFAULT')}]] <sup>đ</sup></td>
+														<tr th:each="item : ${products}">
+															<td th:text="${item.id}"></td>
+															<td>
+																<img th:src="@{|/assets/images/${item.image1}|}"
+																	class="img_product_list">
+															</td>
+															<td th:text="${item.name}"></td>
+															<td th:text="${item.soLuongBanDuoc}"></td>
+															<td class="discount"
+																th:text="${#numbers.formatInteger(item.tongTienThuDuoc, 0, 'DEFAULT')} + ' đ'">
+															</td>
+														</tr>
+
+													</tbody>
+
+												</table>
+											</div>
+											<!-- Tab cho top 10 sản phẩm bán chạy -->
+											<div class="tab-pane fade" id="nav-top10" role="tabpanel"
+												aria-labelledby="nav-top10-tab">
+												<table class="table table-hover">
+													<thead>
+														<tr>
+															<th>ID</th>
+															<th>Image</th>
+															<th>Tên Sản Phẩm</th>
+															<th>Số Lượng</th>
+															<th>Tổng tiền thu được</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr th:each="item : ${top10SellingProducts}">
+															<td th:text="${item.id}"></td>
+															<td>
+																<img th:src="@{|/assets/images/${item.image1}|}"
+																	class="img_product_list">
+															</td>
+															<td th:text="${item.name}"></td>
+															<td th:text="${item.soLuongBanDuoc}"></td>
+															<td class="discount"
+																th:text="${#numbers.formatInteger(item.tongTienThuDuoc, 0, 'DEFAULT')} + ' đ'">
+															</td>
 														</tr>
 													</tbody>
 												</table>
 											</div>
+
 										</div>
 
 									</div>
@@ -112,4 +180,5 @@
 		</div>
 	</main>
 </body>
+
 </html>

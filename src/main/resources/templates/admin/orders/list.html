@@ -1,6 +1,6 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org"
-	th:replace="~{/admin/dist/fragment :: dynamic(~{::main})}">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/admin/dist/fragment :: dynamic(~{::main})}">
+
 <body>
 	<main>
 		<div class="card">
@@ -11,29 +11,34 @@
 			</div>
 			<div class="card-body">
 				<div class="row">
-					<div class="col-sm-8">
+					<div class="col">
 						<div class="status_cart">
-							<a th:href=@{/admin/orders/list}><label id="btn_search"
-								class="status_cart_item">[[#{OH.all}]] (<label class="text_totalSizeOrder">[[${totalSize}]]</label>)</label></a> 
-							<a th:href=@{/admin/orders/confirmation}><label id="btn_search"
-								class="status_cart_item">
-								<i class="fa-solid fa-circle-check"></i> [[#{OH.confirm}]] ([[${totalSizeStatus_confirmation}]])</label></a> 
-							<a th:href=@{/admin/orders/transported}><label id="btn_search"
-								class="status_cart_item"><i class="fa-solid fa-truck"></i>
-								[[#{OH.transported}]] ([[${totalSizeStatus_transported}]])</label></a> 
-							<a th:href=@{/admin/orders/delivered}><label id="btn_search"
-								class="status_cart_item"><i class="fa-solid fa-face-smile"></i>
-								[[#{OH.delivered}]] ([[${totalSizeStatus_delivered}]])</label></a> 
-							<a th:href=@{/admin/orders/cancel}><label id="btn_search"
-								class="status_cart_item"><i class="fa-solid fa-road"></i>
-								[[#{OH.cancel}]] ([[${totalSizeStatus_cancel}]])</label></a>
+							<a th:href="@{/admin/orders/list}" id="btn_all" class="status_cart_item active">
+								[[#{OH.all}]]
+								([[${totalSize}]])</a>
+							<a th:href="@{/admin/orders/confirmation}" id="btn_confirmation" class="status_cart_item">
+								<i class="fa-solid fa-circle-check"></i> [[#{OH.confirm}]]
+								([[${totalSizeStatus_confirmation}]])
+							</a>
+							<a th:href="@{/admin/orders/transported}" id="btn_transported" class="status_cart_item"><i
+									class="fa-solid fa-truck"></i>
+								[[#{OH.transported}]] ([[${totalSizeStatus_transported}]])
+							</a>
+							<a th:href="@{/admin/orders/delivered}" id="btn_delivered" class="status_cart_item"><i
+									class="fa-solid fa-face-smile"></i>
+								[[#{OH.delivered}]] ([[${totalSizeStatus_delivered}]])
+							</a>
+							<a th:href="@{/admin/orders/cancel}" id="btn_cancel" class="status_cart_item"><i
+									class="fa-solid fa-road"></i>
+								[[#{OH.cancel}]] ([[${totalSizeStatus_cancel}]])
+							</a>
 						</div>
 					</div>
 					<div class="col-sm-4">
 						<form th:action="@{/admin/orders/list}">
 							<div class="form-inline float-right">
-								<input type="text" class="form-control" name="name" id="name"
-									aria-describedby="helpId" placeholder="Tên khách hàng">
+								<input type="text" class="form-control" name="name" id="name" aria-describedby="helpId"
+									placeholder="Tìm kiếm...">
 								<button class="btn btn-outline-primary ml-2"><i class="fa fa-search"></i></button>
 							</div>
 						</form>
@@ -41,40 +46,35 @@
 				</div>
 			</div>
 			<div class="card-body">
-				<div th:if="${message != null}" class="alert alert-primary"
-					role="alert">
+				<div th:if="${message != null}" class="alert alert-primary" role="alert">
 					<i>[[${message}]]</i>
 				</div>
 				<table class="table table-hover">
 					<thead class="bg-light">
 						<tr>
 							<th>ID</th>
-							<th>Hình</th>
+							<th>Image</th>
 							<th>Họ tên</th>
 							<th>Ngày đặt</th>
-							<th>SDT</th>
-							<th>Email</th>
 							<th>Tổng đơn</th>
 							<th>Trạng thái</th>
 							<th></th>
 						</tr>
 					</thead>
 					<tbody class="text_tbody">
-						<tr th:each="item, state: ${orderPage.content}">
+						<tr th:each="item, state: ${orderPage}">
 							<td th:utext="${item.orderId}"></td>
 							<td>
 								<img th:src="@{|/assets/images/${item.account.image}|}" class="img--itemm">
 							</td>
 							<td th:utext="${item.name}"></td>
 							<td th:utext="${item.createDay}"></td>
-							<td th:utext="${item.telePhone}"></td>
-							<td th:utext="${item.email}"></td>
 							<td>
-								<label class="totalPrice_order">[[*{#numbers.formatInteger(item.total, 0, 'DEFAULT')}]] <sup>đ</sup></label>
+								<label class="totalPrice_order">[[*{#numbers.formatInteger(item.total, 0, 'DEFAULT')}]]
+									<sup>đ</sup></label>
 							</td>
 							<td>
-								<label class="status_order" 
-									th:style="${item.status == 'Đã giao hàng' ? 'background-color: yellowgreen;' 
+								<label class="status_order" th:style="${item.status == 'Đã giao hàng' ? 'background-color: yellowgreen;' 
 									: (item.status == 'Đang vận chuyển' ? 'color: green' 
 									: (item.status == 'Đã hủy' ? 'background-color: red;' 
 									: (item.status == 'Đang chờ xác nhận' ? 'color: blue' : '')))}">
@@ -82,21 +82,20 @@
 								</label>
 							</td>
 							<td>
-								<div class="btn-group btn-group-xs">
-									<a th:href="@{|/admin/orders/detail/${item.orderId}|}"
-										class="btn btn-default" id="btn_detail_history"> 
+								<div class="btn-group btn-group-xs flex-sb">
+									<a th:href="@{|/admin/orders/detail/${item.orderId}|}" class="btn btn-default"
+										id="btn_detail_history">
 										<i class="fa-solid fa-magnifying-glass-plus"></i>
-										Xem chi tiết đơn
 									</a>
 									<button class="btn btn-primary" id="btn_duyet" data-toggle="modal"
 										data-target="#exampleModal-3">
 										<span>Duyệt</span>
 									</button>
-									<form th:action="@{/admin/orders/updateStatus}"
-										th:object="${LISTSTATUS}" method="POST">
-										<div class="modal fade" id="exampleModal-3" tabindex="-1"
-											role="dialog" aria-labelledby="exampleModalLabel-3"
-											aria-hidden="true" style="display: none;">
+									<form th:action="@{/admin/orders/updateStatus}" th:object="${LISTSTATUS}"
+										method="POST">
+										<div class="modal fade" id="exampleModal-3" tabindex="-1" role="dialog"
+											aria-labelledby="exampleModalLabel-3" aria-hidden="true"
+											style="display: none;">
 											<div class="modal-dialog " role="document">
 												<div class="modal-content">
 													<div class="modal-header">
@@ -109,15 +108,18 @@
 													<div class="modal-body">
 														<div class="form-group text-center">
 															<select class="form-control" name="orderId">
-																<option th:each="order : ${orders}" th:value="${order.orderId}" th:text="${order.orderId}"></option>
-															</select>															
+																<option th:each="order : ${orders}"
+																	th:value="${order.orderId}"
+																	th:text="${order.orderId}"></option>
+															</select>
 														</div>
 													</div>
 													<div class="modal-body">
 														<div class="form-group text-center">
 															<select th:field="*{status}" class="form-control">
 																<option th:each="item2 : ${list_status}"
-																	th:value="${item2.status}" th:text="${item2.status}">1</option>
+																	th:value="${item2.status}"
+																	th:text="${item2.status}">1</option>
 															</select>
 														</div>
 													</div>
@@ -147,8 +149,7 @@
 				<div class="card-footer text-muted">
 					<form action="">
 						<div class="form-inline float-left">
-							<label class="mr-3" for="size">Kích thước: </label> <select
-								name="size" id="size" 
+							<label class="mr-3" for="size">Kích thước: </label> <select name="size" id="size"
 								onchange="this.form.submit()">
 								<option th:selected="${orderPage.size == 5}" value="5">5</option>
 								<option th:selected="${orderPage.size == 10}" value="10">10</option>
@@ -158,30 +159,24 @@
 							</select>
 						</div>
 					</form>
-					<nav aria-label="Page navigation"
-						th:if="${orderPage.totalPages > 0}">
+					<nav aria-label="Page navigation" th:if="${orderPage.totalPages > 0}">
 						<ul class="pagination justify-content-center">
-							<li
-								th:class="${1 == orderPage.number + 1} ? 'page-item active' : 'page-item'">
-								<a
-								th:href="@{/admin/orders/list(name=${name}, size=${orderPage.size}, page=${1})}"
-								class="page-link">Trang đầu</a>
+							<li th:class="${1 == orderPage.number + 1} ? 'page-item active' : 'page-item'">
+								<a th:href="@{/admin/orders/list(name=${name}, size=${orderPage.size}, page=${1})}"
+									class="page-link">Trang đầu</a>
 							</li>
 
-							<li class="page-item active"
-								th:each="pageNumber : ${pageNumbers}"
+							<li class="page-item active" th:each="pageNumber : ${pageNumbers}"
 								th:if="${orderPage.totalPages > 1}"
 								th:class="${pageNumber == orderPage.number + 1} ? 'page-item active' : 'page-item'">
-								<a
-								th:href="@{/admin/orders/list(name=${name}, size=${orderPage.size}, page=${pageNumber})}"
-								class="page-link" th:text="${pageNumber}"></a>
+								<a th:href="@{/admin/orders/list(name=${name}, size=${orderPage.size}, page=${pageNumber})}"
+									class="page-link" th:text="${pageNumber}"></a>
 							</li>
 
 							<li
 								th:class="${orderPage.totalPages == orderPage.number + 1} ? 'page-item active' : 'page-item'">
-								<a
-								th:href="@{/admin/orders/list(name=${name}, size=${orderPage.size}, page=${orderPage.totalPages})}"
-								class="page-link">Trang cuối</a>
+								<a th:href="@{/admin/orders/list(name=${name}, size=${orderPage.size}, page=${orderPage.totalPages})}"
+									class="page-link">Trang cuối</a>
 							</li>
 						</ul>
 					</nav>
@@ -190,4 +185,5 @@
 		</div>
 	</main>
 </body>
+
 </html>

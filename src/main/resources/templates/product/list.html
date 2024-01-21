@@ -371,7 +371,7 @@
 			</div>
 		</div>
 		<div class="row ml-2">
-			<div th:each="item: ${productPage}" class="col-sm-2">
+			<div th:each="item: ${productPage}" class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
 				<div class="card">
 					<div class="card-body list-item">
 						<div class="gif">
@@ -391,7 +391,7 @@
 									'POINT')}]] <sup>đ</sup>
 								</span>
 							</div>
-							<div>
+							<div class="card-price">
 								<span class="old_price">[[${#numbers.formatInteger(item.oldPrice, 0,
 									'POINT')}]] <sup>đ</sup>
 								</span>
@@ -406,7 +406,7 @@
 								<a th:attr="ng-click=@{|cart.add(${item.productId})|}">
 									<i class="fa-solid fa-cart-shopping cart-shopping"></i></a>
 								<a th:href="@{|/favorite/save/${item.productId}|}">
-									<i class="fa-regular fa-thumbs-up cart-shopping"></i></a>
+									<i class="fa-regular fa-thumbs-up cart-like"></i></a>
 							</div>
 						</div>
 					</div>

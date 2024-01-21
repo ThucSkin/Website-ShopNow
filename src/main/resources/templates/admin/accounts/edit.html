@@ -1,20 +1,16 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" 
-    th:replace="~{/admin/dist/fragment :: dynamic(~{::main})}">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{/admin/dist/fragment :: dynamic(~{::main})}">
+
 <body>
 	<main>
-		<div
-			class="container rounded bg-white mt-5 mb-5 border-0 shadow rounded-3 overflow-hidden">
-			<form action="/admin/accounts/info/saveOrUpdate" enctype="multipart/form-data"
-				th:object="${account}" method="post" class="content">
+		<div class="container rounded bg-white mt-5 mb-5 border-0 shadow rounded-3 overflow-hidden">
+			<form action="/admin/accounts/info/saveOrUpdate" enctype="multipart/form-data" th:object="${account}"
+				method="post" class="content">
 				<div class="row">
 					<div class="col-sm-4">
-						<div
-							class="d-flex flex-column align-items-center text-center p-3 py-5">
-							<img class="rounded-circle mt-5" width="150px"> <img
-								id="image"
-								class="avatar img-circle img-thumbnail rounded-circle"
-								alt="avatar"
+						<div class="d-flex flex-column align-items-center text-center p-3 py-5">
+							<img class="rounded-circle mt-5" width="150px"> <img id="image"
+								class="avatar img-circle img-thumbnail rounded-circle" alt="avatar"
 								th:src="${account.image != null? '/admin/accounts/info/images/' + account.image : '/assets/images/noimage.jpg'}"
 								src="/assets/images/noimage.jpg">
 							<h6>[[#{info.avata}]]</h6>
@@ -22,20 +18,19 @@
 								<script>
 									function chooseFile(fileInput) {
 										if (fileInput.files
-												&& fileInput.files[0]) {
+											&& fileInput.files[0]) {
 											var reader = new FileReader();
-											reader.onload = function(e) {
+											reader.onload = function (e) {
 												$('#image').attr('src',
-														e.target.result);
+													e.target.result);
 											}
 											reader
-													.readAsDataURL(fileInput.files[0]);
+												.readAsDataURL(fileInput.files[0]);
 										}
 									}
 								</script>
-								<input type="file" name="imageFile" style="height: 45px"
-									onchange="chooseFile(this)" placeholder="Product Image"
-									aria-describedby="productImageHid"
+								<input type="file" name="imageFile" style="height: 45px" onchange="chooseFile(this)"
+									placeholder="Product Image" aria-describedby="productImageHid"
 									class="form-control mt-5 choose-img" id="productImage">
 							</div>
 						</div>
@@ -44,47 +39,43 @@
 						<div class="row mb-5 mt-4 card-title">
 							<h4>[[#{info.tit}]]</h4>
 						</div>
-						<div th:if="${message != null}" class="alert alert-primary" role="alert"> 
+						<div th:if="${message != null}" class="alert alert-primary" role="alert">
 							<i>[[${message}]]</i>
 						</div>
 						<div class="row">
 							<div class="form-group col-sm-6" hidden="hidden">
-								<label for="productId">Tên tài khoản: </label> <input
-									type="text" class="form-control" name="username" id="productId"
-									th:field="*{username}" aria-describedby="productIdHid"
-									placeholder="Tên tài khoản">
+								<label for="productId">Tên tài khoản: </label> <input type="text" class="form-control"
+									name="username" id="productId" th:field="*{username}"
+									aria-describedby="productIdHid" placeholder="Tìm kiếm...">
 							</div>
 							<div class="form-group col-sm-6" hidden="hidden">
-									<div>Mật khẩu:</div>
-									<input th:field="*{password}" type="text" name="password" id="password" aria-describedby="passwordHid"
-										placeholder="mật khẩu" class="form-control mt-2">
+								<div>Mật khẩu:</div>
+								<input th:field="*{password}" type="text" name="password" id="password"
+									aria-describedby="passwordHid" placeholder="mật khẩu" class="form-control mt-2">
 							</div>
 							<div class="form-floating mb-3 col-sm-3" hidden>
 								<div>image1:</div>
-								<input th:field="*{image}"
-									placeholder="Unit Price" class="form-control mt-2">
+								<input th:field="*{image}" placeholder="Unit Price" class="form-control mt-2">
 							</div>
 							<div class="col-sm-6 ">
-								<label>[[#{info.name}]]</label>: 
+								<label>[[#{info.name}]]</label>:
 								<div class="form-floating mb-3">
-									<input th:field="*{fullname}"
-										type="text" name="fullname" placeholder="Họ và tên"
+									<input th:field="*{fullname}" type="text" name="fullname" placeholder="Tìm kiếm..."
 										class="form-control">
 								</div>
 							</div>
 							<div class="col-sm-6">
-								<label>[[#{info.sdt}]]</label>: 
+								<label>[[#{info.sdt}]]</label>:
 								<div class="form-floating mb-3">
-									<input th:field="*{telePhone}"
-										type="text" minlength="10" maxlength="10" name="telePhone" placeholder="Phone number"
-										class="form-control">
+									<input th:field="*{telePhone}" type="text" minlength="10" maxlength="10"
+										name="telePhone" placeholder="Phone number" class="form-control">
 								</div>
 							</div>
 							<div class="col-sm-12">
-								<label>Email</label>: 
+								<label>Email</label>:
 								<div class="form-floating mb-3">
-									<input th:field="*{email}" type="email"
-										name="email" placeholder="Email" class="form-control mt-2">
+									<input th:field="*{email}" type="email" name="email" placeholder="Email"
+										class="form-control mt-2">
 								</div>
 							</div>
 							<div class="col-sm-12">
@@ -107,4 +98,5 @@
 		</div>
 	</main>
 </body>
+
 </html>

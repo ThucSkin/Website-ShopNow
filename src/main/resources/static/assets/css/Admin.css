@@ -3,11 +3,29 @@
     margin : 0;
 }
 
+.fa-trash-can {
+    font-size: 20px;
+    color    : red;
+}
+
+.fa-trash-can:hover,
+.fa-pen-to-square:hover {
+    opacity: .5;
+    cursor : pointer;
+}
+
+
+.fa-pen-to-square {
+    font-size: 20px;
+    color    : rgb(39, 134, 174);
+}
+
+
 tbody tr td {
     height: 60px;
 }
 
-tbody tr td .new_price {
+.new_price {
     color      : yellowgreen;
     font-weight: bold;
 }
@@ -218,13 +236,23 @@ tbody tr .discount {
     font-size      : 12px;
 }
 
+
 .status_cart_item {
-    background-color: #e7cccc;
-    padding         : 4px 15px 4px;
-    border-radius   : 15px;
-    font-weight     : bolder;
-    color           : #ad1b20;
-    border          : 1px solid #313639;
+    padding        : 5px 10px;
+    text-decoration: none;
+    color          : #000;
+    border         : 1px solid #ccc;
+    margin-right   : 5px;
+}
+
+.status_cart_item :hover {
+    text-decoration: none;
+}
+
+.status_cart_item.active {
+    background-color: #007bff;
+    color           : #fff;
+    text-decoration : none;
 }
 
 #btn_search {
@@ -243,4 +271,42 @@ tbody tr .discount {
     border-radius: 7px;
     border       : 1px solid #1594de;
     box-shadow   : rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.order-detail-bottom {
+    display        : flex;
+    justify-content: space-between;
+    align-items    : center;
+    margin         : 0 5px 10px 5px;
+}
+
+.order-detail-bottom .odb-orderId {
+    display        : flex;
+    gap            : 7px;
+    justify-content: center;
+    align-items    : center;
+}
+
+.order-detail-bottom .odb-orderId :nth-child(2) {
+    font-size  : 20px;
+    font-weight: bold;
+    color      : #50e543;
+}
+
+.fas-icon {
+    display: flex;
+    gap    : 10px;
+}
+
+.author-role {
+    display    : flex;
+    align-items: center;
+    gap        : 4px;
+    margin-top : 5px;
+}
+
+.flex-sb {
+    display        : flex;
+    justify-content: space-between;
+    gap            : 15px;
 }

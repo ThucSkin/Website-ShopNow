@@ -1,27 +1,31 @@
 /* login */
 .btn-google {
-  color: white;
+  color           : white;
   background-color: #ea4335;
 }
+
 .btn-facebook {
-  color: white;
+  color           : white;
   background-color: #3b5998;
-  border: none;
+  border          : none;
 }
+
 .card-bottom :hover {
   background-color: rgb(159, 183, 238);
 }
-.card-bottom {
+
+/* .card-bottom {
   display: flex;
   justify-content: space-around;
   align-items: center;
-}
-.card .card-body .card-bottom a{
+} */
+.card .card-body .card-bottom a {
   text-decoration: none;
 }
-.message{
-  text-align: center;
-  color: red;
+
+.message {
+  text-align : center;
+  color      : red;
   font-family: 'Times New Roman', Times, serif;
-  font-size: 15px;
+  font-size  : 15px;
 }
