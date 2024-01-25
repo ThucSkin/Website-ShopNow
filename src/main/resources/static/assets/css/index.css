@@ -490,6 +490,26 @@
     border          : 1px solid #313639;
   }
 
+  .status_order_item {
+    padding        : 5px 10px;
+    text-decoration: none;
+    color          : #000;
+    border         : 1px solid #ccc;
+    margin-right   : 5px;
+    border-radius  : 4px;
+  }
+
+  .status_order_item :hover {
+    text-decoration: none;
+  }
+
+  .status_order_item.active {
+    background-color: #007bff;
+    color           : #fff;
+    text-decoration : none;
+  }
+
+
   .no-result {
     display        : flex;
     justify-content: center;

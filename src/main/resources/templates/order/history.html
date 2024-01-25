@@ -6,19 +6,20 @@
 		<div class="row mt-2">
 			<div class="col-sm-8">
 				<div class="status_cart">
-					<a th:href=@{/orderHistory/list}><label id="btn_search" class="status_cart_item">[[#{OH.all}]]
-							(<label class="text_totalSizeOrder">[[${totalSize}]]</label>)</label></a>
-					<a th:href=@{/orderHistory/confirmation}><label id="btn_search" class="status_cart_item">
+					<a th:href=@{/orderHistory/list}>
+						<label class="status_order_item active">[[#{OH.all}]]
+							([[${totalSize}]])
+						</label></a>
+					<a th:href=@{/orderHistory/confirmation}><label class="status_order_item">
 							<i class="fa-solid fa-circle-check"></i> [[#{OH.confirm}]]
 							([[${totalSizeStatus_confirmation}]])</label></a>
-					<a th:href=@{/orderHistory/transported}><label id="btn_search" class="status_cart_item"><i
+					<a th:href=@{/orderHistory/transported}><label class="status_order_item"><i
 								class="fa-solid fa-truck"></i>
 							[[#{OH.transported}]] ([[${totalSizeStatus_transported}]])</label></a>
-					<a th:href=@{/orderHistory/delivered}><label id="btn_search" class="status_cart_item"><i
+					<a th:href=@{/orderHistory/delivered}><label class="status_order_item"><i
 								class="fa-solid fa-face-smile"></i>
 							[[#{OH.delivered}]] ([[${totalSizeStatus_delivered}]])</label></a>
-					<a th:href=@{/orderHistory/cancel}><label id="btn_search" class="status_cart_item"><i
-								class="fa-solid fa-road"></i>
+					<a th:href=@{/orderHistory/cancel}><label class="status_order_item"><i class="fa-solid fa-road"></i>
 							[[#{OH.cancel}]] ([[${totalSizeStatus_cancel}]])</label></a>
 				</div>
 			</div>
@@ -42,8 +43,6 @@
 						<th>Image</th>
 						<th>[[#{order.name}]]</th>
 						<th>[[#{order.date}]]</th>
-						<th>[[#{order.phone}]]</th>
-						<th>Email</th>
 						<th>[[#{order.address}]]</th>
 						<th>[[#{order.total}]]</th>
 						<th>[[#{cart.status}]]</th>
@@ -58,8 +57,6 @@
 						</td>
 						<td>[[${order.name}]]</td>
 						<td>[[${order.createDay}]]</td>
-						<td>[[${order.telePhone}]]</td>
-						<td>[[${order.email}]]</td>
 						<td>[[${order.address}]]</td>
 						<td><label class="totalPrice_order">[[${#numbers.formatInteger(order.total, 0, 'POINT')}]]
 								<sup>đ</sup></label></td>
@@ -72,7 +69,6 @@
 						</td>
 						<th><a th:href="@{|/orderHistory/detail/${order.orderId}|}" class="btn btn-default"
 								id="btn_detail_history"><i class="fa-solid fa-magnifying-glass-plus"></i>
-								Xem chi tiết đơn
 							</a></th>
 					</tr>
 				</tbody>

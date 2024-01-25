@@ -6,18 +6,18 @@
 		<div class="row mt-2">
 			<div class="col">
 				<div class="status_cart">
-					<a th:href=@{/orderHistory/list}><label id="btn_search" class="status_cart_item"> [[#{OH.all}]]
+					<a th:href=@{/orderHistory/list}><label id="btn_all" class="status_order_item"> [[#{OH.all}]]
 							([[${totalSize}]])</label></a>
-					<a th:href=@{/orderHistory/confirmation}><label id="btn_search" class="status_cart_item">
+					<a th:href=@{/orderHistory/confirmation}><label id="btn_confirmation" class="status_order_item">
 							<i class="fa-solid fa-circle-check"></i> [[#{OH.confirm}]]
 							[[${totalSizeStatus_confirmation}]]</label></a>
-					<a th:href=@{/orderHistory/transported}><label id="btn_search" class="status_cart_item"><i
+					<a th:href=@{/orderHistory/transported}><label id="btn_transported" class="status_order_item"><i
 								class="fa-solid fa-truck"></i>
 							[[#{OH.transported}]] [[${totalSizeStatus_transported}]]</label></a>
-					<a th:href=@{/orderHistory/delivered}><label id="btn_search" class="status_cart_item"><i
+					<a th:href=@{/orderHistory/delivered}><label id="btn_delivered" class="status_order_item"><i
 								class="fa-solid fa-face-smile"></i>
 							[[#{OH.delivered}]] [[${totalSizeStatus_delivered}]]</label></a>
-					<a th:href=@{/orderHistory/cancel}><label id="btn_search" class="status_cart_item"><i
+					<a th:href=@{/orderHistory/cancel}><label id="btn_cancel" class="status_order_item"><i
 								class="fa-solid fa-road"></i>
 							[[#{OH.cancel}]] [[${totalSizeStatus_cancel}]]</label></a>
 				</div>
@@ -31,8 +31,6 @@
 						<th>Image</th>
 						<th>[[#{order.name}]]</th>
 						<th>[[#{order.date}]]</th>
-						<th>[[#{order.phone}]]</th>
-						<th>Email</th>
 						<th>[[#{order.address}]]</th>
 						<th>[[#{order.total}]]</th>
 						<th>[[#{cart.status}]]</th>
@@ -47,8 +45,6 @@
 						</td>
 						<td>[[${order.name}]]</td>
 						<td>[[${order.createDay}]]</td>
-						<td>[[${order.telePhone}]]</td>
-						<td>[[${order.email}]]</td>
 						<td>[[${order.address}]]</td>
 						<td><label class="totalPrice_order">[[${#numbers.formatInteger(order.total, 0, 'POINT')}]]
 								<sup>đ</sup></label></td>
@@ -61,7 +57,6 @@
 						</td>
 						<th><a th:href="@{|/orderHistory/detail/${order.orderId}|}" class="btn btn-default"
 								id="btn_detail_history"><i class="fa-solid fa-magnifying-glass-plus"></i>
-								Xem chi tiết đơn
 							</a></th>
 					</tr>
 				</tbody>
@@ -163,6 +158,39 @@
 			<a th:href="@{|/|}" class="btn btn-success dropdown-toggle" id="btn_search">Xem thêm [[${totalItems} - 6]]
 				sản phẩm</a>
 		</div>
+
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				var currentPath = window.location.pathname;
+
+
+				var btnAll = document.getElementById("btn_all");
+				var btnConfirmation = document.getElementById("btn_confirmation");
+				var btnTransported = document.getElementById("btn_transported");
+				var btnDelivered = document.getElementById("btn_delivered");
+				var btnCancel = document.getElementById("btn_cancel");
+
+				// Remove "active" class from all buttons
+				btnAll.classList.remove("active");
+				btnConfirmation.classList.remove("active");
+				btnTransported.classList.remove("active");
+				btnDelivered.classList.remove("active");
+				btnCancel.classList.remove("active");
+
+				// Add "active" class to the relevant button based on the current path
+				if (currentPath.includes("/orderHistory/list")) {
+					btnAll.classList.add("active");
+				} else if (currentPath.includes("/orderHistory/confirmation")) {
+					btnConfirmation.classList.add("active");
+				} else if (currentPath.includes("/orderHistory/transported")) {
+					btnTransported.classList.add("active");
+				} else if (currentPath.includes("/orderHistory/delivered")) {
+					btnDelivered.classList.add("active");
+				} else if (currentPath.includes("/orderHistory/cancel")) {
+					btnCancel.classList.add("active");
+				}
+			});
+		</script>
 	</main>
 </body>
 
