@@ -12,6 +12,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
@@ -61,7 +62,7 @@ public class AccountAdminController {
 			@RequestParam("size") Optional<Integer> size) {
 		int currentPage = page.orElse(1);
 		int pageSize = size.orElse(5);
-		Pageable pageable = PageRequest.of(currentPage - 1, pageSize);
+		Pageable pageable = PageRequest.of(currentPage - 1, pageSize, Sort.by("username").descending());
 		Page<Account> resultPage = null;
 
 		if (StringUtils.hasText(fullname)) {

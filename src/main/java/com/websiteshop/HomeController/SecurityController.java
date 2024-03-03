@@ -20,7 +20,8 @@ public class SecurityController {
     @RequestMapping("/oauth2/login/success")
     public String success(OAuth2AuthenticationToken oauth2) {
         accountService.loginFormOAuth2(oauth2);
-        return "forward:/security/login/success";
+
+        return "redirect:/";
     }
 
     @RequestMapping("/security/login/form")
@@ -31,7 +32,6 @@ public class SecurityController {
 
     @RequestMapping("/security/login/success")
     public ModelAndView loginSuccess(ModelMap model) {
-        model.addAttribute("message", "Đã đăng nhập!");
         return new ModelAndView("forward:/", model);
     }
 

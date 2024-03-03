@@ -384,7 +384,8 @@
 					</div>
 					<div class="card-footer">
 						<a th:href="@{|/product/detail/${item.productId}|}" class="card-title">[(${item.name})]
-							[(${item.RAM})]</a>
+							<span th:if="${item.RAM != null and not #strings.isEmpty(item.RAM)}">
+								/ [(${item.RAM})]GB</span></a>
 						<div class="card-bottom">
 							<div>
 								<span class="price">[[${#numbers.formatInteger(item.unitPrice, 0,

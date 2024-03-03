@@ -1,5 +1,6 @@
 package com.websiteshop.HomeController;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -71,7 +72,7 @@ public class OrderController {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(5);
 
-        Pageable pageable = PageRequest.of(currentPage - 1, pageSize);
+        Pageable pageable = PageRequest.of(currentPage - 1, pageSize, Sort.by("orderId").descending());
         Page<Order> resultPage;
 
         if (StringUtils.hasText(name)) {
@@ -136,7 +137,14 @@ public class OrderController {
             @RequestParam("page") Optional<Integer> page) {
         String status = "Đang chờ xác nhận";
         String username = request.getRemoteUser();
-        model.addAttribute("orders", odao.findByStatus(status, username));
+        List<Order> orders = odao.findByStatus(status, username);
+
+        // Sắp xếp danh sách theo giảm dần của orderId
+        orders = orders.stream()
+                .sorted(Comparator.comparingLong(Order::getOrderId).reversed())
+                .collect(Collectors.toList());
+
+        model.addAttribute("orders", orders);
         // get totalsize item
         All_item(model);
         long totalSize = orderService.countByUsernameAndStatus(username, "Đang chờ xác nhận");
@@ -154,9 +162,17 @@ public class OrderController {
     @GetMapping("/transported")
     public String listTransported(Model model,
             HttpServletRequest request) {
-        String username = request.getRemoteUser();
+
         String status = "Đang vận chuyển";
-        model.addAttribute("orders", odao.findByStatus(status, username));
+        String username = request.getRemoteUser();
+        List<Order> orders = odao.findByStatus(status, username);
+
+        // Sắp xếp danh sách theo giảm dần của orderId
+        orders = orders.stream()
+                .sorted(Comparator.comparingLong(Order::getOrderId).reversed())
+                .collect(Collectors.toList());
+
+        model.addAttribute("orders", orders);
         // get totalsize item
         All_item(model);
         long totalSize = orderService.countByUsernameAndStatus(username, "Đang chờ xác nhận");
@@ -175,7 +191,14 @@ public class OrderController {
     public String listDelivery(Model model, HttpServletRequest request) {
         String status = "Đã hủy";
         String username = request.getRemoteUser();
-        model.addAttribute("orders", odao.findByStatus(status, username));
+        List<Order> orders = odao.findByStatus(status, username);
+
+        // Sắp xếp danh sách theo giảm dần của orderId
+        orders = orders.stream()
+                .sorted(Comparator.comparingLong(Order::getOrderId).reversed())
+                .collect(Collectors.toList());
+
+        model.addAttribute("orders", orders);
         // get totalsize item
         All_item(model);
         long totalSize = orderService.countByUsernameAndStatus(username, "Đang chờ xác nhận");
@@ -194,7 +217,14 @@ public class OrderController {
     public String listEvaluate(Model model, HttpServletRequest request) {
         String status = "Đã giao hàng";
         String username = request.getRemoteUser();
-        model.addAttribute("orders", odao.findByStatus(status, username));
+        List<Order> orders = odao.findByStatus(status, username);
+
+        // Sắp xếp danh sách theo giảm dần của orderId
+        orders = orders.stream()
+                .sorted(Comparator.comparingLong(Order::getOrderId).reversed())
+                .collect(Collectors.toList());
+        model.addAttribute("orders", orders);
+
         // get totalsize item
         All_item(model);
         long totalSize = orderService.countByUsernameAndStatus(username, "Đang chờ xác nhận");

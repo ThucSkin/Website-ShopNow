@@ -1,6 +1,7 @@
 package com.websiteshop.AdminController;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,9 +31,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.data.domain.Sort;
 
 import com.websiteshop.entity.Account;
 import com.websiteshop.entity.Category;
+import com.websiteshop.entity.Order;
 import com.websiteshop.entity.Product;
 import com.websiteshop.model.CategoryDto;
 import com.websiteshop.model.ProductDto;
@@ -68,7 +71,8 @@ public class ProductAdminController {
             @RequestParam("size") Optional<Integer> size) {
         int currentPage = page.orElse(1);
         int pageSize = size.orElse(5);
-        Pageable pageable = PageRequest.of(currentPage - 1, pageSize);
+
+        Pageable pageable = PageRequest.of(currentPage - 1, pageSize, Sort.by("productId").descending());
         Page<Product> resultPage = null;
 
         if (StringUtils.hasText(name)) {
@@ -79,6 +83,7 @@ public class ProductAdminController {
         } else {
             resultPage = productService.findAll(pageable);
             List<Product> resultList = productService.findAll();
+
             int totalSize = resultList.size();
             model.addAttribute("totalSize", totalSize);
         }

@@ -208,14 +208,6 @@ public class AccountServiceImpl implements AccountService {
     // Luu vào CSDL
     @Override
     public void loginFormOAuth2(OAuth2AuthenticationToken oauth2) {
-        // // Lấy tất cả các thuộc tính của người dùng
-        // Map<String, Object> attributes = oauth2.getPrincipal().getAttributes();
-        // // In ra console
-        // for (Map.Entry<String, Object> entry : attributes.entrySet()) {
-        // String key = entry.getKey();
-        // Object value = entry.getValue();
-        // System.out.println(key + ": " + value);
-        // }
         String email = oauth2.getPrincipal().getAttribute("email");
         String username = email.substring(0, email.indexOf("@")).trim();
         String password = Long.toHexString(System.currentTimeMillis());

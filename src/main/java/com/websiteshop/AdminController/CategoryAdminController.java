@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -41,7 +42,7 @@ public class CategoryAdminController {
 			@RequestParam("size") Optional<Integer> size) {
 		int currentPage = page.orElse(1);
 		int pageSize = size.orElse(5);
-		Pageable pageable = PageRequest.of(currentPage - 1, pageSize);
+		Pageable pageable = PageRequest.of(currentPage - 1, pageSize, Sort.by("categoryId").descending());
 		Page<Category> resultPage = null;
 
 		if (StringUtils.hasText(name)) {

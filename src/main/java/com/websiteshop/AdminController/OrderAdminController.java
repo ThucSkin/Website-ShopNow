@@ -24,12 +24,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.util.StringUtils;
-import com.websiteshop.model.listStatusDao;
+import com.websiteshop.model.ListStatusDao;
 import com.websiteshop.dao.OrderDAO;
 import com.websiteshop.entity.Order;
 import com.websiteshop.model.AccountDto;
 import com.websiteshop.model.OrderDto;
-import com.websiteshop.model.listStatus;
+import com.websiteshop.model.ListStatus;
 import com.websiteshop.service.AccountService;
 import com.websiteshop.service.OrderDetailService;
 import com.websiteshop.service.OrderService;
@@ -54,19 +54,19 @@ public class OrderAdminController {
 		model.addAttribute("totalSize", totalSize);
 	}
 
-	listStatusDao ls = new listStatusDao();
+	ListStatusDao ls = new ListStatusDao();
 
 	@ModelAttribute("list_status")
-	public List<listStatus> getlistStatus() {
+	public List<ListStatus> getListStatus() {
 		return ls.getAll().stream().map(item -> {
-			listStatus dto = new listStatus();
+			ListStatus dto = new ListStatus();
 			BeanUtils.copyProperties(item, dto);
 			return dto;
 		}).collect(Collectors.toList());
 	}
 
 	@PostMapping("updateStatus")
-	public ModelAndView updateStatusOrder(ModelMap model, @ModelAttribute("LISTSTATUS") listStatus status,
+	public ModelAndView updateStatusOrder(ModelMap model, @ModelAttribute("LISTSTATUS") ListStatus status,
 			BindingResult result) {
 
 		Order order = orderService.findById(status.getOrderId());
@@ -103,62 +103,60 @@ public class OrderAdminController {
 	}
 
 	@GetMapping("list")
-	public String search(ModelMap model, @RequestParam(name = "name", required = false) String name,
-			@RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
+	public String search(ModelMap model,
+			@RequestParam(name = "name", required = false) String name,
+			@RequestParam("page") Optional<Integer> page,
+			@RequestParam("size") Optional<Integer> size) {
 
-		model.addAttribute("LISTSTATUS", new listStatus());
+		model.addAttribute("LISTSTATUS", new ListStatus());
 		int currentPage = page.orElse(1);
 		int pageSize = size.orElse(5);
 		Pageable pageable = PageRequest.of(currentPage - 1, pageSize, Sort.by("orderId").descending());
-		Page<Order> resultPage = null;
+		Page<Order> resultPage = StringUtils.hasText(name)
+				? orderService.findByNameContaining(name, pageable)
+				: orderService.findAll(pageable);
 
-		if (StringUtils.hasText(name)) {
-			resultPage = orderService.findByNameContaining(name, pageable);
-			model.addAttribute("name", name);
-			long totalSize = orderService.countByNameContaining(name);
-			model.addAttribute("totalSize", totalSize);
-		} else {
-			List<Order> list = orderService.findAll();
-			list = list.stream()
-					.sorted(Comparator.comparingLong(Order::getOrderId).reversed())
-					.collect(Collectors.toList());
+		populateModel(model, resultPage);
+		return "admin/orders/list";
+	}
 
-			int totalSize = list.size();
-			model.addAttribute("totalSize", totalSize);
-
-			resultPage = orderService.findAll(pageable);
-		}
-
-		int totalPages = resultPage.getTotalPages();
-		if (totalPages > 0) {
-			int start = Math.max(1, currentPage - 2);
-			int end = Math.min(currentPage + 2, totalPages);
-
-			if (totalPages > 5) {
-				if (end == totalPages)
-					start = end - 5;
-				else if (start == 1)
-					end = start + 5;
-			}
-			List<Integer> pageNumbers = IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList());
-			model.addAttribute("pageNumbers", pageNumbers);
-		}
+	private void populateModel(ModelMap model, Page<Order> resultPage) {
+		List<Order> orders = resultPage.getContent();
+		orders = orders.stream()
+				.sorted(Comparator.comparingLong(Order::getOrderId).reversed())
+				.collect(Collectors.toList());
 
 		model.addAttribute("orderPage", resultPage);
-		List<Order> totalSize = odao.findByStatus("Đang chờ xác nhận");
-		int total = totalSize.size();
-		model.addAttribute("totalSizeStatus_confirmation", total);
-		List<Order> totalSize1 = odao.findByStatus("Đang vận chuyển");
-		int total1 = totalSize1.size();
-		model.addAttribute("totalSizeStatus_transported", total1);
-		List<Order> totalSize2 = odao.findByStatus("Đã giao hàng");
-		int total2 = totalSize2.size();
-		model.addAttribute("totalSizeStatus_delivered", total2);
-		List<Order> totalSize3 = odao.findByStatus("Đã hủy");
-		int total3 = totalSize3.size();
-		model.addAttribute("totalSizeStatus_cancel", total3);
+		model.addAttribute("pageNumbers", calculatePageNumbers(resultPage));
+		model.addAttribute("totalSize", orders.size());
 
-		return "admin/orders/list";
+		populateStatusCounters(model);
+	}
+
+	// phân trang
+	private List<Integer> calculatePageNumbers(Page<Order> resultPage) {
+		int totalPages = resultPage.getTotalPages();
+		int currentPage = resultPage.getNumber() + 1;
+
+		int start = Math.max(1, currentPage - 2);
+		int end = Math.min(currentPage + 2, totalPages);
+
+		if (totalPages > 5) {
+			if (end == totalPages)
+				start = end - 5;
+			else if (start == 1)
+				end = start + 5;
+		}
+
+		return IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList());
+	}
+
+	// lấy kich thướt theo status
+	private void populateStatusCounters(ModelMap model) {
+		model.addAttribute("totalSizeStatus_confirmation", odao.findByStatus("Đang chờ xác nhận").size());
+		model.addAttribute("totalSizeStatus_transported", odao.findByStatus("Đang vận chuyển").size());
+		model.addAttribute("totalSizeStatus_delivered", odao.findByStatus("Đã giao hàng").size());
+		model.addAttribute("totalSizeStatus_cancel", odao.findByStatus("Đã hủy").size());
 	}
 
 	@GetMapping("add")
@@ -238,235 +236,74 @@ public class OrderAdminController {
 		return new ModelAndView("forward:/admin/orders/list", model);
 	}
 
-	@GetMapping("/confirmation")
-	public String listConfirmationa(Model model, @RequestParam(name = "name", required = false) String name,
-			@RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
+	private List<Order> sortOrdersByOrderIdDesc(List<Order> orders) {
+		return orders.stream()
+				.sorted(Comparator.comparingLong(Order::getOrderId).reversed())
+				.collect(Collectors.toList());
+	}
 
+	private String listByStatus(Model model, String name, Optional<Integer> page, Optional<Integer> size,
+			String status) {
 		int currentPage = page.orElse(1);
 		int pageSize = size.orElse(5);
-		Pageable pageable = PageRequest.of(currentPage - 1, pageSize, Sort.by("name"));
+		Pageable pageable = PageRequest.of(currentPage - 1, pageSize, Sort.by("orderId"));
 		Page<Order> resultPage;
 
 		if (StringUtils.hasText(name)) {
 			resultPage = orderService.findByNameContaining(name, pageable);
 			model.addAttribute("name", name);
-			long totalSize = orderService.countByNameContaining(name);
-			model.addAttribute("totalSize", totalSize);
+			model.addAttribute("totalSize", orderService.countByNameContaining(name));
 		} else {
 			resultPage = orderService.findAll(pageable);
 			List<Order> list = orderService.findAll();
-			int totalSize = list.size();
-			model.addAttribute("totalSize", totalSize);
-		}
-
-		int totalPages = resultPage.getTotalPages();
-		if (totalPages > 0) {
-			int start = Math.max(1, currentPage - 2);
-			int end = Math.min(currentPage + 2, totalPages);
-
-			if (totalPages > 5) {
-				if (end == totalPages)
-					start = end - 5;
-				else if (start == 1)
-					end = start + 5;
-			}
-			List<Integer> pageNumbers = IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList());
-			model.addAttribute("pageNumbers", pageNumbers);
+			model.addAttribute("totalSize", list.size());
 		}
 
 		model.addAttribute("orderPage", resultPage);
+		model.addAttribute("orders", sortOrdersByOrderIdDesc(odao.findByStatus(status)));
+		model.addAttribute("pageNumbers", calculatePageNumbers(resultPage));
 
-		String status = "Đang chờ xác nhận";
-		model.addAttribute("orders", odao.findByStatus(status));
 		// All size orders
 		All_Size_Order(model);
 		// get totalsize item
-		List<Order> totalSize = odao.findByStatus("Đang chờ xác nhận");
-		int total = totalSize.size();
-		model.addAttribute("totalSizeStatus_confirmation", total);
-		List<Order> totalSize1 = odao.findByStatus("Đang vận chuyển");
-		int total1 = totalSize1.size();
-		model.addAttribute("totalSizeStatus_transported", total1);
-		List<Order> totalSize2 = odao.findByStatus("Đã giao hàng");
-		int total2 = totalSize2.size();
-		model.addAttribute("totalSizeStatus_delivered", total2);
-		List<Order> totalSize3 = odao.findByStatus("Đã hủy");
-		int total3 = totalSize3.size();
-		model.addAttribute("totalSizeStatus_cancel", total3);
+		model.addAttribute("totalSizeStatus_confirmation", odao.findByStatus("Đang chờ xác nhận").size());
+		model.addAttribute("totalSizeStatus_transported", odao.findByStatus("Đang vận chuyển").size());
+		model.addAttribute("totalSizeStatus_delivered", odao.findByStatus("Đã giao hàng").size());
+		model.addAttribute("totalSizeStatus_cancel", odao.findByStatus("Đã hủy").size());
+
 		return "/admin/orders/listByStatus";
+	}
+
+	@GetMapping("/confirmation")
+	public String listConfirmation(Model model,
+			@RequestParam(name = "name", required = false) String name,
+			@RequestParam("page") Optional<Integer> page,
+			@RequestParam("size") Optional<Integer> size) {
+		return listByStatus(model, name, page, size, "Đang chờ xác nhận");
 	}
 
 	@GetMapping("/transported")
-	public String transported(Model model, @RequestParam(name = "name", required = false) String name,
-			@RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
-
-		int currentPage = page.orElse(1);
-		int pageSize = size.orElse(5);
-		Pageable pageable = PageRequest.of(currentPage - 1, pageSize, Sort.by("name"));
-		Page<Order> resultPage;
-
-		if (StringUtils.hasText(name)) {
-			resultPage = orderService.findByNameContaining(name, pageable);
-			model.addAttribute("name", name);
-			long totalSize = orderService.countByNameContaining(name);
-			model.addAttribute("totalSize", totalSize);
-		} else {
-			resultPage = orderService.findAll(pageable);
-			List<Order> list = orderService.findAll();
-			int totalSize = list.size();
-			model.addAttribute("totalSize", totalSize);
-		}
-
-		int totalPages = resultPage.getTotalPages();
-		if (totalPages > 0) {
-			int start = Math.max(1, currentPage - 2);
-			int end = Math.min(currentPage + 2, totalPages);
-
-			if (totalPages > 5) {
-				if (end == totalPages)
-					start = end - 5;
-				else if (start == 1)
-					end = start + 5;
-			}
-			List<Integer> pageNumbers = IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList());
-			model.addAttribute("pageNumbers", pageNumbers);
-		}
-
-		model.addAttribute("orderPage", resultPage);
-
-		String status = "Đang vận chuyển";
-		model.addAttribute("orders", odao.findByStatus(status));
-		// All size orders
-		All_Size_Order(model);
-		// get totalsize item
-		List<Order> totalSize = odao.findByStatus("Đang chờ xác nhận");
-		int total = totalSize.size();
-		model.addAttribute("totalSizeStatus_confirmation", total);
-		List<Order> totalSize1 = odao.findByStatus("Đang vận chuyển");
-		int total1 = totalSize1.size();
-		model.addAttribute("totalSizeStatus_transported", total1);
-		List<Order> totalSize2 = odao.findByStatus("Đã giao hàng");
-		int total2 = totalSize2.size();
-		model.addAttribute("totalSizeStatus_delivered", total2);
-		List<Order> totalSize3 = odao.findByStatus("Đã hủy");
-		int total3 = totalSize3.size();
-		model.addAttribute("totalSizeStatus_cancel", total3);
-		return "/admin/orders/listByStatus";
+	public String transported(Model model,
+			@RequestParam(name = "name", required = false) String name,
+			@RequestParam("page") Optional<Integer> page,
+			@RequestParam("size") Optional<Integer> size) {
+		return listByStatus(model, name, page, size, "Đang vận chuyển");
 	}
 
 	@GetMapping("/delivered")
-	public String delivered(Model model, @RequestParam(name = "name", required = false) String name,
-			@RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
-
-		int currentPage = page.orElse(1);
-		int pageSize = size.orElse(5);
-		Pageable pageable = PageRequest.of(currentPage - 1, pageSize, Sort.by("name"));
-		Page<Order> resultPage;
-
-		if (StringUtils.hasText(name)) {
-			resultPage = orderService.findByNameContaining(name, pageable);
-			model.addAttribute("name", name);
-			long totalSize = orderService.countByNameContaining(name);
-			model.addAttribute("totalSize", totalSize);
-		} else {
-			resultPage = orderService.findAll(pageable);
-			List<Order> list = orderService.findAll();
-			int totalSize = list.size();
-			model.addAttribute("totalSize", totalSize);
-		}
-
-		int totalPages = resultPage.getTotalPages();
-		if (totalPages > 0) {
-			int start = Math.max(1, currentPage - 2);
-			int end = Math.min(currentPage + 2, totalPages);
-
-			if (totalPages > 5) {
-				if (end == totalPages)
-					start = end - 5;
-				else if (start == 1)
-					end = start + 5;
-			}
-			List<Integer> pageNumbers = IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList());
-			model.addAttribute("pageNumbers", pageNumbers);
-		}
-
-		model.addAttribute("orderPage", resultPage);
-
-		String status = "Đã giao hàng";
-		model.addAttribute("orders", odao.findByStatus(status));
-		// All size orders
-		All_Size_Order(model);
-		// get totalsize item
-		List<Order> totalSize = odao.findByStatus("Đang chờ xác nhận");
-		int total = totalSize.size();
-		model.addAttribute("totalSizeStatus_confirmation", total);
-		List<Order> totalSize1 = odao.findByStatus("Đang vận chuyển");
-		int total1 = totalSize1.size();
-		model.addAttribute("totalSizeStatus_transported", total1);
-		List<Order> totalSize2 = odao.findByStatus("Đã giao hàng");
-		int total2 = totalSize2.size();
-		model.addAttribute("totalSizeStatus_delivered", total2);
-		List<Order> totalSize3 = odao.findByStatus("Đã hủy");
-		int total3 = totalSize3.size();
-		model.addAttribute("totalSizeStatus_cancel", total3);
-		return "/admin/orders/listByStatus";
+	public String delivered(Model model,
+			@RequestParam(name = "name", required = false) String name,
+			@RequestParam("page") Optional<Integer> page,
+			@RequestParam("size") Optional<Integer> size) {
+		return listByStatus(model, name, page, size, "Đã giao hàng");
 	}
 
 	@GetMapping("/cancel")
-	public String cancel(Model model, @RequestParam(name = "name", required = false) String name,
-			@RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
-
-		int currentPage = page.orElse(1);
-		int pageSize = size.orElse(5);
-		Pageable pageable = PageRequest.of(currentPage - 1, pageSize, Sort.by("name"));
-		Page<Order> resultPage;
-
-		if (StringUtils.hasText(name)) {
-			resultPage = orderService.findByNameContaining(name, pageable);
-			model.addAttribute("name", name);
-			long totalSize = orderService.countByNameContaining(name);
-			model.addAttribute("totalSize", totalSize);
-		} else {
-			resultPage = orderService.findAll(pageable);
-			List<Order> list = orderService.findAll();
-			int totalSize = list.size();
-			model.addAttribute("totalSize", totalSize);
-		}
-
-		int totalPages = resultPage.getTotalPages();
-		if (totalPages > 0) {
-			int start = Math.max(1, currentPage - 2);
-			int end = Math.min(currentPage + 2, totalPages);
-
-			if (totalPages > 5) {
-				if (end == totalPages)
-					start = end - 5;
-				else if (start == 1)
-					end = start + 5;
-			}
-			List<Integer> pageNumbers = IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList());
-			model.addAttribute("pageNumbers", pageNumbers);
-		}
-
-		model.addAttribute("orderPage", resultPage);
-
-		String status = "Đã hủy";
-		model.addAttribute("orders", odao.findByStatus(status));
-		// All size orders
-		All_Size_Order(model);
-		// get totalsize item
-		List<Order> totalSize = odao.findByStatus("Đang chờ xác nhận");
-		int total = totalSize.size();
-		model.addAttribute("totalSizeStatus_confirmation", total);
-		List<Order> totalSize1 = odao.findByStatus("Đang vận chuyển");
-		int total1 = totalSize1.size();
-		model.addAttribute("totalSizeStatus_transported", total1);
-		List<Order> totalSize2 = odao.findByStatus("Đã giao hàng");
-		int total2 = totalSize2.size();
-		model.addAttribute("totalSizeStatus_delivered", total2);
-		List<Order> totalSize3 = odao.findByStatus("Đã hủy");
-		int total3 = totalSize3.size();
-		model.addAttribute("totalSizeStatus_cancel", total3);
-		return "/admin/orders/listByStatus";
+	public String cancel(Model model,
+			@RequestParam(name = "name", required = false) String name,
+			@RequestParam("page") Optional<Integer> page,
+			@RequestParam("size") Optional<Integer> size) {
+		return listByStatus(model, name, page, size, "Đã hủy");
 	}
+
 }

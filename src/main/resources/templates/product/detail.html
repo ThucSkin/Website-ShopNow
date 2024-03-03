@@ -26,7 +26,12 @@
                     </div>
                     <div class="col-sm-7">
                         <fieldset class="list_item_detail">
-                            <li>[[#{cart.name}]]: <label class="category-name">[(*{name})] [(*{RAM})].</label></li>
+                            <li>[[#{cart.name}]]:
+                                <label class="category-name">[(*{name})]
+                                    <span th:if="${item.RAM != null and not #strings.isEmpty(item.RAM)}">
+                                        / [(${item.RAM})]GB</span>.
+                                </label>
+                            </li>
                             <li>[[#{cart.price}]]: <label class="price">[[*{#numbers.formatInteger(unitPrice, 0,
                                     'DEFAULT')}]] <sup>đ</sup></label></li>
                             <li><label class="old_price">[[*{#numbers.formatInteger(oldPrice, 0, 'DEFAULT')}]]
@@ -124,7 +129,8 @@
                         </div>
                         <div class="card-footer">
                             <a th:href="@{|/product/detail/${item.productId}|}" class="card-title">[(${item.name})]
-                                [(${item.RAM})]</a>
+                                <span th:if="${item.RAM != null and not #strings.isEmpty(item.RAM)}">
+                                    / [(${item.RAM})]GB</span></a>
                             <div class="card-bottom">
                                 <div>
                                     <span class="price">[[${#numbers.formatInteger(item.unitPrice, 0,
@@ -153,6 +159,7 @@
                     </div>
                 </div>
             </div>
+
             <!-- ******************************** -->
             <h5 class="mt-3"><b>Xem thêm sản phẩm cùng loại: </b></h5>
             <div class="row mb-4 ml-2">
@@ -169,7 +176,8 @@
                         </div>
                         <div class="card-footer">
                             <a th:href="@{|/product/detail/${item.productId}|}" class="card-title">[(${item.name})]
-                                [(${item.RAM})]</a>
+                                <span th:if="${item.RAM != null and not #strings.isEmpty(item.RAM)}">
+                                    / [(${item.RAM})]GB</span></a>
                             <div class="card-bottom">
                                 <div>
                                     <span class="price">[[${#numbers.formatInteger(item.unitPrice, 0,
@@ -247,7 +255,8 @@
                         </div>
                         <div class="card-footer">
                             <a th:href="@{|/product/detail/${item.productId}|}" class="card-title">[(${item.name})]
-                                [(${item.RAM})]</a>
+                                <span th:if="${item.RAM != null and not #strings.isEmpty(item.RAM)}">
+                                    / [(${item.RAM})]GB</span></a>
                             <div class="card-bottom">
                                 <div>
                                     <span class="price">[[${#numbers.formatInteger(item.unitPrice, 0, 'POINT')}]]

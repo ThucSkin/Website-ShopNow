@@ -49,7 +49,7 @@
 							<td><img th:src="@{|/assets/images/${item.account.image}|}" class="img--itemm"></td>
 							<td th:utext="${item.account.fullname}"></td>
 							<td>[[${item.account.email}]]</td>
-							<td><img th:src="@{|/assets/images/${item.product.image1}|}" class="img--item"></td>
+							<td><img th:src="@{|/assets/images/${item.product.image1}|}" class="img_product_list"></td>
 							<td th:utext="${item.product.name}"></td>
 							<td><b>[[${item.description}]]</b></td>
 							<td>
@@ -57,8 +57,7 @@
 									<a class="btn btn-warning mr-2" hidden
 										th:href="@{'/admin/comments/edit/' + ${item.commentId}}">
 										<i class="fa-regular fa-pen-to-square"></i>
-									</a> <a class="btn btn-danger" th:data-id="${item.commentId}"
-										th:data-name="${item.commentId}"
+									</a> <a th:data-id="${item.commentId}" th:data-name="${item.commentId}"
 										onclick="showConfirmModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))">
 										<i class="fa-solid fa-trash-can"></i>
 									</a>
